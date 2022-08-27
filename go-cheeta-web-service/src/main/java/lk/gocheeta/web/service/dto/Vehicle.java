@@ -15,6 +15,7 @@ public class Vehicle {
     private String year;
     private int driverId;
     private int branchId;
+    private int vehicleTypeId;
 
     public int getId() {
         return id;
@@ -62,5 +63,13 @@ public class Vehicle {
 
     public void setBranchId(int branchId) {
         this.branchId = branchId;
-    }    
+    }  
+
+    public int getVehicleTypeId() {
+        return vehicleTypeId;
+    }
+
+    public void setVehicleTypeId(int vehicleTypeId) {
+        this.vehicleTypeId = vehicleTypeId;
+    }
 }

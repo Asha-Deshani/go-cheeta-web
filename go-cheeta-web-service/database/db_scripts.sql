@@ -48,9 +48,11 @@ CREATE TABLE `gocheeta`.`vehicle` (
   `year` VARCHAR(4) NULL,
   `driver_id` INT NOT NULL,
   `branch_id` INT NOT NULL,
+  `vehicle_type_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_branch_id_idx` (`branch_id` ASC) VISIBLE,
   INDEX `fk_driver_id_idx` (`driver_id` ASC) VISIBLE,
+  INDEX `fk_vehicle_vehicle_type_id_idx` (`vehicle_type_id` ASC) VISIBLE,
   CONSTRAINT `fk_vehicle_branch_id`
     FOREIGN KEY (`branch_id`)
     REFERENCES `gocheeta`.`branch` (`id`)
@@ -59,6 +61,11 @@ CREATE TABLE `gocheeta`.`vehicle` (
   CONSTRAINT `fk_vehicle_driver_id`
     FOREIGN KEY (`driver_id`)
     REFERENCES `gocheeta`.`driver` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION),
+ CONSTRAINT `fk_vehicle_vehicle_type_id_idx`
+    FOREIGN KEY (`vehicle_type_id`)
+    REFERENCES `gocheeta`.`vehicle_type` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
