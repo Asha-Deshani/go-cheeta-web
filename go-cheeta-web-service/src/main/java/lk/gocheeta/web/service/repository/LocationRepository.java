@@ -18,10 +18,18 @@ import lk.gocheeta.web.service.repository.exception.DatabaseException;
  * @author asha
  */
 public class LocationRepository {
-
+    
+    private static LocationRepository instance;
     private static final Logger loger = Logger.getLogger(LocationRepository.class.getName());
+    
+    public static LocationRepository getInstance() {
+        if (instance == null) {
+            instance = new LocationRepository();
+        }
+        return instance;
+    }
 
-    public Location addCustomer(Location location) throws DatabaseException {
+    public Location addLocation(Location location) throws DatabaseException {
         try {
             String query = "INSERT INTO location (address, branch_id) VALUES (?, ?)";
 
@@ -42,7 +50,7 @@ public class LocationRepository {
         }
     }
 
-    public Location updateCustomer(Location location) throws DatabaseException {
+    public Location updateLocation(Location location) throws DatabaseException {
         try {
             String query = "UPDATE location SET address=?, branch_id=? WHERE id =?";
 
@@ -59,7 +67,7 @@ public class LocationRepository {
         }
     }
 
-    public Location getCustomer(int id) throws DatabaseException {
+    public Location getLocationr(int id) throws DatabaseException {
         try {
             String query = "SELECT address, branch_id FROM branch WHERE id =?";
 

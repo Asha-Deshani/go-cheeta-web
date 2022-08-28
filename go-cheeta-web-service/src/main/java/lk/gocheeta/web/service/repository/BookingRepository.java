@@ -19,7 +19,15 @@ import lk.gocheeta.web.service.repository.exception.DatabaseException;
  */
 public class BookingRepository {
 
+    private static BookingRepository instance;
     private static final Logger loger = Logger.getLogger(BookingRepository.class.getName());
+
+    public static BookingRepository getInstance() {
+        if (instance == null) {
+            instance = new BookingRepository();
+        }
+        return instance;
+    }
 
     public Booking addBooking(Booking booking) throws DatabaseException {
         try {

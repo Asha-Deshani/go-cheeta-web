@@ -19,7 +19,15 @@ import lk.gocheeta.web.service.repository.exception.DatabaseException;
  */
 public class CustomerRepository {
 
+    private static CustomerRepository instance;
     private static final Logger loger = Logger.getLogger(CustomerRepository.class.getName());
+    
+    public static CustomerRepository getInstance() {
+        if (instance == null) {
+            instance = new CustomerRepository();
+        }
+        return instance;
+    }
 
     public Customer addCustomer(Customer customer) throws DatabaseException {
         try {

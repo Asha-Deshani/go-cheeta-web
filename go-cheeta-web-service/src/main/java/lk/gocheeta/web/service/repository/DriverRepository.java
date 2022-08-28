@@ -19,7 +19,15 @@ import lk.gocheeta.web.service.repository.exception.DatabaseException;
  */
 public class DriverRepository {
 
+    private static DriverRepository instance;
     private static final Logger loger = Logger.getLogger(DriverRepository.class.getName());
+    
+    public static DriverRepository getInstance() {
+        if (instance == null) {
+            instance = new DriverRepository();
+        }
+        return instance;
+    }
 
     public Driver addDriver(Driver driver) throws DatabaseException {
         try {

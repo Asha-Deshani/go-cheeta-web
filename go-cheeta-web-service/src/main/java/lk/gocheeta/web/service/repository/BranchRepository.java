@@ -19,7 +19,15 @@ import lk.gocheeta.web.service.repository.exception.DatabaseException;
  */
 public class BranchRepository {
 
-    private final Logger loger = Logger.getLogger(BranchRepository.class.getName());
+    private static BranchRepository instance;
+    private static final Logger loger = Logger.getLogger(BranchRepository.class.getName());
+    
+    public static BranchRepository getInstance() {
+        if (instance == null) {
+            instance = new BranchRepository();
+        }
+        return instance;
+    }
 
     public Branch addBranch(Branch branch) throws DatabaseException {
         try {

@@ -18,8 +18,16 @@ import lk.gocheeta.web.service.repository.exception.DatabaseException;
  * @author asha
  */
 public class VehicleRepository {
-
-    private final Logger loger = Logger.getLogger(VehicleRepository.class.getName());
+    
+    private static VehicleRepository instance;
+    private static final Logger loger = Logger.getLogger(VehicleRepository.class.getName());
+    
+    public static VehicleRepository getInstance() {
+        if (instance == null) {
+            instance = new VehicleRepository();
+        }
+        return instance;
+    }
 
     public Vehicle addVehicle(Vehicle vehicle) throws DatabaseException {
         try {
