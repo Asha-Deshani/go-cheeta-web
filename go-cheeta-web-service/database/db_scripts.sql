@@ -81,7 +81,7 @@ CREATE TABLE `gocheeta`.`location` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE `bookings` (
+CREATE TABLE `booking` (
   `id` int NOT NULL AUTO_INCREMENT,
   `fare` decimal(10,0) DEFAULT NULL,
   `status` varchar(10) NOT NULL DEFAULT 'PENDING',
@@ -89,13 +89,13 @@ CREATE TABLE `bookings` (
   `driver_feedback` varchar(45) DEFAULT NULL,
   `distance` double DEFAULT NULL,
   `duration_minute` int DEFAULT NULL,
-  `vechile_id` int NOT NULL,
+  `vehicle_id` int NOT NULL,
   `customer_id` int NOT NULL,
   `branch_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_booking_customer_id_idx` (`customer_id`),
-  KEY `fk_booking_vehicle_id_idx` (`vechile_id`),
+  KEY `fk_booking_vehicle_id_idx` (`vehicle_id`),
   KEY `fk_booking_branch_id_idx` (`branch_id`),
   CONSTRAINT `fk_booking_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`),
   CONSTRAINT `fk_booking_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
-  CONSTRAINT `fk_booking_vehicle_id` FOREIGN KEY (`vechile_id`) REFERENCES `vehicle` (`id`));
+  CONSTRAINT `fk_booking_vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`));
