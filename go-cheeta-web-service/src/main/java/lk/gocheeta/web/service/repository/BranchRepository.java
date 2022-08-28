@@ -49,6 +49,7 @@ public class BranchRepository {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, branch.getName());
             statement.setString(2, branch.getCity());
+            statement.setInt(3, branch.getId());
 
             statement.executeUpdate();
             return branch;

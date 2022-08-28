@@ -10,72 +10,75 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
-import lk.gocheeta.web.service.dto.VehicleType;
+import lk.gocheeta.web.service.dto.Customer;
 import lk.gocheeta.web.service.repository.exception.DatabaseException;
 
 /**
  *
  * @author asha
  */
-public class VehicleTypeRepository {
+public class CustomerRepository {
 
-    private static final Logger loger = Logger.getLogger(VehicleTypeRepository.class.getName());
+    private static final Logger loger = Logger.getLogger(CustomerRepository.class.getName());
 
-    public VehicleType addVehicleType(VehicleType vehicleType) throws DatabaseException {
+    public Customer addCustomer(Customer customer) throws DatabaseException {
         try {
-            String query = "INSERT INTO vehicle_type (name, rate) VALUES (?, ?)";
+            String query = "INSERT INTO branch (name, telephone, email) VALUES (?, ?, ?)";
 
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
-            statement.setString(1, vehicleType.getName());
-            statement.setFloat(2, vehicleType.getRate());
+            statement.setString(1, customer.getName());
+            statement.setString(2, customer.getTelephone());
+            statement.setString(3, customer.getEmail());
 
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
-                vehicleType.setId(rs.getInt(1));
+                customer.setId(rs.getInt(1));
             }
 
-            return vehicleType;
+            return customer;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
         }
     }
 
-    public VehicleType updateVehicleType(VehicleType vehicleType) throws DatabaseException {
+    public Customer updateCustomer(Customer customer) throws DatabaseException {
         try {
-            String query = "UPDATE vehicle_type SET name=?, rate=? WHERE id =?";
+            String query = "UPDATE branch SET name=?, telephone=?, email=? WHERE id =?";
 
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
-            statement.setString(1, vehicleType.getName());
-            statement.setFloat(2, vehicleType.getRate());
-            statement.setInt(3, vehicleType.getId());
+            statement.setString(1, customer.getName());
+            statement.setString(2, customer.getTelephone());
+            statement.setString(3, customer.getEmail());
+            statement.setInt(4, customer.getId());
 
             statement.executeUpdate();
-            return vehicleType;
+            return customer;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
         }
     }
 
-    public VehicleType getVehicleType(int id) throws DatabaseException {
+    public Customer getCustomer(int id) throws DatabaseException {
         try {
-            String query = "SELECT name, rate FROM vehicle_type WHERE id =?";
+            String query = "SELECT name, city FROM branch WHERE id =?";
 
-            VehicleType vehicleType = null;
+            Customer customer = null;
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
 
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                vehicleType = new VehicleType();
+                customer = new Customer();
 
-                vehicleType.setId(id);
-                vehicleType.setName(rs.getString("name"));
-                vehicleType.setRate(rs.getFloat("rate"));
+                customer.setId(id);
+                customer.setName(rs.getString("name"));
+                customer.setTelephone(rs.getString("telephone"));
+                customer.setEmail(rs.getString("email"));
             }
-            return vehicleType;
+            return customer;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

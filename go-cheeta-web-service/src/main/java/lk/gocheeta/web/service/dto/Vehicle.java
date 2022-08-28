@@ -9,6 +9,7 @@ package lk.gocheeta.web.service.dto;
  * @author asha
  */
 public class Vehicle {
+    
     private int id;
     private String make;
     private String model;

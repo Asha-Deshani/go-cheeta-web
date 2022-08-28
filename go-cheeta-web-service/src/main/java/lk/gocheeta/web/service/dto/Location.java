@@ -8,11 +8,11 @@ package lk.gocheeta.web.service.dto;
  *
  * @author asha
  */
-public class VehicleType {
+public class Location {
     
     private int id;
-    private String name;
-    private float rate;
+    private String address;
+    private int branchId;
 
     public int getId() {
         return id;
@@ -22,19 +22,19 @@ public class VehicleType {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getAddress() {
+        return address;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public float getRate() {
-        return rate;
+    public int getBranchId() {
+        return branchId;
     }
 
-    public void setRate(float rate) {
-        this.rate = rate;
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
     }
 }

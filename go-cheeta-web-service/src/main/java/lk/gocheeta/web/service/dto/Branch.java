@@ -9,6 +9,7 @@ package lk.gocheeta.web.service.dto;
  * @author asha
  */
 public class Branch {
+    
     private int id;
     private String name;
     private String city;

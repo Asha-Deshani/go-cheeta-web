@@ -10,72 +10,72 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
-import lk.gocheeta.web.service.dto.VehicleType;
+import lk.gocheeta.web.service.dto.Location;
 import lk.gocheeta.web.service.repository.exception.DatabaseException;
 
 /**
  *
  * @author asha
  */
-public class VehicleTypeRepository {
+public class LocationRepository {
 
-    private static final Logger loger = Logger.getLogger(VehicleTypeRepository.class.getName());
+    private static final Logger loger = Logger.getLogger(LocationRepository.class.getName());
 
-    public VehicleType addVehicleType(VehicleType vehicleType) throws DatabaseException {
+    public Location addCustomer(Location location) throws DatabaseException {
         try {
-            String query = "INSERT INTO vehicle_type (name, rate) VALUES (?, ?)";
+            String query = "INSERT INTO location (address, branch_id) VALUES (?, ?)";
 
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
-            statement.setString(1, vehicleType.getName());
-            statement.setFloat(2, vehicleType.getRate());
+            statement.setString(1, location.getAddress());
+            statement.setInt(2, location.getBranchId());
 
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
-                vehicleType.setId(rs.getInt(1));
+                location.setId(rs.getInt(1));
             }
 
-            return vehicleType;
+            return location;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
         }
     }
 
-    public VehicleType updateVehicleType(VehicleType vehicleType) throws DatabaseException {
+    public Location updateCustomer(Location location) throws DatabaseException {
         try {
-            String query = "UPDATE vehicle_type SET name=?, rate=? WHERE id =?";
+            String query = "UPDATE location SET address=?, branch_id=? WHERE id =?";
 
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
-            statement.setString(1, vehicleType.getName());
-            statement.setFloat(2, vehicleType.getRate());
-            statement.setInt(3, vehicleType.getId());
+            statement.setString(1, location.getAddress());
+            statement.setInt(2, location.getBranchId());
+            statement.setInt(3, location.getId());
 
             statement.executeUpdate();
-            return vehicleType;
+            return location;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
         }
     }
 
-    public VehicleType getVehicleType(int id) throws DatabaseException {
+    public Location getCustomer(int id) throws DatabaseException {
         try {
-            String query = "SELECT name, rate FROM vehicle_type WHERE id =?";
+            String query = "SELECT address, branch_id FROM branch WHERE id =?";
 
-            VehicleType vehicleType = null;
+            Location location = null;
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
 
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                vehicleType = new VehicleType();
+                location = new Location();
 
-                vehicleType.setId(id);
-                vehicleType.setName(rs.getString("name"));
-                vehicleType.setRate(rs.getFloat("rate"));
+                location.setId(id);
+                location.setAddress(rs.getString("name"));
+                location.setBranchId(rs.getInt("branch_id"));
             }
-            return vehicleType;
+            return location;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
