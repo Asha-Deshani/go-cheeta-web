@@ -20,7 +20,7 @@ public class DriverService {
     private final DriverRepository driverRepository = DriverRepository.getInstance();
     private static final Logger loger = Logger.getLogger(DriverService.class.getName());
 
-    public Driver AddDriver(Driver driver) throws ServiceException {
+    public Driver addDriver(Driver driver) throws ServiceException {
         try {
             return driverRepository.addDriver(driver);
         } catch (DatabaseException ex) {
@@ -28,8 +28,8 @@ public class DriverService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Driver UpdateDriver(Driver driver) throws ServiceException {
+
+    public Driver updateDriver(Driver driver) throws ServiceException {
         try {
             return driverRepository.updateDriver(driver);
         } catch (DatabaseException ex) {
@@ -37,10 +37,19 @@ public class DriverService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Driver GetDriver(int id) throws ServiceException {
+
+    public Driver getDriver(int id) throws ServiceException {
         try {
             return driverRepository.getDriver(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteDriver(int id) throws ServiceException {
+        try {
+            return driverRepository.deleteDriver(id);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

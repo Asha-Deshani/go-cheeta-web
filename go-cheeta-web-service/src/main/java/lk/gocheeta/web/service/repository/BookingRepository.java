@@ -7,6 +7,7 @@ package lk.gocheeta.web.service.repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -30,11 +31,11 @@ public class BookingRepository {
     }
 
     public Booking addBooking(Booking booking) throws DatabaseException {
+        String query = "INSERT INTO booking (fare, status, customer_feedback, "
+                + "driver_feedback, distance, duration_minute, vehicle_id, customer_id, branch_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
         try {
-            String query = "INSERT INTO booking (fare, status, customer_feedback, "
-                    + "driver_feedback, distance, duration_minute, vehicle_id, customer_id, branch_id) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setBigDecimal(1, booking.getFare());
             statement.setString(2, booking.getStatus());
@@ -60,11 +61,11 @@ public class BookingRepository {
     }
 
     public Booking updateBooking(Booking booking) throws DatabaseException {
-        try {
-            String query = "UPDATE booking SET fare=?, status=?, customer_feedback=?,"
-                    + "driver_feedback=?, distance=?, duration_minute=?, vehicle_id=?, "
-                    + "customer_id=?, branch_id=?  WHERE id =?";
+        String query = "UPDATE booking SET fare=?, status=?, customer_feedback=?,"
+                + "driver_feedback=?, distance=?, duration_minute=?, vehicle_id=?, "
+                + "customer_id=?, branch_id=?  WHERE id =?";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setBigDecimal(1, booking.getFare());
             statement.setString(2, booking.getStatus());
@@ -86,11 +87,11 @@ public class BookingRepository {
     }
 
     public Booking getBooking(int id) throws DatabaseException {
+        String query = "SELECT fare, status, customer_feedback, driver_feedback, distance,"
+                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking WHERE id =?";
+        Booking booking = null;
+        
         try {
-            String query = "SELECT fare, status, customer_feedback, driver_feedback, distance,"
-                    + " duration_minute, vehicle_id, customer_id, branch_id FROM booking WHERE id =?";
-
-            Booking booking = null;
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
 
@@ -110,6 +111,18 @@ public class BookingRepository {
                 booking.setBranchId(rs.getInt("branch_id"));
             }
             return booking;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteBooking(int id) throws DatabaseException {
+        String query = "DELETE FROM booking WHERE id =?";
+        
+        try {
+            Statement statement = DatabaseManager.getStatment();
+            return statement.executeUpdate(query) > 1;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

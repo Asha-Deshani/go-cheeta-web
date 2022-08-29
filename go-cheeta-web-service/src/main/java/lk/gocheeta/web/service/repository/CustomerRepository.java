@@ -7,6 +7,7 @@ package lk.gocheeta.web.service.repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -21,7 +22,7 @@ public class CustomerRepository {
 
     private static CustomerRepository instance;
     private static final Logger loger = Logger.getLogger(CustomerRepository.class.getName());
-    
+
     public static CustomerRepository getInstance() {
         if (instance == null) {
             instance = new CustomerRepository();
@@ -30,9 +31,9 @@ public class CustomerRepository {
     }
 
     public Customer addCustomer(Customer customer) throws DatabaseException {
-        try {
-            String query = "INSERT INTO branch (name, telephone, email) VALUES (?, ?, ?)";
+        String query = "INSERT INTO customer (name, telephone, email) VALUES (?, ?, ?)";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, customer.getName());
             statement.setString(2, customer.getTelephone());
@@ -52,9 +53,9 @@ public class CustomerRepository {
     }
 
     public Customer updateCustomer(Customer customer) throws DatabaseException {
-        try {
-            String query = "UPDATE branch SET name=?, telephone=?, email=? WHERE id =?";
+        String query = "UPDATE customer SET name=?, telephone=?, email=? WHERE id =?";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, customer.getName());
             statement.setString(2, customer.getTelephone());
@@ -70,10 +71,11 @@ public class CustomerRepository {
     }
 
     public Customer getCustomer(int id) throws DatabaseException {
-        try {
-            String query = "SELECT name, city FROM branch WHERE id =?";
+        String query = "SELECT name, city FROM customer WHERE id =?";
 
-            Customer customer = null;
+        Customer customer = null;
+
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
 
@@ -87,6 +89,18 @@ public class CustomerRepository {
                 customer.setEmail(rs.getString("email"));
             }
             return customer;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteCustomer(int id) throws DatabaseException {
+        String query = "DELETE FROM customer WHERE id =?";
+
+        try {
+            Statement statement = DatabaseManager.getStatment();
+            return statement.executeUpdate(query) > 1;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

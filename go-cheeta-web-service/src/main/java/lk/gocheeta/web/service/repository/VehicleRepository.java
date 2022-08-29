@@ -8,6 +8,7 @@ import lk.gocheeta.web.service.dto.Vehicle;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -18,10 +19,10 @@ import lk.gocheeta.web.service.repository.exception.DatabaseException;
  * @author asha
  */
 public class VehicleRepository {
-    
+
     private static VehicleRepository instance;
     private static final Logger loger = Logger.getLogger(VehicleRepository.class.getName());
-    
+
     public static VehicleRepository getInstance() {
         if (instance == null) {
             instance = new VehicleRepository();
@@ -30,9 +31,9 @@ public class VehicleRepository {
     }
 
     public Vehicle addVehicle(Vehicle vehicle) throws DatabaseException {
-        try {
-            String query = "INSERT INTO vehicle (make, model, year, driver_id, branch_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO vehicle (make, model, year, driver_id, branch_id) VALUES (?, ?, ?, ?, ?)";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, vehicle.getMake());
             statement.setString(2, vehicle.getModel());
@@ -54,9 +55,9 @@ public class VehicleRepository {
     }
 
     public Vehicle updateVehicle(Vehicle vehicle) throws DatabaseException {
-        try {
-            String query = "UPDATE vehicle SET make=?, model=?, year=?, driver_id=?, branch_id=? WHERE id =?";
+        String query = "UPDATE vehicle SET make=?, model=?, year=?, driver_id=?, branch_id=? WHERE id =?";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, vehicle.getMake());
             statement.setString(2, vehicle.getModel());
@@ -74,10 +75,10 @@ public class VehicleRepository {
     }
 
     public Vehicle getVehicle(int id) throws DatabaseException {
-        try {
-            String query = "SELECT make, model, year, driver_id, branch_id FROM vehicle WHERE id =?";
+        String query = "SELECT make, model, year, driver_id, branch_id FROM vehicle WHERE id =?";
+        Vehicle vehicle = null;
 
-            Vehicle vehicle = null;
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
 
@@ -93,6 +94,18 @@ public class VehicleRepository {
                 vehicle.setBranchId(rs.getInt("branch_id"));
             }
             return vehicle;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteVehicle(int id) throws DatabaseException {
+        String query = "DELETE FROM vehicle WHERE id =?";
+
+        try {
+            Statement statement = DatabaseManager.getStatment();
+            return statement.executeUpdate(query) > 1;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

@@ -20,7 +20,7 @@ public class BranchService {
     private final BranchRepository branchRepository = BranchRepository.getInstance();
     private static final Logger loger = Logger.getLogger(BranchService.class.getName());
 
-    public Branch AddBranch(Branch branch) throws ServiceException {
+    public Branch addBranch(Branch branch) throws ServiceException {
         try {
             return branchRepository.addBranch(branch);
         } catch (DatabaseException ex) {
@@ -28,8 +28,8 @@ public class BranchService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Branch UpdateBranch(Branch branch) throws ServiceException {
+
+    public Branch updateBranch(Branch branch) throws ServiceException {
         try {
             return branchRepository.updateBranch(branch);
         } catch (DatabaseException ex) {
@@ -37,10 +37,19 @@ public class BranchService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Branch GetBranch(int id) throws ServiceException {
+
+    public Branch getBranch(int id) throws ServiceException {
         try {
             return branchRepository.getBranch(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteBranch(int id) throws ServiceException {
+        try {
+            return branchRepository.deleteBranch(id);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

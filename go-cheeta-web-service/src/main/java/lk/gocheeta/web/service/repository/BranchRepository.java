@@ -7,6 +7,7 @@ package lk.gocheeta.web.service.repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -21,7 +22,7 @@ public class BranchRepository {
 
     private static BranchRepository instance;
     private static final Logger loger = Logger.getLogger(BranchRepository.class.getName());
-    
+
     public static BranchRepository getInstance() {
         if (instance == null) {
             instance = new BranchRepository();
@@ -30,9 +31,9 @@ public class BranchRepository {
     }
 
     public Branch addBranch(Branch branch) throws DatabaseException {
-        try {
-            String query = "INSERT INTO branch (name, city) VALUES (?, ?)";
+        String query = "INSERT INTO branch (name, city) VALUES (?, ?)";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, branch.getName());
             statement.setString(2, branch.getCity());
@@ -51,9 +52,9 @@ public class BranchRepository {
     }
 
     public Branch updateBranch(Branch branch) throws DatabaseException {
-        try {
-            String query = "UPDATE branch SET name=?, city=? WHERE id =?";
+        String query = "UPDATE branch SET name=?, city=? WHERE id =?";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, branch.getName());
             statement.setString(2, branch.getCity());
@@ -68,10 +69,10 @@ public class BranchRepository {
     }
 
     public Branch getBranch(int id) throws DatabaseException {
-        try {
-            String query = "SELECT name, city FROM branch WHERE id =?";
+        String query = "SELECT name, city FROM branch WHERE id =?";
+        Branch branch = null;
 
-            Branch branch = null;
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
 
@@ -84,6 +85,18 @@ public class BranchRepository {
                 branch.setCity(rs.getString("city"));
             }
             return branch;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteBranch(int id) throws DatabaseException {
+        String query = "DELETE FROM branch WHERE id =?";
+
+        try {
+            Statement statement = DatabaseManager.getStatment();
+            return statement.executeUpdate(query) > 1;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

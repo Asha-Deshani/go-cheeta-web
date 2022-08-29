@@ -7,6 +7,7 @@ package lk.gocheeta.web.service.repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -21,7 +22,7 @@ public class DriverRepository {
 
     private static DriverRepository instance;
     private static final Logger loger = Logger.getLogger(DriverRepository.class.getName());
-    
+
     public static DriverRepository getInstance() {
         if (instance == null) {
             instance = new DriverRepository();
@@ -30,9 +31,9 @@ public class DriverRepository {
     }
 
     public Driver addDriver(Driver driver) throws DatabaseException {
-        try {
-            String query = "INSERT INTO branch (name, telephone, email, branch_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO driver (name, telephone, email, branch_id) VALUES (?, ?, ?, ?)";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, driver.getName());
             statement.setString(2, driver.getTelephone());
@@ -53,9 +54,9 @@ public class DriverRepository {
     }
 
     public Driver updateDriver(Driver driver) throws DatabaseException {
-        try {
-            String query = "UPDATE branch SET name=?, telephone=?, email=?, branch_id=? WHERE id =?";
+        String query = "UPDATE driver SET name=?, telephone=?, email=?, branch_id=? WHERE id =?";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, driver.getName());
             statement.setString(2, driver.getTelephone());
@@ -72,10 +73,10 @@ public class DriverRepository {
     }
 
     public Driver getDriver(int id) throws DatabaseException {
-        try {
-            String query = "SELECT name, city, branch_id FROM branch WHERE id =?";
+        String query = "SELECT name, city, branch_id FROM driver WHERE id =?";
+        Driver driver = null;
 
-            Driver driver = null;
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
 
@@ -90,6 +91,18 @@ public class DriverRepository {
                 driver.setBranchId(rs.getInt("branch_id"));
             }
             return driver;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteDriver(int id) throws DatabaseException {
+        String query = "DELETE FROM driver WHERE id =?";
+
+        try {
+            Statement statement = DatabaseManager.getStatment();
+            return statement.executeUpdate(query) > 1;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

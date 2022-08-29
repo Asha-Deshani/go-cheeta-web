@@ -7,6 +7,7 @@ package lk.gocheeta.web.service.repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -18,10 +19,10 @@ import lk.gocheeta.web.service.repository.exception.DatabaseException;
  * @author asha
  */
 public class LocationRepository {
-    
+
     private static LocationRepository instance;
     private static final Logger loger = Logger.getLogger(LocationRepository.class.getName());
-    
+
     public static LocationRepository getInstance() {
         if (instance == null) {
             instance = new LocationRepository();
@@ -30,9 +31,9 @@ public class LocationRepository {
     }
 
     public Location addLocation(Location location) throws DatabaseException {
-        try {
-            String query = "INSERT INTO location (address, branch_id) VALUES (?, ?)";
+        String query = "INSERT INTO location (address, branch_id) VALUES (?, ?)";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, location.getAddress());
             statement.setInt(2, location.getBranchId());
@@ -51,9 +52,9 @@ public class LocationRepository {
     }
 
     public Location updateLocation(Location location) throws DatabaseException {
-        try {
-            String query = "UPDATE location SET address=?, branch_id=? WHERE id =?";
+        String query = "UPDATE location SET address=?, branch_id=? WHERE id =?";
 
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setString(1, location.getAddress());
             statement.setInt(2, location.getBranchId());
@@ -67,11 +68,11 @@ public class LocationRepository {
         }
     }
 
-    public Location getLocationr(int id) throws DatabaseException {
-        try {
-            String query = "SELECT address, branch_id FROM branch WHERE id =?";
+    public Location getLocation(int id) throws DatabaseException {
+        String query = "SELECT address, branch_id FROM branch WHERE id =?";
+        Location location = null;
 
-            Location location = null;
+        try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
 
@@ -84,6 +85,18 @@ public class LocationRepository {
                 location.setBranchId(rs.getInt("branch_id"));
             }
             return location;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteLocation(int id) throws DatabaseException {
+        String query = "DELETE FROM driver WHERE id =?";
+
+        try {
+            Statement statement = DatabaseManager.getStatment();
+            return statement.executeUpdate(query) > 1;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

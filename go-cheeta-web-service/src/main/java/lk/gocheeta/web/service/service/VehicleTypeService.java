@@ -20,7 +20,7 @@ public class VehicleTypeService {
     private final VehicleTypeRepository vehicleTypeRepository = VehicleTypeRepository.getInstance();
     private static final Logger loger = Logger.getLogger(VehicleTypeService.class.getName());
 
-    public VehicleType AddVehicleType(VehicleType vehicleType) throws ServiceException {
+    public VehicleType addVehicleType(VehicleType vehicleType) throws ServiceException {
         try {
             return vehicleTypeRepository.addVehicleType(vehicleType);
         } catch (DatabaseException ex) {
@@ -28,8 +28,8 @@ public class VehicleTypeService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public VehicleType UpdateVehicleType(VehicleType vehicleType) throws ServiceException {
+
+    public VehicleType updateVehicleType(VehicleType vehicleType) throws ServiceException {
         try {
             return vehicleTypeRepository.updateVehicleType(vehicleType);
         } catch (DatabaseException ex) {
@@ -37,10 +37,19 @@ public class VehicleTypeService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public VehicleType GetVehicleType(int id) throws ServiceException {
+
+    public VehicleType getVehicleType(int id) throws ServiceException {
         try {
             return vehicleTypeRepository.getVehicleType(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteVehicleType(int id) throws ServiceException {
+        try {
+            return vehicleTypeRepository.deleteVehicleType(id);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

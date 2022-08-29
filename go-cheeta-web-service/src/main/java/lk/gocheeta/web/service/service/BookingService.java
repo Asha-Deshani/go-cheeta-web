@@ -20,7 +20,7 @@ public class BookingService {
     private final BookingRepository bookingRepository = BookingRepository.getInstance();
     private static final Logger loger = Logger.getLogger(BookingService.class.getName());
 
-    public Booking AddBooking(Booking booking) throws ServiceException {
+    public Booking addBooking(Booking booking) throws ServiceException {
         try {
             return bookingRepository.addBooking(booking);
         } catch (DatabaseException ex) {
@@ -28,8 +28,8 @@ public class BookingService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Booking UpdateBooking(Booking booking) throws ServiceException {
+
+    public Booking updateBooking(Booking booking) throws ServiceException {
         try {
             return bookingRepository.updateBooking(booking);
         } catch (DatabaseException ex) {
@@ -37,10 +37,19 @@ public class BookingService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Booking GetBooking(int id) throws ServiceException {
+
+    public Booking getBooking(int id) throws ServiceException {
         try {
             return bookingRepository.getBooking(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteBooking(int id) throws ServiceException {
+        try {
+            return bookingRepository.deleteBooking(id);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

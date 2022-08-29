@@ -20,7 +20,7 @@ public class LocationService {
     private final LocationRepository locationRepository = LocationRepository.getInstance();
     private static final Logger loger = Logger.getLogger(LocationService.class.getName());
 
-    public Location AddLocation(Location location) throws ServiceException {
+    public Location addLocation(Location location) throws ServiceException {
         try {
             return locationRepository.addLocation(location);
         } catch (DatabaseException ex) {
@@ -28,8 +28,8 @@ public class LocationService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Location UpdateLocation(Location location) throws ServiceException {
+
+    public Location updateLocation(Location location) throws ServiceException {
         try {
             return locationRepository.updateLocation(location);
         } catch (DatabaseException ex) {
@@ -37,10 +37,19 @@ public class LocationService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Location GetLocation(int id) throws ServiceException {
+
+    public Location getLocation(int id) throws ServiceException {
         try {
-            return locationRepository.getLocationr(id);
+            return locationRepository.getLocation(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteLocation(int id) throws ServiceException {
+        try {
+            return locationRepository.deleteLocation(id);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

@@ -20,7 +20,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository = CustomerRepository.getInstance();
     private static final Logger loger = Logger.getLogger(CustomerService.class.getName());
 
-    public Customer AddBooking(Customer customer) throws ServiceException {
+    public Customer addCustomer(Customer customer) throws ServiceException {
         try {
             return customerRepository.addCustomer(customer);
         } catch (DatabaseException ex) {
@@ -28,8 +28,8 @@ public class CustomerService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Customer UpdateBooking(Customer customer) throws ServiceException {
+
+    public Customer updateCustomer(Customer customer) throws ServiceException {
         try {
             return customerRepository.updateCustomer(customer);
         } catch (DatabaseException ex) {
@@ -37,10 +37,19 @@ public class CustomerService {
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-    public Customer GetBooking(int id) throws ServiceException {
+
+    public Customer getCustomer(int id) throws ServiceException {
         try {
             return customerRepository.getCustomer(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public boolean deleteCustomer(int id) throws ServiceException {
+        try {
+            return customerRepository.deleteCustomer(id);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());
