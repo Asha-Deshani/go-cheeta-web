@@ -121,7 +121,9 @@ public class BookingRepository {
         String query = "DELETE FROM booking WHERE id =?";
         
         try {
-            Statement statement = DatabaseManager.getStatment();
+            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            statement.setInt(1, id);
+            
             return statement.executeUpdate(query) > 1;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);

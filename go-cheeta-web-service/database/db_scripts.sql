@@ -99,3 +99,7 @@ CREATE TABLE `booking` (
   CONSTRAINT `fk_booking_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`),
   CONSTRAINT `fk_booking_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `fk_booking_vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`));
+
+ALTER TABLE `gocheeta`.`branch` 
+ADD UNIQUE INDEX `unique_branch_city_idx` (`city` ASC) INVISIBLE,
+ADD UNIQUE INDEX `unique_branch_name_idx` (`name` ASC) VISIBLE;
