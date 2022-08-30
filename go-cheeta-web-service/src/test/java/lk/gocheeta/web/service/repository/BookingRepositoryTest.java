@@ -4,7 +4,7 @@
  */
 package lk.gocheeta.web.service.repository;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

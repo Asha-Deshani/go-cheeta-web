@@ -10,6 +10,7 @@ import static junit.framework.Assert.assertTrue;
 import lk.gocheeta.web.service.dto.Branch;
 import lk.gocheeta.web.service.repository.exception.DatabaseException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class BranchRepositoryTest {
     }
 
     @Test
-    public void addDeleteBranchSuccess() {
+    public void addGetUpdateDeleteBranchSuccess() {
         Branch branch = new Branch();
         branch.setCity("TEST_1 Colombo");
         branch.setName("TEST_1 Colombo City Branch");
@@ -37,13 +38,38 @@ public class BranchRepositoryTest {
         try {
             branch = branchRepository.addBranch(branch);
             assertNotEquals(0, branch.getId());
-            
-            
-            Branch cxc = branchRepository.getBranch(branch.getId());
-            assertEquals(branch.getCity(), cxc.getCity());
-            
-            boolean dd = branchRepository.deleteBranch(branch.getId());
-            assertTrue(dd);
+
+            Branch dbBranch = branchRepository.getBranch(branch.getId());
+            assertEquals(branch.getCity(), dbBranch.getCity());
+
+            dbBranch.setCity("TEST_1 Galle");
+            branchRepository.updateBranch(dbBranch);
+
+            Branch upDateddBranch = branchRepository.getBranch(branch.getId());
+            assertEquals(dbBranch.getCity(), upDateddBranch.getCity());
+            assertNotEquals(branch.getCity(), upDateddBranch.getCity());
+
+            assertTrue(branchRepository.deleteBranch(branch.getId()));
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
+    public void addDuplicateBranchCityFail() {
+        Branch branch = new Branch();
+        branch.setCity("TEST_1 Colombo");
+        branch.setName("TEST_1 Colombo City Branch");
+
+        try {
+            branch = branchRepository.addBranch(branch);
+            assertNotEquals(0, branch.getId());
+
+            Branch branchNew = new Branch();
+            branchNew.setCity("TEST_1 Colombo");
+            branchNew.setName("TEST_1 Colombo Outer Branch");
+
+            assertThrows(DatabaseException.class, () -> branchRepository.addBranch(branchNew));
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
         }

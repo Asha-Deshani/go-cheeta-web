@@ -25,8 +25,4 @@ public class DatabaseManager {
     public static PreparedStatement getPreparedStatement(String query) throws SQLException{
         return DriverManager.getConnection(URL, USERNAME, PASSWORD).prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
     }
-    
-    public static PreparedStatement getDeletePreparedStatement(String query) throws SQLException{
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD).prepareStatement(query);
-    }
 }

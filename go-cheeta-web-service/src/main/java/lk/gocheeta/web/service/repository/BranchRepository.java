@@ -92,13 +92,13 @@ public class BranchRepository {
     }
 
     public boolean deleteBranch(int id) throws DatabaseException {
-        String query = "DELETE FROM branch WHERE (id =?)";
+        String query = "DELETE FROM branch WHERE id = ?";
 
         try {
-            PreparedStatement statement = DatabaseManager.getDeletePreparedStatement(query);
+            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
-            
-            return statement.executeUpdate(query) > 1;
+
+            return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
