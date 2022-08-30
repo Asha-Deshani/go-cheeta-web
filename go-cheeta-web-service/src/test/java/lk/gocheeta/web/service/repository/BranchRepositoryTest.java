@@ -70,6 +70,7 @@ public class BranchRepositoryTest {
             branchNew.setName("TEST_1 Colombo Outer Branch");
 
             assertThrows(DatabaseException.class, () -> branchRepository.addBranch(branchNew));
+            assertTrue(branchRepository.deleteBranch(branch.getId()));
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
         }
