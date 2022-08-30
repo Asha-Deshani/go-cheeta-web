@@ -71,7 +71,7 @@ public class CustomerRepository {
     }
 
     public Customer getCustomer(int id) throws DatabaseException {
-        String query = "SELECT name, city FROM customer WHERE id =?";
+        String query = "SELECT name, telephone, email FROM customer WHERE id =?";
 
         Customer customer = null;
 
@@ -96,13 +96,13 @@ public class CustomerRepository {
     }
 
     public boolean deleteCustomer(int id) throws DatabaseException {
-        String query = "DELETE FROM customer WHERE id =?";
+        String query = "DELETE FROM customer WHERE id = ?";
 
         try {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
             
-            return statement.executeUpdate() > 1;
+            return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

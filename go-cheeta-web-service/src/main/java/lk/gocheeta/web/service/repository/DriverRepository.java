@@ -104,7 +104,7 @@ public class DriverRepository {
             PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
             statement.setInt(1, id);
             
-            return statement.executeUpdate() > 1;
+            return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

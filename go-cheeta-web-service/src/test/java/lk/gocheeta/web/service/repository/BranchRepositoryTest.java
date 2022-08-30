@@ -10,6 +10,7 @@ import static junit.framework.Assert.assertTrue;
 import lk.gocheeta.web.service.dto.Branch;
 import lk.gocheeta.web.service.repository.exception.DatabaseException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.BeforeClass;
@@ -71,6 +72,15 @@ public class BranchRepositoryTest {
 
             assertThrows(DatabaseException.class, () -> branchRepository.addBranch(branchNew));
             assertTrue(branchRepository.deleteBranch(branch.getId()));
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
+    public void deleteNonExistsBranchFail() {
+        try {
+            assertFalse(branchRepository.deleteBranch(-999));
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
         }

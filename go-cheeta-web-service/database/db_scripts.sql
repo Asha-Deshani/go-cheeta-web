@@ -103,3 +103,7 @@ CREATE TABLE `booking` (
 ALTER TABLE `gocheeta`.`branch` 
 ADD UNIQUE INDEX `unique_branch_city_idx` (`city` ASC) INVISIBLE,
 ADD UNIQUE INDEX `unique_branch_name_idx` (`name` ASC) VISIBLE;
+
+ALTER TABLE `gocheeta`.`customer` 
+ADD UNIQUE INDEX `uk_customer_telephone_idx` (`telephone` ASC) INVISIBLE,
+ADD UNIQUE INDEX `uk_customer_email_idx` (`email` ASC) VISIBLE;
