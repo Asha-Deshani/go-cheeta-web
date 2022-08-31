@@ -107,3 +107,6 @@ ADD UNIQUE INDEX `unique_branch_name_idx` (`name` ASC) VISIBLE;
 ALTER TABLE `gocheeta`.`customer` 
 ADD UNIQUE INDEX `uk_customer_telephone_idx` (`telephone` ASC) INVISIBLE,
 ADD UNIQUE INDEX `uk_customer_email_idx` (`email` ASC) VISIBLE;
+
+ALTER TABLE `gocheeta`.`location` 
+ADD UNIQUE INDEX `uniq_address_location_idx` (`address` ASC) VISIBLE;
