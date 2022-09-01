@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.dto.Branch;
@@ -41,6 +42,15 @@ public class BranchService {
     public Branch getBranch(int id) throws ServiceException {
         try {
             return branchRepository.getBranch(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public List<Branch> getBranches() throws ServiceException {
+        try {
+            return branchRepository.getBranches();
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

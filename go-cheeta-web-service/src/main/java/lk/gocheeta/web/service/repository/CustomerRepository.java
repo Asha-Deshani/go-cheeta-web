@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.repository;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,14 +34,19 @@ public class CustomerRepository {
     public Customer addCustomer(Customer customer) throws DatabaseException {
         String query = "INSERT INTO customer (name, telephone, email) VALUES (?, ?, ?)";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setString(1, customer.getName());
             statement.setString(2, customer.getTelephone());
             statement.setString(3, customer.getEmail());
 
             statement.executeUpdate();
-            ResultSet rs = statement.getGeneratedKeys();
+            rs = statement.getGeneratedKeys();
             if (rs.next()) {
                 customer.setId(rs.getInt(1));
             }
@@ -49,14 +55,20 @@ public class CustomerRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 
     public Customer updateCustomer(Customer customer) throws DatabaseException {
         String query = "UPDATE customer SET name=?, telephone=?, email=? WHERE id =?";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setString(1, customer.getName());
             statement.setString(2, customer.getTelephone());
             statement.setString(3, customer.getEmail());
@@ -67,6 +79,8 @@ public class CustomerRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(null, statement, connection);
         }
     }
 
@@ -75,11 +89,16 @@ public class CustomerRepository {
 
         Customer customer = null;
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setInt(1, id);
 
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             if (rs.next()) {
                 customer = new Customer();
 
@@ -92,20 +111,28 @@ public class CustomerRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 
     public boolean deleteCustomer(int id) throws DatabaseException {
         String query = "DELETE FROM customer WHERE id = ?";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setInt(1, id);
             
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(null, statement, connection);
         }
     }
 }

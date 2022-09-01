@@ -4,11 +4,11 @@
  */
 package lk.gocheeta.web.service.repository;
 
+import java.sql.Connection;
 import lk.gocheeta.web.service.dto.Vehicle;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -33,8 +33,13 @@ public class VehicleRepository {
     public Vehicle addVehicle(Vehicle vehicle) throws DatabaseException {
         String query = "INSERT INTO vehicle (make, model, year, driver_id, branch_id) VALUES (?, ?, ?, ?, ?)";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setString(1, vehicle.getMake());
             statement.setString(2, vehicle.getModel());
             statement.setString(3, vehicle.getYear());
@@ -42,7 +47,7 @@ public class VehicleRepository {
             statement.setInt(5, vehicle.getBranchId());
 
             statement.executeUpdate();
-            ResultSet rs = statement.getGeneratedKeys();
+            rs = statement.getGeneratedKeys();
             if (rs.next()) {
                 vehicle.setId(rs.getInt(1));
             }
@@ -51,14 +56,20 @@ public class VehicleRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 
     public Vehicle updateVehicle(Vehicle vehicle) throws DatabaseException {
         String query = "UPDATE vehicle SET make=?, model=?, year=?, driver_id=?, branch_id=? WHERE id =?";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setString(1, vehicle.getMake());
             statement.setString(2, vehicle.getModel());
             statement.setString(3, vehicle.getYear());
@@ -71,6 +82,8 @@ public class VehicleRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(null, statement, connection);
         }
     }
 
@@ -78,11 +91,16 @@ public class VehicleRepository {
         String query = "SELECT make, model, year, driver_id, branch_id FROM vehicle WHERE id =?";
         Vehicle vehicle = null;
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setInt(1, id);
 
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             if (rs.next()) {
                 vehicle = new Vehicle();
 
@@ -97,20 +115,28 @@ public class VehicleRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 
     public boolean deleteVehicle(int id) throws DatabaseException {
         String query = "DELETE FROM vehicle WHERE id =?";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setInt(1, id);
             
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(null, statement, connection);
         }
     }
 }

@@ -4,10 +4,10 @@
  */
 package lk.gocheeta.web.service.repository;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -33,13 +33,18 @@ public class LocationRepository {
     public Location addLocation(Location location) throws DatabaseException {
         String query = "INSERT INTO location (address, branch_id) VALUES (?, ?)";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setString(1, location.getAddress());
             statement.setInt(2, location.getBranchId());
 
             statement.executeUpdate();
-            ResultSet rs = statement.getGeneratedKeys();
+            rs = statement.getGeneratedKeys();
             if (rs.next()) {
                 location.setId(rs.getInt(1));
             }
@@ -48,14 +53,21 @@ public class LocationRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 
     public Location updateLocation(Location location) throws DatabaseException {
         String query = "UPDATE location SET address=?, branch_id=? WHERE id =?";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setString(1, location.getAddress());
             statement.setInt(2, location.getBranchId());
             statement.setInt(3, location.getId());
@@ -65,6 +77,8 @@ public class LocationRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 
@@ -72,11 +86,16 @@ public class LocationRepository {
         String query = "SELECT address, branch_id FROM branch WHERE id =?";
         Location location = null;
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setInt(1, id);
 
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
             if (rs.next()) {
                 location = new Location();
 
@@ -88,20 +107,28 @@ public class LocationRepository {
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 
     public boolean deleteLocation(int id) throws DatabaseException {
         String query = "DELETE FROM driver WHERE id =?";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+
         try {
-            PreparedStatement statement = DatabaseManager.getPreparedStatement(query);
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setInt(1, id);
             
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(null, statement, connection);
         }
     }
 }
