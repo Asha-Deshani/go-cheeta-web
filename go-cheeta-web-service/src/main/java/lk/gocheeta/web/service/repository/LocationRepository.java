@@ -131,4 +131,34 @@ public class LocationRepository {
             DatabaseManager.closeResources(null, statement, connection);
         }
     }
+    
+    public Location getLocationByBranchId(int branchId) throws DatabaseException {
+        String query = "SELECT id, address, branch_id FROM branch WHERE branch_id =?";
+        Location location = null;
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+            statement.setInt(1, branchId);
+
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                location = new Location();
+
+                location.setId(rs.getInt("id"));
+                location.setAddress(rs.getString("name"));
+                location.setBranchId(rs.getInt("branch_id"));
+            }
+            return location;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
+        }
+    }
 }

@@ -55,4 +55,13 @@ public class VehicleService {
             throw new ServiceException(ex.getMessage());
         }
     }
+    
+    public Vehicle getVehicleByBranchId(int branchId) throws ServiceException {
+        try {
+            return vehicleRepository.getVehicleByBranchId(branchId);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
 }

@@ -139,4 +139,37 @@ public class VehicleRepository {
             DatabaseManager.closeResources(null, statement, connection);
         }
     }
+    
+    public Vehicle getVehicleByBranchId(int branchId) throws DatabaseException {
+        String query = "SELECT id, make, model, year, driver_id, branch_id FROM vehicle WHERE branch_id =?";
+        Vehicle vehicle = null;
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+            statement.setInt(1, branchId);
+
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                vehicle = new Vehicle();
+
+                vehicle.setId(rs.getInt("id"));
+                vehicle.setMake(rs.getString("make"));
+                vehicle.setModel(rs.getString("model"));
+                vehicle.setYear(rs.getString("year"));
+                vehicle.setDriverId(rs.getInt("driver_id"));
+                vehicle.setBranchId(rs.getInt("branch_id"));
+            }
+            return vehicle;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
+        }
+    }
 }

@@ -100,6 +100,15 @@ CREATE TABLE `booking` (
   CONSTRAINT `fk_booking_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `fk_booking_vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`));
 
+CREATE TABLE `gocheeta`.`login` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(10) NOT NULL,
+  `password` VARCHAR(40) NOT NULL,
+  `role` VARCHAR(10) NOT NULL,
+  `reference_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`username` ASC) VISIBLE);
+
 ALTER TABLE `gocheeta`.`branch` 
 ADD UNIQUE INDEX `unique_branch_city_idx` (`city` ASC) INVISIBLE,
 ADD UNIQUE INDEX `unique_branch_name_idx` (`name` ASC) VISIBLE;

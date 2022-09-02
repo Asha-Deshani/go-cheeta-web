@@ -55,4 +55,13 @@ public class LocationService {
             throw new ServiceException(ex.getMessage());
         }
     }
+    
+     public Location getLocationByBranchId(int branchId) throws ServiceException {
+        try {
+            return locationRepository.getLocationByBranchId(branchId);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
 }
