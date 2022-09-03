@@ -7,14 +7,12 @@ package lk.gocheeta.web.service.controller;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import lk.gocheeta.web.service.dto.Branch;
+import javax.jws.WebService;
 import lk.gocheeta.web.service.dto.Login;
 import lk.gocheeta.web.service.repository.exception.ControlerException;
 import lk.gocheeta.web.service.repository.exception.ServiceException;
-import lk.gocheeta.web.service.service.BranchService;
 import lk.gocheeta.web.service.service.LoginService;
 
 /**
