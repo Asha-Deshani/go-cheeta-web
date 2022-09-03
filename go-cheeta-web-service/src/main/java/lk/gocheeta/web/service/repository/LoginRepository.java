@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
-import lk.gocheeta.web.service.dto.Booking;
 import lk.gocheeta.web.service.dto.Login;
 import lk.gocheeta.web.service.repository.exception.DatabaseException;
 
@@ -91,10 +90,10 @@ public class LoginRepository {
         }
     }
 
-    public Booking getBooking(int id) throws DatabaseException {
-        String query = "SELECT fare, status, customer_feedback, driver_feedback, distance,"
-                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking WHERE id =?";
-        Booking booking = null;
+    public Login authenticate(String username, String password) throws DatabaseException {
+        String query = "SELECT id, username, role, reference_id "
+                + "FROM login WHERE username =? AND password =?";
+        Login login = null;
         
        Connection connection = null;
         PreparedStatement statement = null;
@@ -103,24 +102,19 @@ public class LoginRepository {
         try {
             connection = DatabaseManager.getConnection();
             statement = DatabaseManager.getPreparedStatement(connection, query);
-            statement.setInt(1, id);
+            statement.setString(1, username);
+            statement.setString(2, password);
 
              rs = statement.executeQuery();
             if (rs.next()) {
-                booking = new Booking();
+                login = new Login();
 
-                booking.setId(id);
-                booking.setFare(rs.getBigDecimal("fare"));
-                booking.setStatus(rs.getString("status"));
-                booking.setCustomerFeedback(rs.getString("customer_feedback"));
-                booking.setDriverFeedback(rs.getString("driver_feedback"));
-                booking.setDistance(rs.getFloat("distance"));
-                booking.setDurationMinute(rs.getInt("duration_minute"));
-                booking.setVehicleId(rs.getInt("vehicle_id"));
-                booking.setCustomerId(rs.getInt("customer_id"));
-                booking.setBranchId(rs.getInt("branch_id"));
+                login.setId(rs.getInt("id"));
+                login.setUsername(rs.getString("username"));
+                login.setRole(rs.getString("role"));
+                login.setReferenceId(rs.getInt("reference_id"));
             }
-            return booking;
+            return login;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
@@ -129,10 +123,33 @@ public class LoginRepository {
         }
     }
     
-    public List<Booking> getBookings() throws DatabaseException {
-        String query = "SELECT id, fare, status, customer_feedback, driver_feedback, distance,"
-                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking";
-        List<Booking> bookingList = new ArrayList<>();
+    public boolean changePassword(String username, String password, String newPassword) throws DatabaseException {
+        String query = "UPDATE login SET password=? WHERE username =?, password =?";
+
+         Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+            
+            statement.setString(1, newPassword);
+            statement.setString(2, username);
+            statement.setString(3, password);
+
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(null, statement, connection);
+        }
+    }
+    
+    public List<Login> getLogins() throws DatabaseException {
+        String query = "SELECT id, username, role, reference_id FROM login";
+        List<Login> loginList = new ArrayList<>();
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -144,21 +161,15 @@ public class LoginRepository {
             rs = statement.executeQuery();
 
             while (rs.next()) {
-                Booking booking = new Booking();
-                booking.setId(rs.getInt("id"));
-                booking.setFare(rs.getBigDecimal("fare"));
-                booking.setStatus(rs.getString("status"));
-                booking.setCustomerFeedback(rs.getString("customer_feedback"));
-                booking.setDriverFeedback(rs.getString("driver_feedback"));
-                booking.setDistance(rs.getFloat("distance"));
-                booking.setDurationMinute(rs.getInt("duration_minute"));
-                booking.setVehicleId(rs.getInt("vehicle_id"));
-                booking.setCustomerId(rs.getInt("customer_id"));
-                booking.setBranchId(rs.getInt("branch_id"));
+                Login login = new Login();
+                login.setId(rs.getInt("id"));
+                login.setUsername(rs.getString("username"));
+                login.setRole(rs.getString("role"));
+                login.setReferenceId(rs.getInt("reference_id"));
 
-                bookingList.add(booking);
+                loginList.add(login);
             }
-            return bookingList;
+            return loginList;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
@@ -167,8 +178,8 @@ public class LoginRepository {
         }
     }
 
-    public boolean deleteBooking(int id) throws DatabaseException {
-        String query = "DELETE FROM booking WHERE id =?";
+    public boolean deleteLogin(int id) throws DatabaseException {
+        String query = "DELETE FROM login WHERE id =?";
         
        Connection connection = null;
         PreparedStatement statement = null;

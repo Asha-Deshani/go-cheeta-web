@@ -37,7 +37,6 @@ public class BranchWebService {
         return "Hello kamal" + txt + " !";
     }
 
-    //operationName = "getbranches"
     @WebMethod(operationName = "getBranches")
     public List<Branch> getBranches() throws ControlerException {
         try {
