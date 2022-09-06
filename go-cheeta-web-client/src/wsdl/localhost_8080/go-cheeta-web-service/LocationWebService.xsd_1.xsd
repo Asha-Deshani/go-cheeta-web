@@ -56,18 +56,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="addLocation">
-<xs:sequence>
-<xs:element name="branch" type="tns:location" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="addLocationResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:location" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="getLocationByBranchId">
 <xs:sequence>
 <xs:element name="branchId" type="xs:int"/>
@@ -75,6 +63,18 @@
 </xs:complexType>
 
 <xs:complexType name="getLocationByBranchIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:location" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addLocation">
+<xs:sequence>
+<xs:element name="branch" type="tns:location" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addLocationResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:location" minOccurs="0"/>
 </xs:sequence>

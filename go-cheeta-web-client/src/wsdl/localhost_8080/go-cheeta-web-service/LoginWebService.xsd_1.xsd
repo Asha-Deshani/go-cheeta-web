@@ -26,9 +26,16 @@
 
 <xs:element name="updateLoginResponse" type="tns:updateLoginResponse"/>
 
-<xs:complexType name="updateLogin">
+<xs:complexType name="authenticate">
 <xs:sequence>
-<xs:element name="login" type="tns:login" minOccurs="0"/>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="authenticateResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:login" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -42,26 +49,19 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="updateLoginResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:login" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="ControlerException">
 <xs:sequence>
 <xs:element name="message" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="authenticate">
+<xs:complexType name="updateLogin">
 <xs:sequence>
-<xs:element name="username" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="login" type="tns:login" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="authenticateResponse">
+<xs:complexType name="updateLoginResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:login" minOccurs="0"/>
 </xs:sequence>

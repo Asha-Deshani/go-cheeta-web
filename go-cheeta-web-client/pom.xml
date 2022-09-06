@@ -103,11 +103,11 @@
                             <wsdlFiles>
                                 <wsdlFile>localhost_8080/go-cheeta-web-service/LocationWebService.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <packageName>lk.gocheeta.go.cheeta.web.client.ServiceRef</packageName>
+                            <packageName></packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
-                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/LocationWebService?wsdl</wsdlLocation>
+                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/LocationWebService?WSDL</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/LocationWebService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-LocationWebService</id>
@@ -121,11 +121,11 @@
                             <wsdlFiles>
                                 <wsdlFile>localhost_8080/go-cheeta-web-service/LoginWebService.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <packageName>lk.gocheeta.go.cheeta.web.client.ServiceRef</packageName>
+                            <packageName></packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
-                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/LoginWebService?wsdl</wsdlLocation>
+                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/LoginWebService?WSDL</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/LoginWebService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-LoginWebService</id>

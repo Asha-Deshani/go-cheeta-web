@@ -4,14 +4,26 @@
 <xsd:import namespace="http://controller.service.web.gocheeta.lk/" schemaLocation="http://localhost:8080/go-cheeta-web-service/LoginWebService?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="authenticate">
+<part name="parameters" element="tns:authenticate"/>
+</message>
+<message name="authenticateResponse">
+<part name="parameters" element="tns:authenticateResponse"/>
+</message>
+<message name="ControlerException">
+<part name="fault" element="tns:ControlerException"/>
+</message>
 <message name="changePassword">
 <part name="parameters" element="tns:changePassword"/>
 </message>
 <message name="changePasswordResponse">
 <part name="parameters" element="tns:changePasswordResponse"/>
 </message>
-<message name="ControlerException">
-<part name="fault" element="tns:ControlerException"/>
+<message name="updateLogin">
+<part name="parameters" element="tns:updateLogin"/>
+</message>
+<message name="updateLoginResponse">
+<part name="parameters" element="tns:updateLoginResponse"/>
 </message>
 <message name="deleteLogin">
 <part name="parameters" element="tns:deleteLogin"/>
@@ -25,29 +37,27 @@
 <message name="getLoginsResponse">
 <part name="parameters" element="tns:getLoginsResponse"/>
 </message>
-<message name="updateLogin">
-<part name="parameters" element="tns:updateLogin"/>
-</message>
-<message name="updateLoginResponse">
-<part name="parameters" element="tns:updateLoginResponse"/>
-</message>
 <message name="addLogin">
 <part name="parameters" element="tns:addLogin"/>
 </message>
 <message name="addLoginResponse">
 <part name="parameters" element="tns:addLoginResponse"/>
 </message>
-<message name="authenticate">
-<part name="parameters" element="tns:authenticate"/>
-</message>
-<message name="authenticateResponse">
-<part name="parameters" element="tns:authenticateResponse"/>
-</message>
 <portType name="LoginWebService">
+<operation name="authenticate">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/authenticateRequest" message="tns:authenticate"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/authenticateResponse" message="tns:authenticateResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/authenticate/Fault/ControlerException"/>
+</operation>
 <operation name="changePassword">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/changePasswordRequest" message="tns:changePassword"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/changePasswordResponse" message="tns:changePasswordResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/changePassword/Fault/ControlerException"/>
+</operation>
+<operation name="updateLogin">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/updateLoginRequest" message="tns:updateLogin"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/updateLoginResponse" message="tns:updateLoginResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/updateLogin/Fault/ControlerException"/>
 </operation>
 <operation name="deleteLogin">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/deleteLoginRequest" message="tns:deleteLogin"/>
@@ -59,25 +69,39 @@
 <output wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/getLoginsResponse" message="tns:getLoginsResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/getLogins/Fault/ControlerException"/>
 </operation>
-<operation name="updateLogin">
-<input wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/updateLoginRequest" message="tns:updateLogin"/>
-<output wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/updateLoginResponse" message="tns:updateLoginResponse"/>
-<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/updateLogin/Fault/ControlerException"/>
-</operation>
 <operation name="addLogin">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/addLoginRequest" message="tns:addLogin"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/addLoginResponse" message="tns:addLoginResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/addLogin/Fault/ControlerException"/>
 </operation>
-<operation name="authenticate">
-<input wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/authenticateRequest" message="tns:authenticate"/>
-<output wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/authenticateResponse" message="tns:authenticateResponse"/>
-<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LoginWebService/authenticate/Fault/ControlerException"/>
-</operation>
 </portType>
 <binding name="LoginWebServicePortBinding" type="tns:LoginWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="authenticate">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
 <operation name="changePassword">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="updateLogin">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -113,31 +137,7 @@
 <soap:fault name="ControlerException" use="literal"/>
 </fault>
 </operation>
-<operation name="updateLogin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="ControlerException">
-<soap:fault name="ControlerException" use="literal"/>
-</fault>
-</operation>
 <operation name="addLogin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="ControlerException">
-<soap:fault name="ControlerException" use="literal"/>
-</fault>
-</operation>
-<operation name="authenticate">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
