@@ -57,4 +57,14 @@ public class CustomerWebService {
             throw new ControlerException(ex.getMessage());
         }
     }
+    
+    @WebMethod(operationName = "geteCustomer")
+    public Customer getCustomer(@WebParam(name = "id") int id) throws ControlerException {
+        try {
+            return customerService.getCustomer(id);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
 }

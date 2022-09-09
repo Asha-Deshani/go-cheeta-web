@@ -18,5 +18,6 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-maven-jaxws.rest_2e_config_2e_type>ide</org-netbeans-modules-maven-jaxws.rest_2e_config_2e_type>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_LocationWebService>http://localhost:8080/go-cheeta-web-service/LocationWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_LocationWebService>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_LoginWebService>http://localhost:8080/go-cheeta-web-service/LoginWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_LoginWebService>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_CustomerWebService>http://localhost:8080/go-cheeta-web-service/CustomerWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_CustomerWebService>
     </properties>
 </project-shared-configuration>

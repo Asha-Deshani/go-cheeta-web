@@ -34,7 +34,7 @@ public class LoginRepository {
 
     public Login addLogin(Login login) throws DatabaseException {
         String query = "INSERT INTO login (username, password, role, reference_id) "
-                + "VALUES (?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?)";
         
        Connection connection = null;
         PreparedStatement statement = null;

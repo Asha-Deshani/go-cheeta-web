@@ -131,6 +131,24 @@
                         <id>wsimport-generate-LoginWebService</id>
                         <phase>generate-sources</phase>
                     </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/go-cheeta-web-service/CustomerWebService.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName></packageName>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/CustomerWebService?WSDL</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/CustomerWebService.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-CustomerWebService</id>
+                        <phase>generate-sources</phase>
+                    </execution>
                 </executions>
                 <dependencies>
                     <dependency>

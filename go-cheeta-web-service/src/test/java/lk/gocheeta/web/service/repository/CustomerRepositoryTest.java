@@ -70,12 +70,14 @@ public class CustomerRepositoryTest {
 
             Customer customerNew = new Customer();
             customerNew.setName("TEST_1 Peter");
-            customerNew.setTelephone("TEST_1 07765231458");
+            customerNew.setTelephone("TEST_1 07765231458_DD");
+            customerNew.setEmail("peter@gmail.com_DD");
             assertThrows(DatabaseException.class, () -> customerRepository.addCustomer(customerNew));
 
             Customer customerNewEmail = new Customer();
             customerNewEmail.setName("TEST_1 Peter");
-            customerNewEmail.setEmail("peter@gmail.com");
+            customerNewEmail.setEmail("peter@gmail.com_NEW");
+            customerNewEmail.setTelephone("TEST_1 07765231458_NEW");
             assertThrows(DatabaseException.class, () -> customerRepository.addCustomer(customerNewEmail));
 
             assertTrue(customerRepository.deleteCustomer(customer.getId()));

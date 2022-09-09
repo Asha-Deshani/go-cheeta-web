@@ -6,4 +6,6 @@
     <system systemId="http://localhost:8080/go-cheeta-web-service/LocationWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/LocationWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LoginWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/LoginWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LoginWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/LoginWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/CustomerWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/CustomerWebService.wsdl"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/CustomerWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/CustomerWebService.xsd_1.xsd"/>
 </catalog>
