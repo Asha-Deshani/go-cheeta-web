@@ -149,6 +149,24 @@
                         <id>wsimport-generate-CustomerWebService</id>
                         <phase>generate-sources</phase>
                     </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/go-cheeta-web-service/AdminWebService.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName></packageName>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/AdminWebService?WSDL</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/AdminWebService.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-AdminWebService</id>
+                        <phase>generate-sources</phase>
+                    </execution>
                 </executions>
                 <dependencies>
                     <dependency>

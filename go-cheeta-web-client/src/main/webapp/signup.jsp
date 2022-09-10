@@ -10,13 +10,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Join with us</title>
     </head>
     <body>
         <h1>Hello There!</h1> 
         <h2>Simply create an account, So that we can serve you better. It is simple to join with us.</h2>
         
-        <form action = "acountcreated.jsp" method = "POST">
+        <form action = "home.jsp" method = "POST">
             Name: <input type = "text" name = "name">
             <br />
             Telephone: <input type = "text" name = "telephone" />
