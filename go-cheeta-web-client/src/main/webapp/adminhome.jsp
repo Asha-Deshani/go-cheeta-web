@@ -11,6 +11,7 @@
 <%@page import="java.util.Enumeration"%>
 <%@page import="lk.gocheeta.web.service.controller.LoginWebService_Service"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="masterpage.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,28 +19,5 @@
         <title>Welcome Admin</title>
     </head>
     <body>
-        <%
-            final String SESSESION_ID = "sessionId";   
-            boolean isAthuenticated = false;
-            Cookie[] cookieArray = request.getCookies();
-            if(cookieArray == null) {
-                response.sendRedirect("index.jsp");
-                return;
-            }
-            
-            for(Cookie cookie : request.getCookies()) {
-                if(cookie.getName().equals(SESSESION_ID)) {
-                    Admin sessionAdmin = (Admin)session.getAttribute(cookie.getValue());
-                    if(sessionAdmin != null) {
-                        isAthuenticated = true;
-                        %> <h2>Welcome Admin, <%=sessionAdmin.getName()%>!</h3> <%
-                    }
-                }
-            }
-            if (!isAthuenticated) {
-                response.sendRedirect("index.jsp");
-                return;
-            }
-        %>
     </body>
  </html>

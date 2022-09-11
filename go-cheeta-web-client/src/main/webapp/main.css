@@ -11,7 +11,43 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 h3 {
   color: red;
 }
+h4 {
+  color: green;
+}
+input {
+   padding: 5px;
+   margin: 5px;
+}
 
-body {
-  text-align: center; 
+.master {
+  background-color: tomato;
+  color: white;
+  border: 2px solid black;
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.container {
+    width:100%;
+    margin: 20px;
+    padding: 20px;
+}
+
+.left {
+    float:left;
+}
+
+.right {
+    float:right;
+    margin: 50px;
+    padding: 20px;
+}
+
+.center {
+    margin:0 auto;
+}
+
+.td {
+    width: 50px;
 }

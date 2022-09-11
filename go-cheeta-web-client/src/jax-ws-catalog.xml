@@ -10,4 +10,6 @@
     <system systemId="http://localhost:8080/go-cheeta-web-service/CustomerWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/CustomerWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/AdminWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/AdminWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/AdminWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/AdminWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/BranchWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/BranchWebService.wsdl"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/BranchWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/BranchWebService.xsd_1.xsd"/>
 </catalog>

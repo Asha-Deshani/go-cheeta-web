@@ -20,5 +20,6 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-maven-jaxws._5f_C_5f_LoginWebService>http://localhost:8080/go-cheeta-web-service/LoginWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_LoginWebService>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_CustomerWebService>http://localhost:8080/go-cheeta-web-service/CustomerWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_CustomerWebService>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_AdminWebService>http://localhost:8080/go-cheeta-web-service/AdminWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_AdminWebService>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_BranchWebService>http://localhost:8080/go-cheeta-web-service/BranchWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_BranchWebService>
     </properties>
 </project-shared-configuration>

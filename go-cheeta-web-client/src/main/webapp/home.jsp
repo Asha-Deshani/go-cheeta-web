@@ -10,6 +10,7 @@
 <%@page import="java.util.Enumeration"%>
 <%@page import="lk.gocheeta.web.service.controller.LoginWebService_Service"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="masterpage.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,28 +18,6 @@
         <title>Welcome</title>
     </head>
     <body>
-        <%
-            final String SESSESION_ID = "sessionId";   
-            boolean isAthuenticated = false;
-            Cookie[] cookieArray = request.getCookies();
-            if(cookieArray == null) {
-                response.sendRedirect("index.jsp");
-                return;
-            }
-            
-            for(Cookie cookie : request.getCookies()) {
-                if(cookie.getName().equals(SESSESION_ID)) {
-                    Customer sessionCustomer = (Customer)session.getAttribute(cookie.getValue());
-                    if(sessionCustomer != null) {
-                        isAthuenticated = true;
-                        %> <h2>Welcome, <%=sessionCustomer.getName()%>, book your next taxi from here!</h3> <%
-                    }
-                }
-            }
-            if (!isAthuenticated) {
-                response.sendRedirect("index.jsp");
-                return;
-            }
-        %>
+      
     </body>
  </html>

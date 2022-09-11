@@ -109,6 +109,14 @@ CREATE TABLE `gocheeta`.`login` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`username` ASC) VISIBLE);
 
+CREATE TABLE `gocheeta`.`admin` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `telephone` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `designation` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
 ALTER TABLE `gocheeta`.`branch` 
 ADD UNIQUE INDEX `unique_branch_city_idx` (`city` ASC) INVISIBLE,
 ADD UNIQUE INDEX `unique_branch_name_idx` (`name` ASC) VISIBLE;
@@ -119,3 +127,7 @@ ADD UNIQUE INDEX `uk_customer_email_idx` (`email` ASC) VISIBLE;
 
 ALTER TABLE `gocheeta`.`location` 
 ADD UNIQUE INDEX `uniq_address_location_idx` (`address` ASC) VISIBLE;
+
+ALTER TABLE `gocheeta`.`admin` 
+ADD UNIQUE INDEX `uk_admin_telephone_idx` (`telephone` ASC) INVISIBLE,
+ADD UNIQUE INDEX `uk_admin_email_idx` (`email` ASC) VISIBLE;
