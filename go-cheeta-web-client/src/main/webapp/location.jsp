@@ -35,7 +35,7 @@
                     branchIdNameMap.put(branchItem.getId(), branchItem.getName());
                  }
             %>
-            <form action = "location.jsp" method = "POST">
+            <form action = "" method = "POST">
                 Address <input type = "text" name = "address" required="true"/>
                 <br />
                 Branch <select type = "text" name = "branch" required="true">
@@ -138,7 +138,7 @@
             <div class="left">
                 <h2>Update Location</h2>
                 <br />
-                <form action = "location.jsp" method = "POST">
+                <form action = "" method = "POST">
                     <input type = "hidden" name = "id" required="true" value="<%=editLocation.getId()%>"/>
                     <br />
                     Address <input type = "text" name = "address" required="true" value="<%=editLocation.getAddress()%>"/>
