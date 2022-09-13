@@ -10,13 +10,47 @@
 
 <xs:element name="deleteLocationResponse" type="tns:deleteLocationResponse"/>
 
-<xs:element name="getLocationByBranchId" type="tns:getLocationByBranchId"/>
+<xs:element name="getLocation" type="tns:getLocation"/>
 
-<xs:element name="getLocationByBranchIdResponse" type="tns:getLocationByBranchIdResponse"/>
+<xs:element name="getLocationResponse" type="tns:getLocationResponse"/>
+
+<xs:element name="getLocations" type="tns:getLocations"/>
+
+<xs:element name="getLocationsByBranchId" type="tns:getLocationsByBranchId"/>
+
+<xs:element name="getLocationsByBranchIdResponse" type="tns:getLocationsByBranchIdResponse"/>
+
+<xs:element name="getLocationsResponse" type="tns:getLocationsResponse"/>
 
 <xs:element name="updateLocation" type="tns:updateLocation"/>
 
 <xs:element name="updateLocationResponse" type="tns:updateLocationResponse"/>
+
+<xs:complexType name="getLocationsByBranchId">
+<xs:sequence>
+<xs:element name="branchId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getLocationsByBranchIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:location" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="location">
+<xs:sequence>
+<xs:element name="address" type="xs:string" minOccurs="0"/>
+<xs:element name="branchId" type="xs:int"/>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ControlerException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
 
 <xs:complexType name="deleteLocation">
 <xs:sequence>
@@ -30,23 +64,9 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="ControlerException">
-<xs:sequence>
-<xs:element name="message" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="updateLocation">
 <xs:sequence>
 <xs:element name="location" type="tns:location" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="location">
-<xs:sequence>
-<xs:element name="address" type="xs:string" minOccurs="0"/>
-<xs:element name="branchId" type="xs:int"/>
-<xs:element name="id" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -56,15 +76,25 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getLocationByBranchId">
+<xs:complexType name="getLocation">
 <xs:sequence>
-<xs:element name="branchId" type="xs:int"/>
+<xs:element name="id" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getLocationByBranchIdResponse">
+<xs:complexType name="getLocationResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:location" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getLocations">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getLocationsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:location" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

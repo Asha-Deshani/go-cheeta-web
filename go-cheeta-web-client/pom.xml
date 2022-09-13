@@ -101,24 +101,6 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8080/go-cheeta-web-service/LocationWebService.wsdl</wsdlFile>
-                            </wsdlFiles>
-                            <packageName></packageName>
-                            <vmArgs>
-                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-                            </vmArgs>
-                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/LocationWebService?WSDL</wsdlLocation>
-                            <staleFile>${project.build.directory}/jaxws/stale/LocationWebService.stale</staleFile>
-                        </configuration>
-                        <id>wsimport-generate-LocationWebService</id>
-                        <phase>generate-sources</phase>
-                    </execution>
-                    <execution>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                        <configuration>
-                            <wsdlFiles>
                                 <wsdlFile>localhost_8080/go-cheeta-web-service/LoginWebService.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName></packageName>
@@ -183,6 +165,24 @@
                             <staleFile>${project.build.directory}/jaxws/stale/BranchWebService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-BranchWebService</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/go-cheeta-web-service/LocationWebService.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName></packageName>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/LocationWebService?WSDL</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/LocationWebService.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-LocationWebService</id>
                         <phase>generate-sources</phase>
                     </execution>
                 </executions>

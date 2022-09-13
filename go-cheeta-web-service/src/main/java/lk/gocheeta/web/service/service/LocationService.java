@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.dto.Location;
@@ -56,9 +57,18 @@ public class LocationService {
         }
     }
     
-     public Location getLocationByBranchId(int branchId) throws ServiceException {
+     public List<Location> getLocationsByBranchId(int branchId) throws ServiceException {
         try {
-            return locationRepository.getLocationByBranchId(branchId);
+            return locationRepository.getLocationsByBranchId(branchId);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+     
+     public List<Location> getLocations() throws ServiceException {
+        try {
+            return locationRepository.getLocations();
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

@@ -38,6 +38,8 @@
                               isAthuenticated = true;
                               %> <h2>Welcome Admin, <%=admin.getName()%>!</h3>
                                    <a href="branch.jsp">Manage Branches</a>
+                                   <br/>
+                                   <a href="location.jsp">Manage Locations</a>
                                <% 
                           } else if(sessionObject instanceof Customer) {
                               Customer customer = (Customer)sessionObject;

@@ -4,20 +4,20 @@
 <xsd:import namespace="http://controller.service.web.gocheeta.lk/" schemaLocation="http://localhost:8080/go-cheeta-web-service/LocationWebService?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="getLocation">
+<part name="parameters" element="tns:getLocation"/>
+</message>
+<message name="getLocationResponse">
+<part name="parameters" element="tns:getLocationResponse"/>
+</message>
+<message name="ControlerException">
+<part name="fault" element="tns:ControlerException"/>
+</message>
 <message name="updateLocation">
 <part name="parameters" element="tns:updateLocation"/>
 </message>
 <message name="updateLocationResponse">
 <part name="parameters" element="tns:updateLocationResponse"/>
-</message>
-<message name="ControlerException">
-<part name="fault" element="tns:ControlerException"/>
-</message>
-<message name="getLocationByBranchId">
-<part name="parameters" element="tns:getLocationByBranchId"/>
-</message>
-<message name="getLocationByBranchIdResponse">
-<part name="parameters" element="tns:getLocationByBranchIdResponse"/>
 </message>
 <message name="addLocation">
 <part name="parameters" element="tns:addLocation"/>
@@ -25,37 +25,59 @@
 <message name="addLocationResponse">
 <part name="parameters" element="tns:addLocationResponse"/>
 </message>
+<message name="getLocations">
+<part name="parameters" element="tns:getLocations"/>
+</message>
+<message name="getLocationsResponse">
+<part name="parameters" element="tns:getLocationsResponse"/>
+</message>
 <message name="deleteLocation">
 <part name="parameters" element="tns:deleteLocation"/>
 </message>
 <message name="deleteLocationResponse">
 <part name="parameters" element="tns:deleteLocationResponse"/>
 </message>
+<message name="getLocationsByBranchId">
+<part name="parameters" element="tns:getLocationsByBranchId"/>
+</message>
+<message name="getLocationsByBranchIdResponse">
+<part name="parameters" element="tns:getLocationsByBranchIdResponse"/>
+</message>
 <portType name="LocationWebService">
+<operation name="getLocation">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationRequest" message="tns:getLocation"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationResponse" message="tns:getLocationResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocation/Fault/ControlerException"/>
+</operation>
 <operation name="updateLocation">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/updateLocationRequest" message="tns:updateLocation"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/updateLocationResponse" message="tns:updateLocationResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/updateLocation/Fault/ControlerException"/>
-</operation>
-<operation name="getLocationByBranchId">
-<input wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationByBranchIdRequest" message="tns:getLocationByBranchId"/>
-<output wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationByBranchIdResponse" message="tns:getLocationByBranchIdResponse"/>
-<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationByBranchId/Fault/ControlerException"/>
 </operation>
 <operation name="addLocation">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/addLocationRequest" message="tns:addLocation"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/addLocationResponse" message="tns:addLocationResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/addLocation/Fault/ControlerException"/>
 </operation>
+<operation name="getLocations">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationsRequest" message="tns:getLocations"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationsResponse" message="tns:getLocationsResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocations/Fault/ControlerException"/>
+</operation>
 <operation name="deleteLocation">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/deleteLocationRequest" message="tns:deleteLocation"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/deleteLocationResponse" message="tns:deleteLocationResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/deleteLocation/Fault/ControlerException"/>
 </operation>
+<operation name="getLocationsByBranchId">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationsByBranchIdRequest" message="tns:getLocationsByBranchId"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationsByBranchIdResponse" message="tns:getLocationsByBranchIdResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/LocationWebService/getLocationsByBranchId/Fault/ControlerException"/>
+</operation>
 </portType>
 <binding name="LocationWebServicePortBinding" type="tns:LocationWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="updateLocation">
+<operation name="getLocation">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -67,7 +89,7 @@
 <soap:fault name="ControlerException" use="literal"/>
 </fault>
 </operation>
-<operation name="getLocationByBranchId">
+<operation name="updateLocation">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -91,7 +113,31 @@
 <soap:fault name="ControlerException" use="literal"/>
 </fault>
 </operation>
+<operation name="getLocations">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
 <operation name="deleteLocation">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="getLocationsByBranchId">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

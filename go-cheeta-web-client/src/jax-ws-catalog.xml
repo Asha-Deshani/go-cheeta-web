@@ -2,8 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/go-cheeta-web-service/LocationWebService?wsdl" uri="wsdl/localhost_8080/go-cheeta-web-service/LocationWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LoginWebService?wsdl" uri="wsdl/localhost_8080/go-cheeta-web-service/LoginWebService.wsdl"/>
-    <system systemId="http://localhost:8080/go-cheeta-web-service/LocationWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/LocationWebService.wsdl"/>
-    <system systemId="http://localhost:8080/go-cheeta-web-service/LocationWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/LocationWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LoginWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/LoginWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LoginWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/LoginWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/CustomerWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/CustomerWebService.wsdl"/>
@@ -12,4 +10,6 @@
     <system systemId="http://localhost:8080/go-cheeta-web-service/AdminWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/AdminWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/BranchWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/BranchWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/BranchWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/BranchWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/LocationWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/LocationWebService.wsdl"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/LocationWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/LocationWebService.xsd_1.xsd"/>
 </catalog>

@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.controller;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jws.WebMethod;
@@ -58,10 +59,30 @@ public class LocationWebService {
         }
     }
     
-    @WebMethod(operationName = "getLocationByBranchId")
-    public Location getLocationByBranch(@WebParam(name = "branchId") int branchId) throws ControlerException {
+    @WebMethod(operationName = "getLocationsByBranchId")
+    public List<Location> getLocationsByBranch(@WebParam(name = "branchId") int branchId) throws ControlerException {
         try {
-            return locationService.getLocationByBranchId(branchId);
+            return locationService.getLocationsByBranchId(branchId);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getLocations")
+    public List<Location> getLocations() throws ControlerException {
+        try {
+            return locationService.getLocations();
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getLocation")
+    public Location getLocation(@WebParam(name = "id") int id) throws ControlerException {
+        try {
+            return locationService.getLocation(id);
         } catch (ServiceException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ControlerException(ex.getMessage());

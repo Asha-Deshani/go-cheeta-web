@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -83,7 +85,7 @@ public class LocationRepository {
     }
 
     public Location getLocation(int id) throws DatabaseException {
-        String query = "SELECT address, branch_id FROM branch WHERE id =?";
+        String query = "SELECT address, branch_id FROM location WHERE id =?";
         Location location = null;
 
         Connection connection = null;
@@ -100,7 +102,7 @@ public class LocationRepository {
                 location = new Location();
 
                 location.setId(id);
-                location.setAddress(rs.getString("name"));
+                location.setAddress(rs.getString("address"));
                 location.setBranchId(rs.getInt("branch_id"));
             }
             return location;
@@ -113,7 +115,7 @@ public class LocationRepository {
     }
 
     public boolean deleteLocation(int id) throws DatabaseException {
-        String query = "DELETE FROM driver WHERE id =?";
+        String query = "DELETE FROM location WHERE id =?";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -132,9 +134,9 @@ public class LocationRepository {
         }
     }
     
-    public Location getLocationByBranchId(int branchId) throws DatabaseException {
-        String query = "SELECT id, address, branch_id FROM branch WHERE branch_id =?";
-        Location location = null;
+    public List<Location> getLocationsByBranchId(int branchId) throws DatabaseException {
+        String query = "SELECT id, address, branch_id FROM location WHERE branch_id =?";
+        List<Location> locationList = new ArrayList<>();
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -146,14 +148,47 @@ public class LocationRepository {
             statement.setInt(1, branchId);
 
             rs = statement.executeQuery();
-            if (rs.next()) {
-                location = new Location();
+             while (rs.next()) {
+                Location location = new Location();
 
                 location.setId(rs.getInt("id"));
-                location.setAddress(rs.getString("name"));
+                location.setAddress(rs.getString("address"));
                 location.setBranchId(rs.getInt("branch_id"));
+                
+                locationList.add(location);
             }
-            return location;
+            return locationList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
+        }
+    }
+    
+       public List<Location> getLocations() throws DatabaseException {
+        String query = "SELECT id, address, branch_id FROM location";
+        List<Location> locationList = new ArrayList<>();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+
+            rs = statement.executeQuery();
+             while (rs.next()) {
+                Location location = new Location();
+
+                location.setId(rs.getInt("id"));
+                location.setAddress(rs.getString("address"));
+                location.setBranchId(rs.getInt("branch_id"));
+                
+                locationList.add(location);
+            }
+            return locationList;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());
