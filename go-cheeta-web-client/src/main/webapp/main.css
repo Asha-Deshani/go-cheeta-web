@@ -14,9 +14,18 @@ h3 {
 h4 {
   color: green;
 }
-input {
-   padding: 5px;
+
+label {
+  display: inline-block;
+  width: 140px;
+  text-align: right;
+  margin-right: 5px;
+}​
+
+input, select, button {
+   padding: 8px;
    margin: 5px;
+   margin-bottom: 10px;
 }
 
 .master {
@@ -28,26 +37,56 @@ input {
   text-align: center;
 }
 
-.container {
-    width:100%;
-    margin: 20px;
-    padding: 20px;
+td {
+    padding: 10px;
+}
+
+th {
+    padding: 15px;
 }
 
 .left {
-    float:left;
+    background-color: #6666ff;
+    padding: 20px;
+    margin: 20px;
+    border: solid;
+    width: 45%;
+}
+
+.leftsmall {
+    background-color: #6666ff;
+    padding: 20px;
+    margin: 20px;
+    border: solid;
+    width: 25%;
 }
 
 .right {
-    float:right;
-    margin: 50px;
+    background-color: yellowgreen;
     padding: 20px;
+    margin: 20px;
+    border: solid;
+    width: 45%;
 }
 
-.center {
-    float:right;
+.rightbig {
+    background-color: yellowgreen;
+    padding: 20px;
+    margin: 20px;
+    border: solid;
+    width: 65%;
 }
 
-.td {
-    width: 50px;
+.containerrow {
+    display: flex;
+    justify-content: space-between;
+    border: 1px black solid;
+    width: 100%;
 }
+
+.containercolumn {
+    display: flow;
+    justify-content: space-between;
+    border: 1px black solid;
+}
+

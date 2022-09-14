@@ -22,7 +22,7 @@ import lk.gocheeta.web.service.service.LocationService;
 @WebService(serviceName = "LocationWebService")
 public class LocationWebService {
     
-    private LocationService locationService;
+    private final LocationService locationService;
     private static final Logger loger = Logger.getLogger(LocationWebService.class.getName());
 
     public LocationWebService() {

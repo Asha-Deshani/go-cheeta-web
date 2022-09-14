@@ -12,4 +12,8 @@
     <system systemId="http://localhost:8080/go-cheeta-web-service/BranchWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/BranchWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LocationWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/LocationWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LocationWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/LocationWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/VehicleTypeWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/VehicleTypeWebService.wsdl"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/VehicleTypeWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/VehicleTypeWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/VehicleWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/VehicleWebService.wsdl"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/VehicleWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/VehicleWebService.xsd_1.xsd"/>
 </catalog>

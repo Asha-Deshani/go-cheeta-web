@@ -21,7 +21,7 @@ import lk.gocheeta.web.service.service.CustomerService;
 @WebService(serviceName = "CustomerWebService")
 public class CustomerWebService {
 
-    private CustomerService  customerService;
+    private final CustomerService  customerService;
     private static final Logger loger = Logger.getLogger(CustomerWebService.class.getName());
 
     public CustomerWebService() {

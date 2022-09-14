@@ -19,36 +19,38 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-           <div class="container">
-                <div class="left">
-                    <h2>Please sign in</h2>
-                    <br />
-                    <form action = "index.jsp" method = "POST">
-                        Username <input type = "text" name = "username" required="true"/>
-                        <br />
-                        Password <input type = "password" name = "password" required="true"/>
-                        <br />
-                        <input type = "submit" name ="signin" value = "Sign in" />
-                    </form>
+         <div class="containerrow">
+                <div class="containerrow">
+                     <div class="left">
+                         <h2>Please sign in</h2>
+                         <br />
+                         <form action = "index.jsp" method = "POST">
+                              <label>Username</label> <input type = "text" name = "username" required="true"/>
+                             <br />
+                              <label>Password</label> <input type = "password" name = "password" required="true"/>
+                             <br />
+                             <input type = "submit" name ="signin" value = "Sign in" />
+                         </form>
+                     </div>
+                    <div class="right">
+                            <h2>Or simply create an account</h2>
+                            <br />
+                         <form action = "index.jsp" method = "POST">
+                             <label>Name</label> <input type = "text" name = "name" required="true">
+                             <br />
+                             <label>Telephone</label> <input type = "text" name = "telephone" required="true" />
+                             <br />
+                             <label>Email</label> <input type = "text" name = "email" required="true"/>
+                             <br />
+                             <label>Username</label> <input type = "text" name = "username" required="true"/>
+                             <br />
+                             <label>Password</label> <input type = "password" name = "password" required="true"/>
+                             <br />
+                             <input type = "submit" name ="join" value = "Join in me" />
+                         </form>
+                     </div>
                 </div>
-               <div class="right">
-                       <h2>Or simply create an account</h2>
-                       <br />
-                    <form action = "index.jsp" method = "POST">
-                        Name: <input type = "text" name = "name" required="true">
-                        <br />
-                        Telephone: <input type = "text" name = "telephone" required="true" />
-                        <br />
-                        Email <input type = "text" name = "email" required="true"/>
-                        <br />
-                        Username <input type = "text" name = "username" required="true"/>
-                        <br />
-                        Password <input type = "password" name = "password" required="true"/>
-                        <br />
-                        <input type = "submit" name ="join" value = "Join in me" />
-                    </form>
-                </div>
-           </div>
+              </div>
             <%
             final String SESSESION_ID = "sessionId";     
             final String ROLE_CUSTOMER = "CUSTOMER";     

@@ -16,14 +16,14 @@
     </head>
     <body>
         <h1>Manage Branch!</h1>
-        <div>
+        <div class="containercolumn">
          <div class="left">
             <h2>Create a Branch</h2>
             <br />
             <form action = "branch.jsp" method = "POST">
-                Name <input type = "text" name = "name" required="true"/>
+                <label>Name</label><input type = "text" name = "name" required="true"/>
                 <br />
-                City <input type = "text" name = "city" required="true"/>
+                <label>City</label><input type = "text" name = "city" required="true"/>
                 <br />
                 <input type = "submit" name ="newbranch" value = "Create Branch" />
             </form>
@@ -68,10 +68,10 @@
                 <br />
                 <table border="2">
                    <tr>
-                        <td>Name</td>
-                        <td>City</td>
-                        <td>Update</td>
-                        <td>Delete</td>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Update</th>
+                        <th>Delete</th>
                    </tr>
                    <%
                 for (Branch branch : branchList) {
@@ -82,8 +82,10 @@
                         <td><a href="branch.jsp?editId=<%=branch.getId()%>">Update</a></td>
                         <td><a href="branch.jsp?deleteId=<%=branch.getId()%>">Delete</a></td>
                     </tr>
-               <%}
-            }
+               <%}%>
+                             </table>
+            </div>
+            <%}
              
   
             String deleteId = request.getParameter("deleteId");
@@ -122,9 +124,9 @@
                 <form action = "branch.jsp" method = "POST">
                     <input type = "hidden" name = "id" required="true" value="<%=editBranch.getId()%>"/>
                     <br />
-                    Name <input type = "text" name = "name" required="true" value="<%=editBranch.getName()%>"/>
+                    <label>Name</label><input type = "text" name = "name" required="true" value="<%=editBranch.getName()%>"/>
                     <br />
-                    City <input type = "text" name = "city" required="true" value="<%=editBranch.getCity()%>"/>
+                    <label>City</label><input type = "text" name = "city" required="true" value="<%=editBranch.getCity()%>"/>
                     <br />
                     <input type = "submit" name ="editbranch" value = "Update Branch" />
                 </form>
@@ -160,8 +162,7 @@
                     }
                 }
             %>
-                </table>
-            </div>
+  
         </div>
     </body>
 </html>

@@ -21,7 +21,7 @@ import lk.gocheeta.web.service.service.BookingService;
 @WebService(serviceName = "BookingWebService")
 public class BookingWebService {
 
-    private BookingService bookingService;
+    private final BookingService bookingService;
     private static final Logger loger = Logger.getLogger(BookingService.class.getName());
 
     public BookingWebService() {

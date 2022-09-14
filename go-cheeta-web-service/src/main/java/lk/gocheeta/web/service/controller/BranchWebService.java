@@ -22,7 +22,7 @@ import lk.gocheeta.web.service.service.BranchService;
 @WebService(serviceName = "BranchWebService")
 public class BranchWebService {
 
-    private BranchService branchService;
+    private final BranchService branchService;
     private static final Logger loger = Logger.getLogger(BranchWebService.class.getName());
 
     public BranchWebService() {

@@ -22,7 +22,7 @@ import lk.gocheeta.web.service.service.LoginService;
 @WebService(serviceName = "LoginWebService")
 public class LoginWebService {
 
-     private LoginService loginService;
+    private final LoginService loginService;
     private static final Logger loger = Logger.getLogger(LoginWebService.class.getName());
 
     public LoginWebService() {

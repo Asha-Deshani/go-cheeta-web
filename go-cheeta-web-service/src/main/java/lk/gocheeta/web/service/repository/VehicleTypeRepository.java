@@ -4,10 +4,13 @@
  */
 package lk.gocheeta.web.service.repository;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -129,6 +132,37 @@ public class VehicleTypeRepository {
             throw new DatabaseException(ex.getMessage());
         } finally {
             DatabaseManager.closeResources(null, statement, connection);
+        }
+    }
+    
+    public List<VehicleType> getVehicleTypes() throws DatabaseException {
+        String query = "SELECT id, name, rate FROM vehicle_type";
+        List<VehicleType> vehicleTypeList = new ArrayList();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                VehicleType vehicleType = new VehicleType();
+
+                vehicleType.setId(rs.getInt("id"));
+                vehicleType.setName(rs.getString("name"));
+                vehicleType.setRate(rs.getFloat("rate"));
+                
+                vehicleTypeList.add(vehicleType);
+            }
+            return vehicleTypeList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 }

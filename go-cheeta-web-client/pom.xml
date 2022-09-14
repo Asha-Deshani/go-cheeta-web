@@ -185,6 +185,42 @@
                         <id>wsimport-generate-LocationWebService</id>
                         <phase>generate-sources</phase>
                     </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/go-cheeta-web-service/VehicleTypeWebService.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName></packageName>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/VehicleTypeWebService?WSDL</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/VehicleTypeWebService.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-VehicleTypeWebService</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/go-cheeta-web-service/VehicleWebService.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName></packageName>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/VehicleWebService?WSDL</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/VehicleWebService.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-VehicleWebService</id>
+                        <phase>generate-sources</phase>
+                    </execution>
                 </executions>
                 <dependencies>
                     <dependency>

@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.dto.Vehicle;
@@ -56,9 +57,9 @@ public class VehicleService {
         }
     }
     
-    public Vehicle getVehicleByBranchId(int branchId) throws ServiceException {
+    public List<Vehicle> getVehicleByBranchIdAndVehicleTypeId(int branchId, int vehicleTypeId) throws ServiceException {
         try {
-            return vehicleRepository.getVehicleByBranchId(branchId);
+            return vehicleRepository.getVehicleByBranchIdAndVehicleTypeId(branchId, vehicleTypeId);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

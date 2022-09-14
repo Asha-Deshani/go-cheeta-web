@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.0 (wsit240-7e98ff4; 2017-08-03T21:19:54+0200) JAXWS-RI/2.3.0 JAXWS-API/2.3.0 JAXB-RI/2.3.0 JAXB-API/2.3.0 svn-revision#unknown. --><xs:schema xmlns:tns="http://controller.service.web.gocheeta.lk/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://controller.service.web.gocheeta.lk/">
+
+<xs:element name="ControlerException" type="tns:ControlerException"/>
+
+<xs:element name="addVehicle" type="tns:addVehicle"/>
+
+<xs:element name="addVehicleResponse" type="tns:addVehicleResponse"/>
+
+<xs:element name="deleteVehicle" type="tns:deleteVehicle"/>
+
+<xs:element name="deleteVehicleResponse" type="tns:deleteVehicleResponse"/>
+
+<xs:element name="getVehicleByBranchIdAndVehicleTypeId" type="tns:getVehicleByBranchIdAndVehicleTypeId"/>
+
+<xs:element name="getVehicleByBranchIdAndVehicleTypeIdResponse" type="tns:getVehicleByBranchIdAndVehicleTypeIdResponse"/>
+
+<xs:element name="updateVehicle" type="tns:updateVehicle"/>
+
+<xs:element name="updateVehicleResponse" type="tns:updateVehicleResponse"/>
+
+<xs:complexType name="deleteVehicle">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteVehicleResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ControlerException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addVehicle">
+<xs:sequence>
+<xs:element name="vehicle" type="tns:vehicle" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="vehicle">
+<xs:sequence>
+<xs:element name="branchId" type="xs:int"/>
+<xs:element name="driverId" type="xs:int"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="make" type="xs:string" minOccurs="0"/>
+<xs:element name="model" type="xs:string" minOccurs="0"/>
+<xs:element name="vehicleTypeId" type="xs:int"/>
+<xs:element name="year" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addVehicleResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:vehicle" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateVehicle">
+<xs:sequence>
+<xs:element name="vehicle" type="tns:vehicle" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateVehicleResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:vehicle" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getVehicleByBranchIdAndVehicleTypeId">
+<xs:sequence>
+<xs:element name="branchId" type="xs:int"/>
+<xs:element name="vehicleTypeId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getVehicleByBranchIdAndVehicleTypeIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:vehicle" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

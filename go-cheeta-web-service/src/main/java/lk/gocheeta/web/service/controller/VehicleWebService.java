@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.controller;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jws.WebMethod;
@@ -21,7 +22,7 @@ import lk.gocheeta.web.service.service.VehicleService;
 @WebService(serviceName = "VehicleWebService")
 public class VehicleWebService {
     
-    private VehicleService vehicleService;
+    private final VehicleService vehicleService;
     private static final Logger loger = Logger.getLogger(VehicleService.class.getName());
 
     public VehicleWebService() {
@@ -59,10 +60,10 @@ public class VehicleWebService {
         }
     }
     
-    @WebMethod(operationName = "getVehicleByBranchId")
-    public Vehicle getVehicleByBranchId(@WebParam(name = "branchId") int branchId) throws ControlerException {
+    @WebMethod(operationName = "getVehicleByBranchIdAndVehicleTypeId")
+    public List<Vehicle> getVehicleByBranchIdAndVehicleTypeId(@WebParam(name = "branchId") int branchId, @WebParam(name = "vehicleTypeId") int vehicleTypeId) throws ControlerException {
         try {
-            return vehicleService.getVehicleByBranchId(branchId);
+            return vehicleService.getVehicleByBranchIdAndVehicleTypeId(branchId, vehicleTypeId);
         } catch (ServiceException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ControlerException(ex.getMessage());

@@ -9,6 +9,8 @@ import lk.gocheeta.web.service.dto.Vehicle;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -140,9 +142,9 @@ public class VehicleRepository {
         }
     }
     
-    public Vehicle getVehicleByBranchId(int branchId) throws DatabaseException {
-        String query = "SELECT id, make, model, year, driver_id, branch_id FROM vehicle WHERE branch_id =?";
-        Vehicle vehicle = null;
+    public List<Vehicle> getVehicleByBranchIdAndVehicleTypeId(int branchId, int vehicleTypeId) throws DatabaseException {
+        String query = "SELECT id, make, model, year, driver_id, branch_id, vehicle_type_id FROM vehicle WHERE branch_id =? AND vehicle_type_id =?";
+        List<Vehicle> vehicleList = new ArrayList();
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -152,10 +154,11 @@ public class VehicleRepository {
             connection = DatabaseManager.getConnection();
             statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setInt(1, branchId);
+            statement.setInt(2, vehicleTypeId);
 
             rs = statement.executeQuery();
-            if (rs.next()) {
-                vehicle = new Vehicle();
+            while (rs.next()) {
+                Vehicle vehicle = new Vehicle();
 
                 vehicle.setId(rs.getInt("id"));
                 vehicle.setMake(rs.getString("make"));
@@ -163,8 +166,11 @@ public class VehicleRepository {
                 vehicle.setYear(rs.getString("year"));
                 vehicle.setDriverId(rs.getInt("driver_id"));
                 vehicle.setBranchId(rs.getInt("branch_id"));
+                vehicle.setVehicleTypeId(rs.getInt("vehicle_type_id"));
+                
+                vehicleList.add(vehicle);
             }
-            return vehicle;
+            return vehicleList;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex.getMessage());

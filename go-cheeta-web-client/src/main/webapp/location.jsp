@@ -22,7 +22,7 @@
     </head>
     <body>
         <h1>Manage Locations!</h1>
-        <div>
+        <div class="containercolumn">
          <div class="left">
             <h2>Create a Location</h2>
             <br />
@@ -36,9 +36,9 @@
                  }
             %>
             <form action = "" method = "POST">
-                Address <input type = "text" name = "address" required="true"/>
+                <label>Address</label><input type = "text" name = "address" required="true"/>
                 <br />
-                Branch <select type = "text" name = "branch" required="true">
+                <label>Branch</label><select type = "text" name = "branch" required="true">
                     <% for (int i = 0; i < branchList.size(); i++) { %>
                             <option value="<%= branchList.get(i).getId()%>"><%=  branchList.get(i).getName()%></option>
                     <%}%>
@@ -87,10 +87,10 @@
                 <br />
                 <table border="2">
                    <tr>
-                        <td>Address</td>
-                        <td>Branch</td>
-                        <td>Update</td>
-                        <td>Delete</td>
+                        <th>Address</th>
+                        <th>Branch</th>
+                        <th>Update</th>
+                        <th>Delete</th>
                    </tr>
                    <%
                 for (Location location : locationList) {
@@ -101,9 +101,10 @@
                         <td><a href="location.jsp?editId=<%=location.getId()%>">Update</a></td>
                         <td><a href="location.jsp?deleteId=<%=location.getId()%>">Delete</a></td>
                     </tr>
-               <%}
-            }
-             
+           <%}%>
+                             </table>
+            </div>
+            <%}
   
             String deleteId = request.getParameter("deleteId");
             if(deleteId != null) {
@@ -141,9 +142,9 @@
                 <form action = "" method = "POST">
                     <input type = "hidden" name = "id" required="true" value="<%=editLocation.getId()%>"/>
                     <br />
-                    Address <input type = "text" name = "address" required="true" value="<%=editLocation.getAddress()%>"/>
+                    <label>Address</label><input type = "text" name = "address" required="true" value="<%=editLocation.getAddress()%>"/>
                     <br />
-                    Branch <select type = "text" name = "branch" required="true">
+                    <label>Branch</label><select type = "text" name = "branch" required="true">
                         <%for (Branch itemEdit : branchList) {%>
                         <option value="<%= itemEdit.getId()%>"><%= itemEdit.getName()%></option>
                         <%}%>
@@ -183,8 +184,6 @@
                     }
                 }
             %>
-                </table>
-            </div>
         </div>
     </body>
 </html>

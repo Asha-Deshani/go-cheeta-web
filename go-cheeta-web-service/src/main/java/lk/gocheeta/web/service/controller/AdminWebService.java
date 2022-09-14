@@ -21,7 +21,7 @@ import lk.gocheeta.web.service.service.AdminService;
 @WebService(serviceName = "AdminWebService")
 public class AdminWebService {
 
-    private AdminService  adminService;
+    private final AdminService  adminService;
     private static final Logger loger = Logger.getLogger(AdminWebService.class.getName());
 
     public AdminWebService() {
