@@ -24,6 +24,7 @@
               if(!request.getServletPath().equals("/index.jsp")){
                 final String SESSESION_ID = "sessionId";   
                   boolean isAthuenticated = false;
+                  boolean isAdmin = false;
                   Cookie[] cookieArray = request.getCookies();
                   if(cookieArray == null) {
                       response.sendRedirect("index.jsp");
@@ -36,6 +37,7 @@
                           if(sessionObject instanceof Admin) {
                               Admin admin = (Admin)sessionObject;
                               isAthuenticated = true;
+                              isAdmin = true;
                               %> <h2>Welcome Admin, <%=admin.getName()%>!</h3>
                                    <a href="branch.jsp">Manage Branches</a>
                                    <br/>
@@ -44,6 +46,7 @@
                           } else if(sessionObject instanceof Customer) {
                               Customer customer = (Customer)sessionObject;
                               isAthuenticated = true;
+                              isAdmin = false;
                               %> <h2>Welcome, <%=customer.getName()%>, book your next taxi from here!</h3> <%
                           } 
                       }
@@ -51,6 +54,13 @@
                   if (!isAthuenticated) {
                       response.sendRedirect("index.jsp");
                       return;
+                  }
+                  if(!isAdmin) {
+                    if (request.getServletPath().equals("/adminhome.jsp") ||
+                            request.getServletPath().equals("/branch.jsp") ||
+                            request.getServletPath().equals("/location.jsp")) { 
+                                response.sendRedirect("index.jsp");
+                    }
                   }
             }
         %>

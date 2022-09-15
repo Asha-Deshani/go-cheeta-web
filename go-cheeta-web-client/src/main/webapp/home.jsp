@@ -4,6 +4,8 @@
     Author     : asha
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="lk.gocheeta.web.service.controller.DistanceWebService_Service"%>
 <%@page import="lk.gocheeta.web.service.controller.Vehicle"%>
 <%@page import="lk.gocheeta.web.service.controller.VehicleWebService_Service"%>
 <%@page import="lk.gocheeta.web.service.controller.VehicleType"%>
@@ -36,6 +38,20 @@
                        branchIdNameMap.put(branchItem.getId(), branchItem.getName());
                     }
                     
+                String branchId = request.getParameter("branch");
+               String vehicletype = request.getParameter("vehicletype");
+               String origineId = request.getParameter("origine");
+               String destinationId = request.getParameter("destination");
+               
+               if (branchId == null) {
+                  branchId = "-1";
+               }
+               if (origineId == null) {
+                  origineId = "-1";
+               }
+               if (destinationId == null) {
+                  destinationId = "-1";
+               }
           %>
            <div class="containercolumn">
            <div class="containerrow">
@@ -44,8 +60,9 @@
                 <br />
             <form action = "" method = "POST">
                 <label>Select your Branch</label><select type = "text" name = "branch" required="true">
-                    <% for (int i = 0; i < branchList.size(); i++) { %>
-                            <option value="<%= branchList.get(i).getId()%>"><%= branchList.get(i).getCity() + " - " + branchList.get(i).getName()%></option>
+                    <% for (Branch branchSelect : branchList) { %>
+                    <option value="<%= branchSelect.getId()%>" <%= Integer.parseInt(branchId) == branchSelect.getId() ? "selected" : "" %> ''>
+                                <%= branchSelect.getCity() + " - " + branchSelect.getName()%></option>
                     <%}%>
                     </select>
                 <br />
@@ -55,13 +72,13 @@
                <%
                     LocationWebService_Service locationService = new LocationWebService_Service();
                     VehicleTypeWebService_Service vehicleTypeWebService = new VehicleTypeWebService_Service();
+                    
                     List<Location> locationList = null;
                     List<VehicleType> vehicleTypeList = null;
                      
                       String branchselect = request.getParameter("branchselect");
-                       String branchId = null;
              if(branchselect != null) {
-                branchId = request.getParameter("branch");
+      
                   out.print(branchId);
                 try {
                     locationList = locationService.getLocationWebServicePort().getLocationsByBranchId(Integer.parseInt(branchId));
@@ -80,19 +97,25 @@
                 <br />
             <form action = "" method = "POST">
                 <label>Select Origin</label><select type = "text" name = "origine" required="true">
-                    <% for (int i = 0; i < locationList.size(); i++) { %>
-                    <%= locationList.get(i).getAddress()%>
-                            <option value="<%= locationList.get(i).getId()%>"><%= locationList.get(i).getAddress()%></option>
+                    <% for (Location locationOrigin : locationList) { %>
+                    <%= locationOrigin.getAddress()%>
+                            <option value="<%= locationOrigin.getId()%>" 
+                                    <%= Integer.parseInt(origineId) == locationOrigin.getId() ? "selected" : "" %>>
+                                <%= locationOrigin.getAddress()%></option>
                     <%}%>
                     </select>
                 <label>Select Destination</label><select type = "text" name = "destination" required="true">
-                    <% for (int i = 0; i < locationList.size(); i++) { %>
-                            <option value="<%= locationList.get(i).getId()%>"><%= locationList.get(i).getAddress()%></option>
-                    <%}%>
+                    <% for (Location locationDestination : locationList) { %>
+                            <option value="<%= locationDestination.getId()%>"
+                                    <%= Integer.parseInt(destinationId) == locationDestination.getId() ? "selected" : "" %>>
+                                <%= locationDestination.getAddress()%></option>
+                    <%} %>
                     </select>
                  <label>Select Vehicle Type</label><select type = "text" name = "vehicletype" required="true">
                     <% for (VehicleType vehicleType : vehicleTypeList) { %>
-                            <option value="<%= vehicleType.getId()%>"><%= vehicleType.getName() + " - Rs." + vehicleType.getRate() %></option>
+                            <option value="<%= vehicleType.getId() + "," + vehicleType.getRate() %>"
+                                <%= (vehicleType.getId() + "," + vehicleType.getRate()).equals(vehicletype) ? "selected" : "" %>>
+                                <%= vehicleType.getName() + " - Rs." + vehicleType.getRate() %></option>
                     <%}%>
                     </select>
                     <br />
@@ -107,20 +130,27 @@
                 <div class="left">
               <% String searchvehicle = request.getParameter("searchvehicle");
              VehicleWebService_Service vehicleWebService = new VehicleWebService_Service();
-      
+             DistanceWebService_Service distanceWebService_Service = new DistanceWebService_Service();
+                                 
              if(searchvehicle != null) {
-               String vehicletype = request.getParameter("vehicletype");
-                List<Vehicle> vehicleList = vehicleWebService.getVehicleWebServicePort().getVehicleByBranchIdAndVehicleTypeId(Integer.parseInt(branchId), Integer.parseInt(vehicletype));
+        
+               String[] vehicleInfoArray = vehicletype.split(",");
+               int vehicleTypeId = Integer.parseInt(vehicleInfoArray[0]);
+               float vehicleRate = Float.parseFloat(vehicleInfoArray[1]);
+               
+                List<Vehicle> vehicleList = vehicleWebService.getVehicleWebServicePort().getVehicleByBranchIdAndVehicleTypeId(Integer.parseInt(branchId), vehicleTypeId);
+                float distance = distanceWebService_Service.getDistanceWebServicePort().getDistance(Integer.parseInt(origineId), Integer.parseInt(destinationId));
             
               %>
                 <form action = "" method = "POST">
-              
+                    <H5>Distance <%=distance%> km</H5> <H5>Amount Rs. <%=vehicleRate*distance%></H5>
+              <br/>
                                  <table border="2">
                    <tr>
                         <th>Make</th>
                         <th>Model</th>
                         <th>Year</th>
-                        <th>Update</th>
+                        <th>Book Taxi</th>
                         <th>Delete</th>
                    </tr>
                    <%
@@ -130,7 +160,7 @@
                         <td><%=vehicle.getModel()%></td>
                         <td><%=vehicle.getModel()%></td>
                         <td><%=vehicle.getYear()%></td>
-                        <td><a href="branch.jsp?editId=<%=vehicle.getId()%>">Update</a></td>
+                        <td><a href="branch.jsp?bookId=<%=vehicle.getId()%>">Book Taxi</a></td>
                         <td><a href="branch.jsp?deleteId=<%=vehicle.getId()%>">Delete</a></td>
                     </tr>
                <%}%>
@@ -139,7 +169,17 @@
                                                           </div>
 
                </div>
-             <%}%>
+             <%}
+              String bookId = request.getParameter("bookId");
+            if(bookId != null) {
+                out.print("bookId " + bookId);
+                out.print("bookId " + bookId);
+                out.print("bookId " + bookId);
+            }
+             
+             
+             
+             %>
            </div>
     </body>
  </html>

@@ -131,3 +131,30 @@ ADD UNIQUE INDEX `uniq_address_location_idx` (`address` ASC) VISIBLE;
 ALTER TABLE `gocheeta`.`admin` 
 ADD UNIQUE INDEX `uk_admin_telephone_idx` (`telephone` ASC) INVISIBLE,
 ADD UNIQUE INDEX `uk_admin_email_idx` (`email` ASC) VISIBLE;
+
+CREATE TABLE `gocheeta`.`distance_matrix` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `locId1` INT NOT NULL,
+  `locId2` INT NOT NULL,
+  `distance` FLOAT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_distance_loc1_idx` (`locId1` ASC) VISIBLE,
+  INDEX `fk_distance_loc2_idx` (`locId2` ASC) VISIBLE,
+  CONSTRAINT `fk_distance_loc1`
+    FOREIGN KEY (`locId1`)
+    REFERENCES `gocheeta`.`location` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_distance_loc2`
+    FOREIGN KEY (`locId2`)
+    REFERENCES `gocheeta`.`location` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+--INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('1', '41', '11');
+--INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('1', '44', '5');
+--INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('1', '45', '20');
+--INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('41', '44', '21');
+--INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('41', '45', '8');
+--INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('44', '45', '12');
