@@ -54,7 +54,7 @@ public class BookingRepository {
             statement.setInt(7, booking.getVehicleId());
             statement.setInt(8, booking.getCustomerId());
             statement.setInt(9, booking.getBranchId());
-
+            System.out.println("booking.getBranchId" + booking.getBranchId());
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
             if (rs.next()) {

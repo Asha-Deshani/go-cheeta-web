@@ -33,5 +33,6 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-maven-jaxws._5f_C_5f_VehicleTypeWebService>http://localhost:8080/go-cheeta-web-service/VehicleTypeWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_VehicleTypeWebService>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_VehicleWebService>http://localhost:8080/go-cheeta-web-service/VehicleWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_VehicleWebService>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_DistanceWebService>http://localhost:8080/go-cheeta-web-service/DistanceWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_DistanceWebService>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_BookingWebService>http://localhost:8080/go-cheeta-web-service/BookingWebService?WSDL</org-netbeans-modules-maven-jaxws._5f_C_5f_BookingWebService>
     </properties>
 </project-shared-configuration>

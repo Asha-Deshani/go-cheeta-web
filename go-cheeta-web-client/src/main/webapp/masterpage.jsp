@@ -21,6 +21,7 @@
            
              <a href="logout.jsp">Logout</a>
           <%
+              int loginUserId = -1;
               if(!request.getServletPath().equals("/index.jsp")){
                 final String SESSESION_ID = "sessionId";   
                   boolean isAthuenticated = false;
@@ -38,6 +39,7 @@
                               Admin admin = (Admin)sessionObject;
                               isAthuenticated = true;
                               isAdmin = true;
+                              loginUserId = admin.getId();
                               %> <h2>Welcome Admin, <%=admin.getName()%>!</h3>
                                    <a href="branch.jsp">Manage Branches</a>
                                    <br/>
@@ -47,6 +49,7 @@
                               Customer customer = (Customer)sessionObject;
                               isAthuenticated = true;
                               isAdmin = false;
+                              loginUserId = customer.getId();
                               %> <h2>Welcome, <%=customer.getName()%>, book your next taxi from here!</h3> <%
                           } 
                       }

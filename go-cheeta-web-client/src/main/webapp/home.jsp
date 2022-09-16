@@ -4,6 +4,9 @@
     Author     : asha
 --%>
 
+<%@page import="java.math.BigDecimal"%>
+<%@page import="lk.gocheeta.web.service.controller.Booking"%>
+<%@page import="lk.gocheeta.web.service.controller.BookingWebService_Service"%>
 <%@page import="java.util.Date"%>
 <%@page import="lk.gocheeta.web.service.controller.DistanceWebService_Service"%>
 <%@page import="lk.gocheeta.web.service.controller.Vehicle"%>
@@ -33,6 +36,7 @@
          <%
                  BranchWebService_Service branchService = new BranchWebService_Service();
                  List<Branch> branchList = branchService.getBranchWebServicePort().getBranches(); 
+                 
                  Map<Integer, String> branchIdNameMap = new HashMap();
                     for(Branch branchItem : branchList){
                        branchIdNameMap.put(branchItem.getId(), branchItem.getName());
@@ -131,19 +135,22 @@
               <% String searchvehicle = request.getParameter("searchvehicle");
              VehicleWebService_Service vehicleWebService = new VehicleWebService_Service();
              DistanceWebService_Service distanceWebService_Service = new DistanceWebService_Service();
-                                 
+             float vehicleRate = -1;
+             float distance = -1;
+             BigDecimal fare = BigDecimal.valueOf(vehicleRate*distance);
+                           
              if(searchvehicle != null) {
         
                String[] vehicleInfoArray = vehicletype.split(",");
                int vehicleTypeId = Integer.parseInt(vehicleInfoArray[0]);
-               float vehicleRate = Float.parseFloat(vehicleInfoArray[1]);
+               vehicleRate = Float.parseFloat(vehicleInfoArray[1]);
                
                 List<Vehicle> vehicleList = vehicleWebService.getVehicleWebServicePort().getVehicleByBranchIdAndVehicleTypeId(Integer.parseInt(branchId), vehicleTypeId);
-                float distance = distanceWebService_Service.getDistanceWebServicePort().getDistance(Integer.parseInt(origineId), Integer.parseInt(destinationId));
+                distance = distanceWebService_Service.getDistanceWebServicePort().getDistance(Integer.parseInt(origineId), Integer.parseInt(destinationId));
             
               %>
                 <form action = "" method = "POST">
-                    <H5>Distance <%=distance%> km</H5> <H5>Amount Rs. <%=vehicleRate*distance%></H5>
+                    <H5>Distance <%=distance%> km</H5> <H5>Amount Rs. <%=fare%></H5>
               <br/>
                                  <table border="2">
                    <tr>
@@ -160,8 +167,8 @@
                         <td><%=vehicle.getModel()%></td>
                         <td><%=vehicle.getModel()%></td>
                         <td><%=vehicle.getYear()%></td>
-                        <td><a href="branch.jsp?bookId=<%=vehicle.getId()%>">Book Taxi</a></td>
-                        <td><a href="branch.jsp?deleteId=<%=vehicle.getId()%>">Delete</a></td>
+                        <td><a href="booking.jsp?bookvehicleId=<%=vehicle.getId()%>&branchId=<%=branchId%>">Book Taxi</a></td>
+                        <td><a href="booking.jsp?deleteId=<%=vehicle.getId()%>&branchId=<%=branchId%>">Delete</a></td>
                     </tr>
                <%}%>
                              </table>
@@ -169,17 +176,6 @@
                                                           </div>
 
                </div>
-             <%}
-              String bookId = request.getParameter("bookId");
-            if(bookId != null) {
-                out.print("bookId " + bookId);
-                out.print("bookId " + bookId);
-                out.print("bookId " + bookId);
-            }
-             
-             
-             
-             %>
            </div>
     </body>
  </html>
