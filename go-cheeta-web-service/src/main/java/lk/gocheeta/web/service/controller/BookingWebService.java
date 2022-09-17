@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.controller;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jws.WebMethod;
@@ -42,6 +43,46 @@ public class BookingWebService {
     public Booking addBooking(@WebParam(name = "booking") Booking booking) throws ControlerException {
         try {
             return bookingService.addBooking(booking);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getBookings")
+    public List<Booking> getBookings() throws ControlerException {
+        try {
+            return bookingService.getBookings();
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getBookingsByCustomerId")
+    public List<Booking> getBookingsByCustomerId(@WebParam(name = "customerId") int customerId) throws ControlerException {
+        try {
+            return bookingService.getBookingsByCustomerId(customerId);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getBookingsByDriverId")
+    public List<Booking> getBookingsByDriverId(@WebParam(name = "driverId") int driverId) throws ControlerException {
+        try {
+            return bookingService.getBookingsByDriverId(driverId);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getBookingsByBranchId")
+    public List<Booking> getBookingsByBranchId(@WebParam(name = "branchId") int branchId) throws ControlerException {
+        try {
+            return bookingService.getBookingsByBranchId(branchId);
         } catch (ServiceException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ControlerException(ex.getMessage());

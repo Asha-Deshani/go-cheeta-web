@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -86,7 +88,7 @@ public class DriverRepository {
     }
 
     public Driver getDriver(int id) throws DatabaseException {
-        String query = "SELECT name, city, branch_id FROM driver WHERE id =?";
+        String query = "SELECT name, telephone, email, branch_id FROM driver WHERE id =?";
         Driver driver = null;
 
         Connection connection = null;
@@ -134,6 +136,72 @@ public class DriverRepository {
             throw new DatabaseException(ex.getMessage());
         } finally {
             DatabaseManager.closeResources(null, statement, connection);
+        }
+    }
+    
+    public List<Driver> getDrivers() throws DatabaseException {
+        String query = "SELECT id, name, telephone, email, branch_id FROM driver";
+        List<Driver> driverList = new ArrayList();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Driver driver = new Driver();
+
+                driver.setId(rs.getInt("id"));
+                driver.setName(rs.getString("name"));
+                driver.setTelephone(rs.getString("telephone"));
+                driver.setEmail(rs.getString("email"));
+                driver.setBranchId(rs.getInt("branch_id"));
+                
+                driverList.add(driver);
+            }
+            return driverList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
+        }
+    }
+    
+    public List<Driver> getDriversByBranchId(int branchId) throws DatabaseException {
+        String query = "SELECT id, name, telephone, email, branch_id FROM driver WHERE branch_id =?";
+        List<Driver> driverList = new ArrayList();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                Driver driver = new Driver();
+
+                driver.setId(rs.getInt("id"));
+                driver.setName(rs.getString("name"));
+                driver.setTelephone(rs.getString("telephone"));
+                driver.setEmail(rs.getString("email"));
+                driver.setBranchId(rs.getInt("branch_id"));
+                
+                driverList.add(driver);
+            }
+            return driverList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 }

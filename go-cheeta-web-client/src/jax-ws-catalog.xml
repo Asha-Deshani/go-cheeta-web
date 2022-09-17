@@ -20,4 +20,6 @@
     <system systemId="http://localhost:8080/go-cheeta-web-service/DistanceWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/DistanceWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/BookingWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/BookingWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/BookingWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/BookingWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/DriverWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/DriverWebService.wsdl"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/DriverWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/DriverWebService.xsd_1.xsd"/>
 </catalog>

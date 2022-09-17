@@ -197,4 +197,126 @@ public class BookingRepository {
             DatabaseManager.closeResources(null, statement, connection);
         }
     }
+    
+    public List<Booking> getBookingsByCustomerId(int customerId) throws DatabaseException {
+        String query = "SELECT id, fare, status, customer_feedback, driver_feedback, distance,"
+                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking where customer_id =?";
+        List<Booking> bookingList = new ArrayList<>();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+            statement.setInt(1, customerId);
+            rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setId(rs.getInt("id"));
+                booking.setFare(rs.getBigDecimal("fare"));
+                booking.setStatus(rs.getString("status"));
+                booking.setCustomerFeedback(rs.getString("customer_feedback"));
+                booking.setDriverFeedback(rs.getString("driver_feedback"));
+                booking.setDistance(rs.getFloat("distance"));
+                booking.setDurationMinute(rs.getInt("duration_minute"));
+                booking.setVehicleId(rs.getInt("vehicle_id"));
+                booking.setCustomerId(rs.getInt("customer_id"));
+                booking.setBranchId(rs.getInt("branch_id"));
+
+                bookingList.add(booking);
+            }
+            return bookingList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
+        }
+    }
+    
+    public List<Booking> getBookingsByDriverId(int driverId) throws DatabaseException {
+        String query = "SELECT b.id, b.fare, b.status, b.customer_feedback, b.driver_feedback, " +
+                       "b.distance, b.duration_minute, b.vehicle_id, b.customer_id, b.branch_id FROM booking " +
+                       "INNER JOIN vehicle v ON b.vehicle_id = v.id " +
+                       "INNER JOIN driver d ON v.driver_id = d.id " +
+                       "WHERE d.id =?";
+        
+        List<Booking> bookingList = new ArrayList<>();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+            statement.setInt(1, driverId);
+
+            rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setId(rs.getInt("id"));
+                booking.setFare(rs.getBigDecimal("fare"));
+                booking.setStatus(rs.getString("status"));
+                booking.setCustomerFeedback(rs.getString("customer_feedback"));
+                booking.setDriverFeedback(rs.getString("driver_feedback"));
+                booking.setDistance(rs.getFloat("distance"));
+                booking.setDurationMinute(rs.getInt("duration_minute"));
+                booking.setVehicleId(rs.getInt("vehicle_id"));
+                booking.setCustomerId(rs.getInt("customer_id"));
+                booking.setBranchId(rs.getInt("branch_id"));
+
+                bookingList.add(booking);
+            }
+            return bookingList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
+        }
+    }
+    
+    public List<Booking> getBookingsByBranchId(int branchId) throws DatabaseException {
+        String query = "SELECT id, fare, status, customer_feedback, driver_feedback, distance,"
+                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking where branch_id =?";
+        List<Booking> bookingList = new ArrayList<>();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+            statement.setInt(1, branchId);
+            rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setId(rs.getInt("id"));
+                booking.setFare(rs.getBigDecimal("fare"));
+                booking.setStatus(rs.getString("status"));
+                booking.setCustomerFeedback(rs.getString("customer_feedback"));
+                booking.setDriverFeedback(rs.getString("driver_feedback"));
+                booking.setDistance(rs.getFloat("distance"));
+                booking.setDurationMinute(rs.getInt("duration_minute"));
+                booking.setVehicleId(rs.getInt("vehicle_id"));
+                booking.setCustomerId(rs.getInt("customer_id"));
+                booking.setBranchId(rs.getInt("branch_id"));
+
+                bookingList.add(booking);
+            }
+            return bookingList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
+        }
+    }
 }

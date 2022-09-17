@@ -42,7 +42,7 @@
                        branchIdNameMap.put(branchItem.getId(), branchItem.getName());
                     }
                     
-                String branchId = request.getParameter("branch");
+               String branchId = request.getParameter("branch");
                String vehicletype = request.getParameter("vehicletype");
                String origineId = request.getParameter("origine");
                String destinationId = request.getParameter("destination");
@@ -137,7 +137,7 @@
              DistanceWebService_Service distanceWebService_Service = new DistanceWebService_Service();
              float vehicleRate = -1;
              float distance = -1;
-             BigDecimal fare = BigDecimal.valueOf(vehicleRate*distance);
+             BigDecimal fare = null;
                            
              if(searchvehicle != null) {
         
@@ -147,7 +147,7 @@
                
                 List<Vehicle> vehicleList = vehicleWebService.getVehicleWebServicePort().getVehicleByBranchIdAndVehicleTypeId(Integer.parseInt(branchId), vehicleTypeId);
                 distance = distanceWebService_Service.getDistanceWebServicePort().getDistance(Integer.parseInt(origineId), Integer.parseInt(destinationId));
-            
+                fare = BigDecimal.valueOf(vehicleRate*distance);
               %>
                 <form action = "" method = "POST">
                     <H5>Distance <%=distance%> km</H5> <H5>Amount Rs. <%=fare%></H5>
@@ -167,8 +167,8 @@
                         <td><%=vehicle.getModel()%></td>
                         <td><%=vehicle.getModel()%></td>
                         <td><%=vehicle.getYear()%></td>
-                        <td><a href="booking.jsp?bookvehicleId=<%=vehicle.getId()%>&branchId=<%=branchId%>">Book Taxi</a></td>
-                        <td><a href="booking.jsp?deleteId=<%=vehicle.getId()%>&branchId=<%=branchId%>">Delete</a></td>
+                        <td><a href="home.jsp?bookvehicleId=<%=vehicle.getId()%>&branchId=<%=branchId%>&vehicleRate=<%=vehicleRate%>&distance=<%=distance%>">Book Taxi</a></td>
+                        <td><a href="home.jsp?bookvehicleId=<%=vehicle.getId()%>&branchId=<%=branchId%>&vehicleRate=<%=vehicleRate%>&distance=<%=distance%>">Delete</a></td>
                     </tr>
                <%}%>
                              </table>
@@ -176,6 +176,34 @@
                                                           </div>
 
                </div>
+                             <%}
+             
+                 BookingWebService_Service bookingWebService_Service = new BookingWebService_Service();
+
+              String bookvehicleId = request.getParameter("bookvehicleId");
+              String branchBookingId = request.getParameter("branchId");
+              String vehicleRateBookingId = request.getParameter("vehicleRate");
+              String distanceBookingId = request.getParameter("distance");
+            if(bookvehicleId != null && branchBookingId != null
+                    && vehicleRateBookingId != null && distanceBookingId != null) {
+
+                float distanceBooking = Float.parseFloat(distanceBookingId);
+                float vehicleRateBooking = Float.parseFloat(vehicleRateBookingId);
+                BigDecimal fareBooking = BigDecimal.valueOf(distanceBooking*vehicleRateBooking);
+
+                Booking booking = new Booking();
+                booking.setBranchId(Integer.parseInt(branchBookingId));
+                booking.setCustomerId(loginUserId);
+                booking.setVehicleId(Integer.parseInt(bookvehicleId));
+                booking.setStatus("PENDING");
+                booking.setDistance(distanceBooking);
+                booking.setFare(fareBooking);
+                bookingWebService_Service.getBookingWebServicePort().addBooking(booking);
+
+             %><<h2>Booking added successfully</h2> <%
+                  response.sendRedirect("booking.jsp");
+            }
+            %>
            </div>
     </body>
  </html>

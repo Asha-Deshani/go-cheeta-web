@@ -257,6 +257,24 @@
                         <id>wsimport-generate-BookingWebService</id>
                         <phase>generate-sources</phase>
                     </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/go-cheeta-web-service/DriverWebService.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName></packageName>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                            <wsdlLocation>http://localhost:8080/go-cheeta-web-service/DriverWebService?WSDL</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/DriverWebService.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-DriverWebService</id>
+                        <phase>generate-sources</phase>
+                    </execution>
                 </executions>
                 <dependencies>
                     <dependency>

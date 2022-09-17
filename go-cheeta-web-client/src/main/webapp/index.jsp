@@ -4,6 +4,8 @@
     Author     : asha
 --%>
 
+<%@page import="lk.gocheeta.web.service.controller.Driver"%>
+<%@page import="lk.gocheeta.web.service.controller.DriverWebService_Service"%>
 <%@page import="lk.gocheeta.web.service.controller.Admin"%>
 <%@page import="lk.gocheeta.web.service.controller.AdminWebService_Service"%>
 <%@page import="java.util.UUID"%>
@@ -51,15 +53,11 @@
                      </div>
                 </div>
               </div>
-            <%
-            final String SESSESION_ID = "sessionId";     
-            final String ROLE_CUSTOMER = "CUSTOMER";     
-            final String ROLE_ADMIN = "ADMIN";
-            final String ROLE = "ROLE";
-            
+            <%       
             LoginWebService_Service loginService = new LoginWebService_Service();
             CustomerWebService_Service customerService = new CustomerWebService_Service();
             AdminWebService_Service adminWebService = new AdminWebService_Service();
+            DriverWebService_Service driverWebService = new DriverWebService_Service();
             
             String signin = request.getParameter("signin");
             String join = request.getParameter("join");
@@ -81,6 +79,7 @@
 
                 Customer customer = null;
                 Admin admin = null;
+                Driver driver = null;
                 if(login.getRole().equals(ROLE_CUSTOMER)){
                     customer = customerService.getCustomerWebServicePort().geteCustomer(login.getReferenceId());
                     if(customer == null){
@@ -91,6 +90,12 @@
                     admin = adminWebService.getAdminWebServicePort().geteAdmin(login.getReferenceId());
                     if(admin == null){
                         %> <h3>Error: Issue with Admin account. Please check Database!</h3> <%
+                        return;
+                    }
+                } else if(login.getRole().equals(ROLE_DRIVER)){
+                    driver = driverWebService.getDriverWebServicePort().getDriver(login.getReferenceId());
+                    if(driver == null){
+                        %> <h3>Error: Issue with Driver account. Please contact admin!</h3> <%
                         return;
                     }
                 }
@@ -106,8 +111,12 @@
                     response.sendRedirect("home.jsp");
                 } else if(admin != null) {
                     session.setAttribute(id, admin);
-                    session.setAttribute(id + ROLE, ROLE_CUSTOMER);
+                    session.setAttribute(id + ROLE, ROLE_ADMIN);
                     response.sendRedirect("adminhome.jsp");
+                } else if(driver != null) {
+                    session.setAttribute(id, driver);
+                    session.setAttribute(id + ROLE, ROLE_DRIVER);
+                    response.sendRedirect("driverhome.jsp");
                 }
                 return;
             } else if(join != null) {

@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.dto.Booking;
@@ -50,6 +51,42 @@ public class BookingService {
     public boolean deleteBooking(int id) throws ServiceException {
         try {
             return bookingRepository.deleteBooking(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+    
+    public List<Booking> getBookings() throws ServiceException {
+        try {
+            return bookingRepository.getBookings();
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+    
+    public List<Booking> getBookingsByCustomerId(int customerId) throws ServiceException {
+        try {
+            return bookingRepository.getBookingsByCustomerId(customerId);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+    
+    public List<Booking> getBookingsByDriverId(int driverId) throws ServiceException {
+        try {
+            return bookingRepository.getBookingsByDriverId(driverId);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+    
+    public List<Booking> getBookingsByBranchId(int branchId) throws ServiceException {
+        try {
+            return bookingRepository.getBookingsByBranchId(branchId);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

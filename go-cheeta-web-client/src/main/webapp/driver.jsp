@@ -4,6 +4,7 @@
     Author     : asha
 --%>
 
+<%@page import="lk.gocheeta.web.service.controller.DriverWebService_Service"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.stream.Collectors"%>
@@ -21,10 +22,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h1>Manage Locations!</h1>
+        <h1>Manage Drivers!</h1>
         <div class="containercolumn">
          <div class="left">
-            <h2>Create a Location</h2>
+            <h2>Create a Driver</h2>
             <br />
             <%
                  BranchWebService_Service branchService = new BranchWebService_Service();
@@ -36,7 +37,11 @@
                  }
             %>
             <form action = "" method = "POST">
-                <label>Address</label><input type = "text" name = "address" required="true"/>
+                <label>Name</label><input type = "text" name = "name" required="true"/>
+                <br />
+                 <label>Telephone</label><input type = "text" name = "telephone" required="true"/>
+                <br />
+                 <label>Email</label><input type = "text" name = "email" required="false"/>
                 <br />
                 <label>Branch</label><select type = "text" name = "branch" required="true">
                     <% for (int i = 0; i < branchList.size(); i++) { %>
@@ -44,29 +49,33 @@
                     <%}%>
                     </select>
                 <br />
-                <input type = "submit" name ="newlocation" value = "Create Location" />
+                <input type = "submit" name ="newdriver" value = "Create Driver" />
             </form>
           </div>
          <%
-             LocationWebService_Service locationService = new LocationWebService_Service();
+             DriverWebService_Service  driverService = new DriverWebService_Service();
              
-             String newlocation = request.getParameter("newlocation");
-             if(newlocation != null) {
-                String address = request.getParameter("address");
+             String newdriver = request.getParameter("newdriver");
+             if(newdriver != null) {
+                String name = request.getParameter("name");
+                String telephone = request.getParameter("telephone");
+                String email = request.getParameter("email");
                 String branchId = request.getParameter("branch");
                 
-                if(address == null || branchId == null){
-                  %> <h3>Address and Branch can't be empty!</h3> <%
+                if(name == null || telephone == null || branchId == null){
+                  %> <h3>Name, Telephone and Branch can't be empty!</h3> <%
                   return;
                 }
 
-                Location location = new Location();
-                location.setAddress(address);
-                location.setBranchId(Integer.parseInt(branchId));
+                Driver driver = new Driver();
+                driver.setName(name);
+                driver.setTelephone(telephone);
+                driver.setEmail(email);
+                driver.setBranchId(Integer.parseInt(branchId));
 
                 try {
-                    location = locationService.getLocationWebServicePort().addLocation(location);
-                    %> <h4>Location <%= location.getAddress()%> successfully created!</h4> <%
+                    driver = driverService.getDriverWebServicePort().addDriver(driver);
+                    %> <h4>Location <%= driver.getName()%> successfully created!</h4> <%
                 } catch (Exception e) {
                     if (e.getMessage().contains("Duplicate entry")) {
                         String error = e.getMessage().substring(0, e.getMessage().indexOf("for"));
@@ -74,32 +83,36 @@
                      }
                 }
              }
-            List<Location> locationList = null;
+            List<Driver> driverList = null;
             try {
-                locationList = locationService.getLocationWebServicePort().getLocations();
+                driverList = driverService.getDriverWebServicePort().getDrivers();
             } catch (Exception ex) {
                 %> <h3>Error: <%=ex.getMessage()%>!</h3> <%
             }
-            if(locationList != null && locationList.size() > 0){
+            if(driverList != null && driverList.size() > 0){
                 %>
                <div class="left">
-                <h2>Location List count <%=locationList.size()%></h2>
+                <h2>Driver List count <%=driverList.size()%></h2>
                 <br />
                 <table border="2">
                    <tr>
-                        <th>Address</th>
+                        <th>Name</th>
+                        <th>Telephone</th>
+                        <th>Email</th>
                         <th>Branch</th>
                         <th>Update</th>
                         <th>Delete</th>
                    </tr>
                    <%
-                for (Location location : locationList) {
+                for (Driver driver : driverList) {
                 %>
                     <tr>
-                        <td><%=location.getAddress()%></td>
-                        <td><%=branchIdNameMap.get(location.getBranchId())%></td>
-                        <td><a href="location.jsp?editId=<%=location.getId()%>">Update</a></td>
-                        <td><a href="location.jsp?deleteId=<%=location.getId()%>">Delete</a></td>
+                        <td><%=driver.getName()%></td>
+                        <td><%=driver.getTelephone()%></td>
+                        <td><%=driver.getEmail()%></td>
+                        <td><%=branchIdNameMap.get(driver.getBranchId())%></td>
+                        <td><a href="driver.jsp?editId=<%=driver.getId()%>">Update</a></td>
+                        <td><a href="driver.jsp?deleteId=<%=driver.getId()%>">Delete</a></td>
                     </tr>
            <%}%>
                              </table>
@@ -110,8 +123,8 @@
             if(deleteId != null) {
                 int id = Integer.parseInt(deleteId);
                 try {
-                    locationService.getLocationWebServicePort().deleteLocation(id);
-                    %> <h4>Location successfully deleted!</h4> <%
+                    driverService.getDriverWebServicePort().deleteDriver(id);
+                    %> <h4>Driver successfully deleted!</h4> <%
                 } catch (Exception e) {
                     if (e.getMessage().contains("foreign key constraint fails")) {
                         %> <h3>Error: Delete child records before delete this record!</h3> <%
@@ -124,58 +137,66 @@
             String editId = request.getParameter("editId");
             if(editId != null) {
                 int id = Integer.parseInt(editId);
-                Location editLocation = null;
+                Driver editDriver = null;
                 try {
-                    editLocation = locationService.getLocationWebServicePort().getLocation(id);
+                    editDriver = driverService.getDriverWebServicePort().getDriver(id);
                 } catch (Exception e) {
                     %> <h3>Error: <%=e.getMessage()%>!</h3> <%
                 }
 
-                if(editLocation == null){
-                    %> <h3>Error: No location with the selected id!</h3> <%
+                if(editDriver == null){
+                    %> <h3>Error: No Driver with the selected id!</h3> <%
                     return;
                 } 
 %>
             <div class="left">
-                <h2>Update Location</h2>
+                <h2>Update Driver</h2>
                 <br />
                 <form action = "" method = "POST">
-                    <input type = "hidden" name = "id" required="true" value="<%=editLocation.getId()%>"/>
+                    <input type = "hidden" name = "id" required="true" value="<%=editDriver.getId()%>"/>
                     <br />
-                    <label>Address</label><input type = "text" name = "address" required="true" value="<%=editLocation.getAddress()%>"/>
+                    <label>Name</label><input type = "text" name = "name" required="true" value="<%=editDriver.getName()%>"/>
+                    <br />
+                     <label>Telephone</label><input type = "text" name = "telephone" required="true" value="<%=editDriver.getTelephone()%>"/>
+                    <br />
+                     <label>Email</label><input type = "text" name = "email" required="false" value="<%=editDriver.getEmail()%>"/>
                     <br />
                     <label>Branch</label><select type = "text" name = "branch" required="true">
                         <%for (Branch itemEdit : branchList) {%>
-                        <option value="<%= itemEdit.getId()%>" <%= editLocation.getBranchId()== itemEdit.getId() ? "selected" : "" %>><%= itemEdit.getName()%></option>
+                        <option value="<%= itemEdit.getId()%>" <%= editDriver.getBranchId()== itemEdit.getId() ? "selected" : "" %>><%= itemEdit.getName()%></option>
                         <%}%>
                         </select>
                 <br />
-                <input type = "submit" name ="editlocation" value = "Update Location" />
+                <input type = "submit" name ="editdriver" value = "Update Driver" />
                 </form>
             </div>
 <%
             }
             %>
             <%
-                String editlocation = request.getParameter("editlocation");
-                if(editlocation != null) {
-                    String address = request.getParameter("address");
+                String editdriver = request.getParameter("editdriver");
+                if(editdriver != null) {
+                    String name = request.getParameter("name");
+                    String telephone = request.getParameter("telephone");
+                    String email = request.getParameter("email");
                     String branch = request.getParameter("branch");
                     String idEdit = request.getParameter("id");
                     
-                    if(address == null || branch == null || idEdit == null){
-                        %> <h3>Id, address and branch can't be empty!</h3> <%
+                    if(name == null || telephone == null || idEdit == null){
+                        %> <h3>Id, name, telephone and branch can't be empty!</h3> <%
                         return;
                     }
 
-                    Location location = new Location();
-                    location.setAddress(address);
-                    location.setBranchId(Integer.parseInt(branch));
-                    location.setId(Integer.parseInt(idEdit));
+                    Driver driver = new Driver();
+                    driver.setName(name);
+                    driver.setTelephone(telephone);
+                    driver.setEmail(email);
+                    driver.setBranchId(Integer.parseInt(branch));
+                    driver.setId(Integer.parseInt(idEdit));
 
                     try {
-                        location = locationService.getLocationWebServicePort().updateLocation(location);
-                        %> <h4>Location <%= location.getAddress()%> successfully updated!</h4> <%
+                        driver = driverService.getDriverWebServicePort().updateDriver(driver);
+                        %> <h4>Driver <%= driver.getName()%> successfully updated!</h4> <%
                     } catch (Exception e) {
                         if (e.getMessage().contains("Duplicate entry")) {
                             String error = e.getMessage().substring(0, e.getMessage().indexOf("for"));

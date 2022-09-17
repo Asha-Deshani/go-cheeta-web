@@ -4,11 +4,11 @@
 <xsd:import namespace="http://controller.service.web.gocheeta.lk/" schemaLocation="http://localhost:8080/go-cheeta-web-service/BookingWebService?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="addBooking">
-<part name="parameters" element="tns:addBooking"/>
+<message name="getBookings">
+<part name="parameters" element="tns:getBookings"/>
 </message>
-<message name="addBookingResponse">
-<part name="parameters" element="tns:addBookingResponse"/>
+<message name="getBookingsResponse">
+<part name="parameters" element="tns:getBookingsResponse"/>
 </message>
 <message name="ControlerException">
 <part name="fault" element="tns:ControlerException"/>
@@ -19,21 +19,65 @@
 <message name="updateBookingResponse">
 <part name="parameters" element="tns:updateBookingResponse"/>
 </message>
+<message name="addBooking">
+<part name="parameters" element="tns:addBooking"/>
+</message>
+<message name="addBookingResponse">
+<part name="parameters" element="tns:addBookingResponse"/>
+</message>
+<message name="getBookingsByBranchId">
+<part name="parameters" element="tns:getBookingsByBranchId"/>
+</message>
+<message name="getBookingsByBranchIdResponse">
+<part name="parameters" element="tns:getBookingsByBranchIdResponse"/>
+</message>
+<message name="getBookingsByCustomerId">
+<part name="parameters" element="tns:getBookingsByCustomerId"/>
+</message>
+<message name="getBookingsByCustomerIdResponse">
+<part name="parameters" element="tns:getBookingsByCustomerIdResponse"/>
+</message>
+<message name="getBookingsByDriverId">
+<part name="parameters" element="tns:getBookingsByDriverId"/>
+</message>
+<message name="getBookingsByDriverIdResponse">
+<part name="parameters" element="tns:getBookingsByDriverIdResponse"/>
+</message>
 <portType name="BookingWebService">
-<operation name="addBooking">
-<input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/addBookingRequest" message="tns:addBooking"/>
-<output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/addBookingResponse" message="tns:addBookingResponse"/>
-<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/addBooking/Fault/ControlerException"/>
+<operation name="getBookings">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsRequest" message="tns:getBookings"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsResponse" message="tns:getBookingsResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookings/Fault/ControlerException"/>
 </operation>
 <operation name="updateBooking">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/updateBookingRequest" message="tns:updateBooking"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/updateBookingResponse" message="tns:updateBookingResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/updateBooking/Fault/ControlerException"/>
 </operation>
+<operation name="addBooking">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/addBookingRequest" message="tns:addBooking"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/addBookingResponse" message="tns:addBookingResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/addBooking/Fault/ControlerException"/>
+</operation>
+<operation name="getBookingsByBranchId">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByBranchIdRequest" message="tns:getBookingsByBranchId"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByBranchIdResponse" message="tns:getBookingsByBranchIdResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByBranchId/Fault/ControlerException"/>
+</operation>
+<operation name="getBookingsByCustomerId">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByCustomerIdRequest" message="tns:getBookingsByCustomerId"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByCustomerIdResponse" message="tns:getBookingsByCustomerIdResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByCustomerId/Fault/ControlerException"/>
+</operation>
+<operation name="getBookingsByDriverId">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByDriverIdRequest" message="tns:getBookingsByDriverId"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByDriverIdResponse" message="tns:getBookingsByDriverIdResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByDriverId/Fault/ControlerException"/>
+</operation>
 </portType>
 <binding name="BookingWebServicePortBinding" type="tns:BookingWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="addBooking">
+<operation name="getBookings">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -46,6 +90,54 @@
 </fault>
 </operation>
 <operation name="updateBooking">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="addBooking">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="getBookingsByBranchId">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="getBookingsByCustomerId">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="getBookingsByDriverId">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

@@ -17,10 +17,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h1>Manage Branch!</h1>
+        <h1>Manage Booking!</h1>
         <div class="containercolumn">
          <div class="left">
-            <h2>Create a Branch</h2>
+            <h2>Don't forget to leave a feedback for your trip</h2>
             <br />
             <form action = "branch.jsp" method = "POST">
                 <label>Name</label><input type = "text" name = "name" required="true"/>
@@ -31,25 +31,9 @@
             </form>
           </div>
          <%
-             
                  BookingWebService_Service bookingWebService_Service = new BookingWebService_Service();
-
-              String bookvehicleId = request.getParameter("bookvehicleId");
-            if(bookvehicleId != null) {
-              String branchId = request.getParameter("branchId");
-
-
-                Booking booking = new Booking();
-                booking.setBranchId(Integer.parseInt(branchId));
-                booking.setCustomerId(loginUserId);
-                booking.setVehicleId(Integer.parseInt(bookvehicleId));
-                booking.setStatus("STARTED");
-                booking.setDistance(distance);
-                booking.setFare(fare);
-                bookingWebService_Service.getBookingWebServicePort().addBooking(booking);
-
-             %><<h2>Booking added successfully</h2> <%
-            }
+                // bookingWebService_Service.getBookingWebServicePort().getBookingsByCustomerId(customerId)
+                 //bookingWebService_Service.getBookingWebServicePort().
         
             %>
   

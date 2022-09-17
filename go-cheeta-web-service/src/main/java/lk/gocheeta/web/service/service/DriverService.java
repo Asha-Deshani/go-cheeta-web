@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.dto.Driver;
@@ -50,6 +51,24 @@ public class DriverService {
     public boolean deleteDriver(int id) throws ServiceException {
         try {
             return driverRepository.deleteDriver(id);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+    
+    public List<Driver> getDrivers() throws ServiceException {
+        try {
+            return driverRepository.getDrivers();
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+    
+    public List<Driver> getDriversByBranchId(int branchId) throws ServiceException {
+        try {
+            return driverRepository.getDriversByBranchId(branchId);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

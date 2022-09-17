@@ -4,6 +4,7 @@
     Author     : asha
 --%>
 
+<%@page import="lk.gocheeta.web.service.controller.Driver"%>
 <%@page import="lk.gocheeta.web.service.controller.Admin"%>
 <%@page import="lk.gocheeta.web.service.controller.Customer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,11 +22,17 @@
            
              <a href="logout.jsp">Logout</a>
           <%
-              int loginUserId = -1;
+            final String SESSESION_ID = "sessionId";     
+            final String ROLE_CUSTOMER = "CUSTOMER";     
+            final String ROLE_ADMIN = "ADMIN";
+            final String ROLE_DRIVER = "DRIVER";
+            final String ROLE = "ROLE";
+            int loginUserId = -1;
+            String loginRole = null;
+            
               if(!request.getServletPath().equals("/index.jsp")){
-                final String SESSESION_ID = "sessionId";   
                   boolean isAthuenticated = false;
-                  boolean isAdmin = false;
+                  
                   Cookie[] cookieArray = request.getCookies();
                   if(cookieArray == null) {
                       response.sendRedirect("index.jsp");
@@ -35,33 +42,56 @@
                   for(Cookie cookie : request.getCookies()) {
                       if(cookie.getName().equals(SESSESION_ID)) {
                           Object sessionObject = session.getAttribute(cookie.getValue());
-                          if(sessionObject instanceof Admin) {
-                              Admin admin = (Admin)sessionObject;
-                              isAthuenticated = true;
-                              isAdmin = true;
-                              loginUserId = admin.getId();
-                              %> <h2>Welcome Admin, <%=admin.getName()%>!</h3>
-                                   <a href="branch.jsp">Manage Branches</a>
-                                   <br/>
-                                   <a href="location.jsp">Manage Locations</a>
-                               <% 
-                          } else if(sessionObject instanceof Customer) {
-                              Customer customer = (Customer)sessionObject;
-                              isAthuenticated = true;
-                              isAdmin = false;
-                              loginUserId = customer.getId();
-                              %> <h2>Welcome, <%=customer.getName()%>, book your next taxi from here!</h3> <%
-                          } 
+                          loginRole = (String)session.getAttribute(cookie.getValue()+ ROLE);
+                          
+                          if(sessionObject != null && loginRole != null){
+                            if(loginRole.equals(ROLE_ADMIN)) {
+                                Admin admin = (Admin)sessionObject;
+                                isAthuenticated = true;
+                                loginUserId = admin.getId();
+                                %> <h2>Welcome Admin, <%=admin.getName()%>!</h3>
+                                     <a href="branch.jsp">Manage Branches</a>
+                                     <br/>
+                                     <a href="location.jsp">Manage Locations</a>
+                                     <br/>
+                                     <a href="driver.jsp">Manage Drivers</a>
+                                 <% 
+                             } else if (loginRole.equals(ROLE_CUSTOMER)) {
+                                Customer customer = (Customer)sessionObject;
+                                isAthuenticated = true;
+                                loginUserId = customer.getId();
+                                %> <h2>Welcome <%=customer.getName()%>, book your next taxi from here!</h3> <%
+                             } else if (loginRole.equals(ROLE_DRIVER)) {
+                                Driver driver = (Driver)sessionObject;
+                                isAthuenticated = true;
+                                loginUserId = driver.getId();
+                                %> <h2>Welcome <%=driver.getName()%>, Start and Finish your bookings from here!</h3> <%
+                             }
+                          }
+                        break;
                       }
+
                   }
                   if (!isAthuenticated) {
                       response.sendRedirect("index.jsp");
                       return;
                   }
-                  if(!isAdmin) {
+                  if(!ROLE_ADMIN.equals(loginRole)) {
                     if (request.getServletPath().equals("/adminhome.jsp") ||
                             request.getServletPath().equals("/branch.jsp") ||
-                            request.getServletPath().equals("/location.jsp")) { 
+                            request.getServletPath().equals("/location.jsp") ||
+                            request.getServletPath().equals("/driver.jsp")) { 
+                                response.sendRedirect("index.jsp");
+                    }
+                  }
+                  if(!ROLE_CUSTOMER.equals(loginRole)) {
+                    if (request.getServletPath().equals("/home.jsp") ||
+                            request.getServletPath().equals("/booking.jsp")) {
+                                response.sendRedirect("index.jsp");
+                    }
+                  }
+                  if(!ROLE_DRIVER.equals(loginRole)) {
+                    if (request.getServletPath().equals("/driverhome.jsp")) {
                                 response.sendRedirect("index.jsp");
                     }
                   }

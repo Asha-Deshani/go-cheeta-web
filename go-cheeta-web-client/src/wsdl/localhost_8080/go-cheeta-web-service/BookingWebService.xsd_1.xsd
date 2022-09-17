@@ -6,13 +6,33 @@
 
 <xs:element name="addBookingResponse" type="tns:addBookingResponse"/>
 
+<xs:element name="getBookings" type="tns:getBookings"/>
+
+<xs:element name="getBookingsByBranchId" type="tns:getBookingsByBranchId"/>
+
+<xs:element name="getBookingsByBranchIdResponse" type="tns:getBookingsByBranchIdResponse"/>
+
+<xs:element name="getBookingsByCustomerId" type="tns:getBookingsByCustomerId"/>
+
+<xs:element name="getBookingsByCustomerIdResponse" type="tns:getBookingsByCustomerIdResponse"/>
+
+<xs:element name="getBookingsByDriverId" type="tns:getBookingsByDriverId"/>
+
+<xs:element name="getBookingsByDriverIdResponse" type="tns:getBookingsByDriverIdResponse"/>
+
+<xs:element name="getBookingsResponse" type="tns:getBookingsResponse"/>
+
 <xs:element name="updateBooking" type="tns:updateBooking"/>
 
 <xs:element name="updateBookingResponse" type="tns:updateBookingResponse"/>
 
-<xs:complexType name="addBooking">
+<xs:complexType name="getBookings">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getBookingsResponse">
 <xs:sequence>
-<xs:element name="booking" type="tns:booking" minOccurs="0"/>
+<xs:element name="return" type="tns:booking" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -31,12 +51,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="addBookingResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:booking" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="ControlerException">
 <xs:sequence>
 <xs:element name="message" type="xs:string" minOccurs="0"/>
@@ -52,6 +66,54 @@
 <xs:complexType name="updateBookingResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:booking" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addBooking">
+<xs:sequence>
+<xs:element name="booking" type="tns:booking" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addBookingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:booking" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getBookingsByCustomerId">
+<xs:sequence>
+<xs:element name="customerId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getBookingsByCustomerIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:booking" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getBookingsByBranchId">
+<xs:sequence>
+<xs:element name="branchId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getBookingsByBranchIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:booking" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getBookingsByDriverId">
+<xs:sequence>
+<xs:element name="driverId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getBookingsByDriverIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:booking" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>
