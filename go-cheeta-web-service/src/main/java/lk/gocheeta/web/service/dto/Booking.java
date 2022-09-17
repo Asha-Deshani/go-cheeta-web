@@ -5,6 +5,8 @@
 package lk.gocheeta.web.service.dto;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.Instant;
 
 /**
  *
@@ -18,10 +20,12 @@ public class Booking {
     private String customerFeedback;
     private String driverFeedback;
     private float distance;
-    private int durationMinute;
     private int vehicleId;
     private int customerId;
     private int branchId;
+    private Date starttime;
+    private Date endtime;
+    private Date booktime;
 
     public int getId() {
         return id;
@@ -71,14 +75,6 @@ public class Booking {
         this.distance = distance;
     }
 
-    public int getDurationMinute() {
-        return durationMinute;
-    }
-
-    public void setDurationMinute(int durationMinute) {
-        this.durationMinute = durationMinute;
-    }
-
     public int getVehicleId() {
         return vehicleId;
     }
@@ -101,5 +97,29 @@ public class Booking {
 
     public void setBranchId(int branchId) {
         this.branchId = branchId;
+    }
+
+    public Date getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(Date starttime) {
+        this.starttime = starttime;
+    }
+
+    public Date getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(Date endtime) {
+        this.endtime = endtime;
+    }
+
+    public Date getBooktime() {
+        return booktime;
+    }
+
+    public void setBooktime(Date booktime) {
+        this.booktime = booktime;
     }
 }

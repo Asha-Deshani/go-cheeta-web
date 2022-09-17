@@ -151,6 +151,12 @@ CREATE TABLE `gocheeta`.`distance_matrix` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+ALTER TABLE `gocheeta`.`booking` 
+DROP COLUMN `duration_minute`,
+ADD COLUMN `booktime` DATETIME NOT NULL DEFAULT NOW() AFTER `branch_id`,
+ADD COLUMN `starttime` DATETIME NULL AFTER `booktime`,
+ADD COLUMN `endtime` DATETIME NULL AFTER `starttime`;
+
 
 --INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('1', '41', '11');
 --INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('1', '44', '5');

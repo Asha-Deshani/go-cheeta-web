@@ -5,9 +5,11 @@
 package lk.gocheeta.web.service.repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,8 +36,8 @@ public class BookingRepository {
 
     public Booking addBooking(Booking booking) throws DatabaseException {
         String query = "INSERT INTO booking (fare, status, customer_feedback, "
-                + "driver_feedback, distance, duration_minute, vehicle_id, customer_id, branch_id) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "driver_feedback, duration_minute, vehicle_id, customer_id, branch_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
        Connection connection = null;
         PreparedStatement statement = null;
@@ -50,10 +52,9 @@ public class BookingRepository {
             statement.setString(3, booking.getCustomerFeedback());
             statement.setString(4, booking.getDriverFeedback());
             statement.setFloat(5, booking.getDistance());
-            statement.setInt(6, booking.getDurationMinute());
-            statement.setInt(7, booking.getVehicleId());
-            statement.setInt(8, booking.getCustomerId());
-            statement.setInt(9, booking.getBranchId());
+            statement.setInt(6, booking.getVehicleId());
+            statement.setInt(7, booking.getCustomerId());
+            statement.setInt(8, booking.getBranchId());
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
             if (rs.next()) {
@@ -71,10 +72,10 @@ public class BookingRepository {
 
     public Booking updateBooking(Booking booking) throws DatabaseException {
         String query = "UPDATE booking SET fare=?, status=?, customer_feedback=?,"
-                + "driver_feedback=?, distance=?, duration_minute=?, vehicle_id=?, "
+                + "driver_feedback=?, distance=?, starttime=?, endtime=?, vehicle_id=?, "
                 + "customer_id=?, branch_id=?  WHERE id =?";
 
-         Connection connection = null;
+        Connection connection = null;
         PreparedStatement statement = null;
 
         try {
@@ -86,11 +87,12 @@ public class BookingRepository {
             statement.setString(3, booking.getCustomerFeedback());
             statement.setString(4, booking.getDriverFeedback());
             statement.setFloat(5, booking.getDistance());
-            statement.setInt(6, booking.getDurationMinute());
-            statement.setInt(7, booking.getVehicleId());
-            statement.setInt(8, booking.getCustomerId());
-            statement.setInt(9, booking.getBranchId());
-            statement.setInt(10, booking.getId());
+            statement.setTimestamp(6, booking.getStarttime() != null? Date.valueOf(booking.getStarttime()) : null);
+            statement.setTimestamp(7, booking.getEndtime()!= null? Timestamp.from(booking.getEndtime()) : null);
+            statement.setInt(8, booking.getVehicleId());
+            statement.setInt(9, booking.getCustomerId());
+            statement.setInt(10, booking.getBranchId());
+            statement.setInt(11, booking.getId());
 
             statement.executeUpdate();
             return booking;
@@ -104,7 +106,7 @@ public class BookingRepository {
 
     public Booking getBooking(int id) throws DatabaseException {
         String query = "SELECT fare, status, customer_feedback, driver_feedback, distance,"
-                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking WHERE id =?";
+                + " booktime, starttime, endtime, vehicle_id, customer_id, branch_id FROM booking WHERE id =?";
         Booking booking = null;
         
        Connection connection = null;
@@ -126,7 +128,15 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setDurationMinute(rs.getInt("duration_minute"));
+                booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                Timestamp startDate = rs.getTimestamp("starttime");
+                if(startDate != null) {
+                   booking.setStarttime(startDate.toInstant());
+                }
+                Timestamp endDate = rs.getTimestamp("endtime");
+                if(endDate != null) {
+                   booking.setEndtime(endDate.toInstant());
+                }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
                 booking.setBranchId(rs.getInt("branch_id"));
@@ -142,7 +152,7 @@ public class BookingRepository {
     
     public List<Booking> getBookings() throws DatabaseException {
         String query = "SELECT id, fare, status, customer_feedback, driver_feedback, distance,"
-                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking";
+                + " booktime, starttime, endtime, vehicle_id, customer_id, branch_id FROM booking";
         List<Booking> bookingList = new ArrayList<>();
 
         Connection connection = null;
@@ -162,7 +172,15 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setDurationMinute(rs.getInt("duration_minute"));
+                booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                Timestamp startDate = rs.getTimestamp("starttime");
+                if(startDate != null) {
+                   booking.setStarttime(startDate.toInstant());
+                }
+                Timestamp endDate = rs.getTimestamp("endtime");
+                if(endDate != null) {
+                   booking.setEndtime(endDate.toInstant());
+                }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
                 booking.setBranchId(rs.getInt("branch_id"));
@@ -200,7 +218,7 @@ public class BookingRepository {
     
     public List<Booking> getBookingsByCustomerId(int customerId) throws DatabaseException {
         String query = "SELECT id, fare, status, customer_feedback, driver_feedback, distance,"
-                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking where customer_id =?";
+                + "  booktime, starttime, endtime, vehicle_id, customer_id, branch_id FROM booking where customer_id =?";
         List<Booking> bookingList = new ArrayList<>();
 
         Connection connection = null;
@@ -221,7 +239,15 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setDurationMinute(rs.getInt("duration_minute"));
+                booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                Timestamp startDate = rs.getTimestamp("starttime");
+                if(startDate != null) {
+                   booking.setStarttime(startDate.toInstant());
+                }
+                Timestamp endDate = rs.getTimestamp("endtime");
+                if(endDate != null) {
+                   booking.setEndtime(endDate.toInstant());
+                }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
                 booking.setBranchId(rs.getInt("branch_id"));
@@ -239,7 +265,7 @@ public class BookingRepository {
     
     public List<Booking> getBookingsByDriverId(int driverId) throws DatabaseException {
         String query = "SELECT b.id, b.fare, b.status, b.customer_feedback, b.driver_feedback, " +
-                       "b.distance, b.duration_minute, b.vehicle_id, b.customer_id, b.branch_id FROM booking " +
+                       "b.booktime, b.starttime, b.endtime, b.duration_minute, b.vehicle_id, b.customer_id, b.branch_id FROM booking " +
                        "INNER JOIN vehicle v ON b.vehicle_id = v.id " +
                        "INNER JOIN driver d ON v.driver_id = d.id " +
                        "WHERE d.id =?";
@@ -265,7 +291,15 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setDurationMinute(rs.getInt("duration_minute"));
+                booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                Timestamp startDate = rs.getTimestamp("starttime");
+                if(startDate != null) {
+                   booking.setStarttime(startDate.toInstant());
+                }
+                Timestamp endDate = rs.getTimestamp("endtime");
+                if(endDate != null) {
+                   booking.setEndtime(endDate.toInstant());
+                }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
                 booking.setBranchId(rs.getInt("branch_id"));
@@ -283,7 +317,7 @@ public class BookingRepository {
     
     public List<Booking> getBookingsByBranchId(int branchId) throws DatabaseException {
         String query = "SELECT id, fare, status, customer_feedback, driver_feedback, distance,"
-                + " duration_minute, vehicle_id, customer_id, branch_id FROM booking where branch_id =?";
+                + " b.booktime=?, b.starttime=?, b.endtime=?, vehicle_id, customer_id, branch_id FROM booking where branch_id =?";
         List<Booking> bookingList = new ArrayList<>();
 
         Connection connection = null;
@@ -304,7 +338,15 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setDurationMinute(rs.getInt("duration_minute"));
+                 booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                Timestamp startDate = rs.getTimestamp("starttime");
+                if(startDate != null) {
+                   booking.setStarttime(startDate.toInstant());
+                }
+                Timestamp endDate = rs.getTimestamp("endtime");
+                if(endDate != null) {
+                   booking.setEndtime(endDate.toInstant());
+                }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
                 booking.setBranchId(rs.getInt("branch_id"));

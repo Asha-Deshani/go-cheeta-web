@@ -49,6 +49,16 @@ public class BookingWebService {
         }
     }
     
+    @WebMethod(operationName = "getBooking")
+    public Booking getBooking(@WebParam(name = "id") int id) throws ControlerException {
+        try {
+            return bookingService.getBooking(id);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
     @WebMethod(operationName = "getBookings")
     public List<Booking> getBookings() throws ControlerException {
         try {

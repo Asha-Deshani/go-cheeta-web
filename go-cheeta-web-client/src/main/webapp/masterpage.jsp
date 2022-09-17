@@ -61,6 +61,8 @@
                                 isAthuenticated = true;
                                 loginUserId = customer.getId();
                                 %> <h2>Welcome <%=customer.getName()%>, book your next taxi from here!</h3> <%
+                                   %> <a href="booking.jsp">Manage Bookings</a>
+                                    <% 
                              } else if (loginRole.equals(ROLE_DRIVER)) {
                                 Driver driver = (Driver)sessionObject;
                                 isAthuenticated = true;
