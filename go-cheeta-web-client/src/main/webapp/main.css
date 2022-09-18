@@ -61,6 +61,14 @@ th {
     width: 25%;
 }
 
+.leftfull {
+    background-color: #6666ff;
+    padding: 20px;
+    margin: 20px;
+    border: solid;
+    width: 100%;
+}
+
 .right {
     background-color: yellowgreen;
     padding: 20px;

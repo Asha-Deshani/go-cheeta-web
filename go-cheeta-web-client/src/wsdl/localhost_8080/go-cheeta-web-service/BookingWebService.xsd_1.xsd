@@ -24,6 +24,10 @@
 
 <xs:element name="getBookingsByDriverIdResponse" type="tns:getBookingsByDriverIdResponse"/>
 
+<xs:element name="getBookingsDetailsByBranchId" type="tns:getBookingsDetailsByBranchId"/>
+
+<xs:element name="getBookingsDetailsByBranchIdResponse" type="tns:getBookingsDetailsByBranchIdResponse"/>
+
 <xs:element name="getBookingsResponse" type="tns:getBookingsResponse"/>
 
 <xs:element name="updateBooking" type="tns:updateBooking"/>
@@ -120,6 +124,40 @@
 <xs:complexType name="getBookingsByDriverIdResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:booking" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getBookingsDetailsByBranchId">
+<xs:sequence>
+<xs:element name="branchId" type="xs:int"/>
+<xs:element name="starttime" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="endtime" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getBookingsDetailsByBranchIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:bookingDetail" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="bookingDetail">
+<xs:sequence>
+<xs:element name="booktime" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="branchId" type="xs:int"/>
+<xs:element name="customerFeedback" type="xs:string" minOccurs="0"/>
+<xs:element name="customerId" type="xs:int"/>
+<xs:element name="customerName" type="xs:string" minOccurs="0"/>
+<xs:element name="distance" type="xs:float"/>
+<xs:element name="driverFeedback" type="xs:string" minOccurs="0"/>
+<xs:element name="driverName" type="xs:string" minOccurs="0"/>
+<xs:element name="endtime" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="fare" type="xs:decimal" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="starttime" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="status" type="xs:string" minOccurs="0"/>
+<xs:element name="vehicleDetail" type="xs:string" minOccurs="0"/>
+<xs:element name="vehicleId" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 

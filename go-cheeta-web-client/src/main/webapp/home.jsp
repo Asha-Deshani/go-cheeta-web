@@ -36,11 +36,6 @@
          <%
                  BranchWebService_Service branchService = new BranchWebService_Service();
                  List<Branch> branchList = branchService.getBranchWebServicePort().getBranches(); 
-                 
-                 Map<Integer, String> branchIdNameMap = new HashMap();
-                    for(Branch branchItem : branchList){
-                       branchIdNameMap.put(branchItem.getId(), branchItem.getName());
-                    }
                     
                String branchId = request.getParameter("branch");
                String vehicletype = request.getParameter("vehicletype");
@@ -86,7 +81,6 @@
                     locationList = locationService.getLocationWebServicePort().getLocationsByBranchId(Integer.parseInt(branchId));
                      vehicleTypeList = vehicleTypeWebService.getVehicleTypeWebServicePort().getVehicleTypes();
                 } catch (Exception ex) {
-                out.print(ex);
                     %> <h3>Error: <%=ex.getMessage()%>!</h3> <%
                 }
           

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.database.DatabaseManager;
@@ -132,6 +134,38 @@ public class CustomerRepository {
             throw new DatabaseException(ex.getMessage());
         } finally {
             DatabaseManager.closeResources(null, statement, connection);
+        }
+    }
+    
+    public List<Customer> getCustomers() throws DatabaseException {
+        String query = "SELECT name, telephone, email FROM customer";
+
+        List<Customer> customerList = new ArrayList();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
+
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+
+                customer.setId(rs.getInt("id"));
+                customer.setName(rs.getString("name"));
+                customer.setTelephone(rs.getString("telephone"));
+                customer.setEmail(rs.getString("email"));
+                customerList.add(customer);
+            }
+            return customerList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
         }
     }
 }

@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.controller;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jws.WebMethod;
@@ -58,10 +59,20 @@ public class CustomerWebService {
         }
     }
     
-    @WebMethod(operationName = "geteCustomer")
+    @WebMethod(operationName = "getCustomer")
     public Customer getCustomer(@WebParam(name = "id") int id) throws ControlerException {
         try {
             return customerService.getCustomer(id);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getCustomers")
+    public List<Customer> getCustomers() throws ControlerException {
+        try {
+            return customerService.getCustomers();
         } catch (ServiceException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ControlerException(ex.getMessage());

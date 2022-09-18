@@ -4,6 +4,7 @@
  */
 package lk.gocheeta.web.service.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +12,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import lk.gocheeta.web.service.dto.Booking;
+import lk.gocheeta.web.service.dto.BookingDetail;
 import lk.gocheeta.web.service.repository.exception.ControlerException;
 import lk.gocheeta.web.service.repository.exception.ServiceException;
 import lk.gocheeta.web.service.service.BookingService;
@@ -93,6 +95,16 @@ public class BookingWebService {
     public List<Booking> getBookingsByBranchId(@WebParam(name = "branchId") int branchId) throws ControlerException {
         try {
             return bookingService.getBookingsByBranchId(branchId);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getBookingsDetailsByBranchId")
+    public List<BookingDetail> getBookingsDetailsByBranchId(@WebParam(name = "branchId") int branchId, @WebParam(name = "starttime") Date starttime, @WebParam(name = "endtime") Date endtime) throws ControlerException {
+        try {
+            return bookingService.getBookingsDetailsByBranchId(branchId, starttime, endtime);
         } catch (ServiceException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ControlerException(ex.getMessage());

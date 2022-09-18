@@ -4,8 +4,6 @@
     <system systemId="http://localhost:8080/go-cheeta-web-service/LoginWebService?wsdl" uri="wsdl/localhost_8080/go-cheeta-web-service/LoginWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LoginWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/LoginWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/LoginWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/LoginWebService.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/go-cheeta-web-service/CustomerWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/CustomerWebService.wsdl"/>
-    <system systemId="http://localhost:8080/go-cheeta-web-service/CustomerWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/CustomerWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/AdminWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/AdminWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/AdminWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/AdminWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/BranchWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/BranchWebService.wsdl"/>
@@ -16,10 +14,12 @@
     <system systemId="http://localhost:8080/go-cheeta-web-service/DistanceWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/DistanceWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/DriverWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/DriverWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/DriverWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/DriverWebService.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/go-cheeta-web-service/BookingWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/BookingWebService.wsdl"/>
-    <system systemId="http://localhost:8080/go-cheeta-web-service/BookingWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/BookingWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/VehicleTypeWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/VehicleTypeWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/VehicleTypeWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/VehicleTypeWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/VehicleWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/VehicleWebService.wsdl"/>
     <system systemId="http://localhost:8080/go-cheeta-web-service/VehicleWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/VehicleWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/CustomerWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/CustomerWebService.wsdl"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/CustomerWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/CustomerWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/BookingWebService?WSDL" uri="wsdl/localhost_8080/go-cheeta-web-service/BookingWebService.wsdl"/>
+    <system systemId="http://localhost:8080/go-cheeta-web-service/BookingWebService?xsd=1" uri="wsdl/localhost_8080/go-cheeta-web-service/BookingWebService.xsd_1.xsd"/>
 </catalog>

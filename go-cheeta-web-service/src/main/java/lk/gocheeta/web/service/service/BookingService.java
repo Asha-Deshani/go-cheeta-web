@@ -4,10 +4,12 @@
  */
 package lk.gocheeta.web.service.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.gocheeta.web.service.dto.Booking;
+import lk.gocheeta.web.service.dto.BookingDetail;
 import lk.gocheeta.web.service.repository.BookingRepository;
 import lk.gocheeta.web.service.repository.exception.DatabaseException;
 import lk.gocheeta.web.service.repository.exception.ServiceException;
@@ -87,6 +89,15 @@ public class BookingService {
     public List<Booking> getBookingsByBranchId(int branchId) throws ServiceException {
         try {
             return bookingRepository.getBookingsByBranchId(branchId);
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+    
+    public List<BookingDetail> getBookingsDetailsByBranchId(int branchId, Date starttime, Date endtime) throws ServiceException {
+        try {
+            return bookingRepository.getBookingsDetailsByBranchId(branchId, starttime, endtime);
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ServiceException(ex.getMessage());

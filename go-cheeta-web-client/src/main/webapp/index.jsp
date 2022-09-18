@@ -81,7 +81,7 @@
                 Admin admin = null;
                 Driver driver = null;
                 if(login.getRole().equals(ROLE_CUSTOMER)){
-                    customer = customerService.getCustomerWebServicePort().geteCustomer(login.getReferenceId());
+                    customer = customerService.getCustomerWebServicePort().getCustomer(login.getReferenceId());
                     if(customer == null){
                         %> <h3>Error: User information missing. Please contact admin!</h3> <%
                         return;

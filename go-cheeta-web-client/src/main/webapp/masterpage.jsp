@@ -57,14 +57,16 @@
                                 loginUserId = admin.getId();
                                 %> <h2>Welcome Admin, <%=admin.getName()%>!</h3>
                                      <a href="branch.jsp">Manage Branches</a>
-                                     <br/>
+                                      <br/>
                                      <a href="location.jsp">Manage Locations</a>
-                                     <br/>
+                                      <br/>
                                      <a href="driver.jsp">Manage Drivers</a>
-                                     <br/>
+                                      <br/>
                                      <a href="vehicletype.jsp">Manage Vehicle Types</a>
                                      <br/>
                                      <a href="vehicle.jsp">Manage Vehicles</a>
+                                     <br/>
+                                     <a href="bookingreport.jsp">Booking Report</a>
                                  <% 
                              } else if (loginRole.equals(ROLE_CUSTOMER)) {
                                 Customer customer = (Customer)sessionObject;
@@ -96,6 +98,7 @@
                             request.getServletPath().equals("/location.jsp") ||
                             request.getServletPath().equals("/vehicletype.jsp") ||
                             request.getServletPath().equals("/vehicle.jsp") ||
+                            request.getServletPath().equals("/bookingreport.jsp") ||
                             request.getServletPath().equals("/driver.jsp")) { 
                                 response.sendRedirect("index.jsp");
                     }

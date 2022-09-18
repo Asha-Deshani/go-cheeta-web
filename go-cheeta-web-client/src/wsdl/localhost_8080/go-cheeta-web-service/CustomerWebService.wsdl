@@ -4,20 +4,14 @@
 <xsd:import namespace="http://controller.service.web.gocheeta.lk/" schemaLocation="http://localhost:8080/go-cheeta-web-service/CustomerWebService?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="addCustomer">
-<part name="parameters" element="tns:addCustomer"/>
+<message name="getCustomers">
+<part name="parameters" element="tns:getCustomers"/>
 </message>
-<message name="addCustomerResponse">
-<part name="parameters" element="tns:addCustomerResponse"/>
+<message name="getCustomersResponse">
+<part name="parameters" element="tns:getCustomersResponse"/>
 </message>
 <message name="ControlerException">
 <part name="fault" element="tns:ControlerException"/>
-</message>
-<message name="geteCustomer">
-<part name="parameters" element="tns:geteCustomer"/>
-</message>
-<message name="geteCustomerResponse">
-<part name="parameters" element="tns:geteCustomerResponse"/>
 </message>
 <message name="deleteCustomer">
 <part name="parameters" element="tns:deleteCustomer"/>
@@ -31,16 +25,23 @@
 <message name="updateCustomerResponse">
 <part name="parameters" element="tns:updateCustomerResponse"/>
 </message>
+<message name="addCustomer">
+<part name="parameters" element="tns:addCustomer"/>
+</message>
+<message name="addCustomerResponse">
+<part name="parameters" element="tns:addCustomerResponse"/>
+</message>
+<message name="getCustomer">
+<part name="parameters" element="tns:getCustomer"/>
+</message>
+<message name="getCustomerResponse">
+<part name="parameters" element="tns:getCustomerResponse"/>
+</message>
 <portType name="CustomerWebService">
-<operation name="addCustomer">
-<input wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/addCustomerRequest" message="tns:addCustomer"/>
-<output wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/addCustomerResponse" message="tns:addCustomerResponse"/>
-<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/addCustomer/Fault/ControlerException"/>
-</operation>
-<operation name="geteCustomer">
-<input wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/geteCustomerRequest" message="tns:geteCustomer"/>
-<output wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/geteCustomerResponse" message="tns:geteCustomerResponse"/>
-<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/geteCustomer/Fault/ControlerException"/>
+<operation name="getCustomers">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/getCustomersRequest" message="tns:getCustomers"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/getCustomersResponse" message="tns:getCustomersResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/getCustomers/Fault/ControlerException"/>
 </operation>
 <operation name="deleteCustomer">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/deleteCustomerRequest" message="tns:deleteCustomer"/>
@@ -52,22 +53,20 @@
 <output wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/updateCustomerResponse" message="tns:updateCustomerResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/updateCustomer/Fault/ControlerException"/>
 </operation>
+<operation name="addCustomer">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/addCustomerRequest" message="tns:addCustomer"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/addCustomerResponse" message="tns:addCustomerResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/addCustomer/Fault/ControlerException"/>
+</operation>
+<operation name="getCustomer">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/getCustomerRequest" message="tns:getCustomer"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/getCustomerResponse" message="tns:getCustomerResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/CustomerWebService/getCustomer/Fault/ControlerException"/>
+</operation>
 </portType>
 <binding name="CustomerWebServicePortBinding" type="tns:CustomerWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="addCustomer">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="ControlerException">
-<soap:fault name="ControlerException" use="literal"/>
-</fault>
-</operation>
-<operation name="geteCustomer">
+<operation name="getCustomers">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -92,6 +91,30 @@
 </fault>
 </operation>
 <operation name="updateCustomer">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="addCustomer">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="getCustomer">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

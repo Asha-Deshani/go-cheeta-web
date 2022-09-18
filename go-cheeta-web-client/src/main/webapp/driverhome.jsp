@@ -133,8 +133,7 @@
                     editBooking = bookingWebService_Service.getBookingWebServicePort().getBooking(id);
 
                     GregorianCalendar gcal = new GregorianCalendar();
-                    XMLGregorianCalendar xgcal = DatatypeFactory.newInstance()
-                            .newXMLGregorianCalendar(gcal);
+                    XMLGregorianCalendar xgcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
 
                     editBooking.setStatus(STATUS_COMPLETED);
                     editBooking.setEndtime(xgcal);
@@ -177,8 +176,7 @@
                 try {
                     editBooking = bookingWebService_Service.getBookingWebServicePort().getBooking(id);
                     GregorianCalendar gcal = new GregorianCalendar();
-                    XMLGregorianCalendar xgcal = DatatypeFactory.newInstance()
-                            .newXMLGregorianCalendar(gcal);
+                    XMLGregorianCalendar xgcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
 
                     editBooking.setStatus(STATUS_STARTED);
                     editBooking.setStarttime(xgcal);

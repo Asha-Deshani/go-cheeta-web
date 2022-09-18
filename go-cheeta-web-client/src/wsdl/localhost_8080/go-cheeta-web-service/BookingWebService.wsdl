@@ -49,6 +49,12 @@
 <message name="getBookingsResponse">
 <part name="parameters" element="tns:getBookingsResponse"/>
 </message>
+<message name="getBookingsDetailsByBranchId">
+<part name="parameters" element="tns:getBookingsDetailsByBranchId"/>
+</message>
+<message name="getBookingsDetailsByBranchIdResponse">
+<part name="parameters" element="tns:getBookingsDetailsByBranchIdResponse"/>
+</message>
 <portType name="BookingWebService">
 <operation name="getBookingsByBranchId">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsByBranchIdRequest" message="tns:getBookingsByBranchId"/>
@@ -84,6 +90,11 @@
 <input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsRequest" message="tns:getBookings"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsResponse" message="tns:getBookingsResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookings/Fault/ControlerException"/>
+</operation>
+<operation name="getBookingsDetailsByBranchId">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsDetailsByBranchIdRequest" message="tns:getBookingsDetailsByBranchId"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsDetailsByBranchIdResponse" message="tns:getBookingsDetailsByBranchIdResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/BookingWebService/getBookingsDetailsByBranchId/Fault/ControlerException"/>
 </operation>
 </portType>
 <binding name="BookingWebServicePortBinding" type="tns:BookingWebService">
@@ -161,6 +172,18 @@
 </fault>
 </operation>
 <operation name="getBookings">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="getBookingsDetailsByBranchId">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
