@@ -82,8 +82,6 @@
                      
                       String branchselect = request.getParameter("branchselect");
              if(branchselect != null) {
-      
-                  out.print(branchId);
                 try {
                     locationList = locationService.getLocationWebServicePort().getLocationsByBranchId(Integer.parseInt(branchId));
                      vehicleTypeList = vehicleTypeWebService.getVehicleTypeWebServicePort().getVehicleTypes();
@@ -158,7 +156,6 @@
                         <th>Model</th>
                         <th>Year</th>
                         <th>Book Taxi</th>
-                        <th>Delete</th>
                    </tr>
                    <%
                 for (Vehicle vehicle : vehicleList) {
@@ -168,7 +165,6 @@
                         <td><%=vehicle.getModel()%></td>
                         <td><%=vehicle.getYear()%></td>
                         <td><a href="home.jsp?bookvehicleId=<%=vehicle.getId()%>&branchId=<%=branchId%>&vehicleRate=<%=vehicleRate%>&distance=<%=distance%>">Book Taxi</a></td>
-                        <td><a href="home.jsp?bookvehicleId=<%=vehicle.getId()%>&branchId=<%=branchId%>&vehicleRate=<%=vehicleRate%>&distance=<%=distance%>">Delete</a></td>
                     </tr>
                <%}%>
                              </table>

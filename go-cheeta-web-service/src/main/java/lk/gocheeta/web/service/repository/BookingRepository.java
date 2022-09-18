@@ -36,7 +36,7 @@ public class BookingRepository {
 
     public Booking addBooking(Booking booking) throws DatabaseException {
         String query = "INSERT INTO booking (fare, status, customer_feedback, "
-                + "driver_feedback, duration_minute, vehicle_id, customer_id, branch_id) "
+                + "driver_feedback, distance, vehicle_id, customer_id, branch_id) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
        Connection connection = null;
@@ -78,7 +78,7 @@ public class BookingRepository {
         Connection connection = null;
         PreparedStatement statement = null;
 
-        try {
+        try { 
             connection = DatabaseManager.getConnection();
             statement = DatabaseManager.getPreparedStatement(connection, query);
             
@@ -87,8 +87,8 @@ public class BookingRepository {
             statement.setString(3, booking.getCustomerFeedback());
             statement.setString(4, booking.getDriverFeedback());
             statement.setFloat(5, booking.getDistance());
-            statement.setTimestamp(6, booking.getStarttime() != null? Date.valueOf(booking.getStarttime()) : null);
-            statement.setTimestamp(7, booking.getEndtime()!= null? Timestamp.from(booking.getEndtime()) : null);
+            statement.setTimestamp(6, booking.getStarttime() != null ? new Timestamp(booking.getStarttime().getTime()) : null);
+            statement.setTimestamp(7, booking.getEndtime()!= null ? new Timestamp(booking.getEndtime().getTime()) : null);
             statement.setInt(8, booking.getVehicleId());
             statement.setInt(9, booking.getCustomerId());
             statement.setInt(10, booking.getBranchId());
@@ -128,14 +128,14 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                booking.setBooktime(rs.getTimestamp("booktime"));
                 Timestamp startDate = rs.getTimestamp("starttime");
                 if(startDate != null) {
-                   booking.setStarttime(startDate.toInstant());
+                   booking.setStarttime(startDate);
                 }
                 Timestamp endDate = rs.getTimestamp("endtime");
                 if(endDate != null) {
-                   booking.setEndtime(endDate.toInstant());
+                   booking.setEndtime(endDate);
                 }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
@@ -172,14 +172,14 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                booking.setBooktime(rs.getTimestamp("booktime"));
                 Timestamp startDate = rs.getTimestamp("starttime");
                 if(startDate != null) {
-                   booking.setStarttime(startDate.toInstant());
+                   booking.setStarttime(startDate);
                 }
                 Timestamp endDate = rs.getTimestamp("endtime");
                 if(endDate != null) {
-                   booking.setEndtime(endDate.toInstant());
+                   booking.setEndtime(endDate);
                 }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
@@ -239,19 +239,20 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                booking.setBooktime(rs.getTimestamp("booktime"));
                 Timestamp startDate = rs.getTimestamp("starttime");
                 if(startDate != null) {
-                   booking.setStarttime(startDate.toInstant());
+                   booking.setStarttime(startDate);
                 }
                 Timestamp endDate = rs.getTimestamp("endtime");
                 if(endDate != null) {
-                   booking.setEndtime(endDate.toInstant());
+                   booking.setEndtime(endDate);
                 }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
                 booking.setBranchId(rs.getInt("branch_id"));
 
+                System.out.println("Booking time: " + booking.getBooktime());
                 bookingList.add(booking);
             }
             return bookingList;
@@ -264,8 +265,8 @@ public class BookingRepository {
     }
     
     public List<Booking> getBookingsByDriverId(int driverId) throws DatabaseException {
-        String query = "SELECT b.id, b.fare, b.status, b.customer_feedback, b.driver_feedback, " +
-                       "b.booktime, b.starttime, b.endtime, b.duration_minute, b.vehicle_id, b.customer_id, b.branch_id FROM booking " +
+        String query = "SELECT b.id, b.fare, b.status, b.customer_feedback, b.driver_feedback, b.distance, " +
+                       "b.booktime, b.starttime, b.endtime, b.vehicle_id, b.customer_id, b.branch_id FROM booking b " +
                        "INNER JOIN vehicle v ON b.vehicle_id = v.id " +
                        "INNER JOIN driver d ON v.driver_id = d.id " +
                        "WHERE d.id =?";
@@ -285,20 +286,20 @@ public class BookingRepository {
 
             while (rs.next()) {
                 Booking booking = new Booking();
-                booking.setId(rs.getInt("id"));
+                booking.setId(rs.getInt("b.id"));
                 booking.setFare(rs.getBigDecimal("fare"));
                 booking.setStatus(rs.getString("status"));
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                booking.setBooktime(rs.getTimestamp("booktime"));
                 Timestamp startDate = rs.getTimestamp("starttime");
                 if(startDate != null) {
-                   booking.setStarttime(startDate.toInstant());
+                   booking.setStarttime(startDate);
                 }
                 Timestamp endDate = rs.getTimestamp("endtime");
                 if(endDate != null) {
-                   booking.setEndtime(endDate.toInstant());
+                   booking.setEndtime(endDate);
                 }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));
@@ -317,7 +318,7 @@ public class BookingRepository {
     
     public List<Booking> getBookingsByBranchId(int branchId) throws DatabaseException {
         String query = "SELECT id, fare, status, customer_feedback, driver_feedback, distance,"
-                + " b.booktime=?, b.starttime=?, b.endtime=?, vehicle_id, customer_id, branch_id FROM booking where branch_id =?";
+                + " booktime=?, starttime=?, endtime=?, vehicle_id, customer_id, branch_id FROM booking where branch_id =?";
         List<Booking> bookingList = new ArrayList<>();
 
         Connection connection = null;
@@ -338,14 +339,14 @@ public class BookingRepository {
                 booking.setCustomerFeedback(rs.getString("customer_feedback"));
                 booking.setDriverFeedback(rs.getString("driver_feedback"));
                 booking.setDistance(rs.getFloat("distance"));
-                 booking.setBooktime(rs.getTimestamp("booktime").toInstant());
+                booking.setBooktime(rs.getTimestamp("booktime"));
                 Timestamp startDate = rs.getTimestamp("starttime");
                 if(startDate != null) {
-                   booking.setStarttime(startDate.toInstant());
+                   booking.setStarttime(startDate);
                 }
                 Timestamp endDate = rs.getTimestamp("endtime");
                 if(endDate != null) {
-                   booking.setEndtime(endDate.toInstant());
+                   booking.setEndtime(endDate);
                 }
                 booking.setVehicleId(rs.getInt("vehicle_id"));
                 booking.setCustomerId(rs.getInt("customer_id"));

@@ -5,8 +5,8 @@
 package lk.gocheeta.web.service.dto;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.Instant;
+import java.util.Date;
+
 
 /**
  *

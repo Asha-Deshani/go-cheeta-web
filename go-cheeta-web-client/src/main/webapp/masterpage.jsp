@@ -27,6 +27,12 @@
             final String ROLE_ADMIN = "ADMIN";
             final String ROLE_DRIVER = "DRIVER";
             final String ROLE = "ROLE";
+            
+            final String STATUS_PENDING = "PENDING";
+            final String STATUS_ACCEPTED = "ACCEPTED";
+            final String STATUS_STARTED = "STARTED";
+            final String STATUS_COMPLETED = "COMPLETED";
+            
             int loginUserId = -1;
             String loginRole = null;
             
@@ -62,6 +68,8 @@
                                 loginUserId = customer.getId();
                                 %> <h2>Welcome <%=customer.getName()%>, book your next taxi from here!</h3> <%
                                    %> <a href="booking.jsp">Manage Bookings</a>
+                                   <br/>
+                                     <a href="home.jsp">Home</a>
                                     <% 
                              } else if (loginRole.equals(ROLE_DRIVER)) {
                                 Driver driver = (Driver)sessionObject;

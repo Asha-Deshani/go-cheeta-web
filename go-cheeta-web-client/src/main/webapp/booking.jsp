@@ -4,8 +4,6 @@
     Author     : asha
 --%>
 
-<%@page import="java.time.LocalDateTime"%>
-<%@page import="lk.gocheeta.web.service.controller.LocalDate"%>
 <%@page import="lk.gocheeta.web.service.controller.Booking"%>
 <%@page import="lk.gocheeta.web.service.controller.BookingWebService_Service"%>
 <%@page import="java.util.List"%>
@@ -25,11 +23,6 @@
             <h2>Don't forget to leave a feedback for your trip</h2>
        
             <% 
-                final String STATUS_PENDING = "PENDING";
-                final String STATUS_ACCEPTED = "ACCEPTED";
-                final String STATUS_STARTED = "STARTED";
-                final String STATUS_COMPLETED = "COMPLETED";
-                
                BookingWebService_Service bookingWebService_Service = new BookingWebService_Service();
                List<Booking> bookinglist = bookingWebService_Service.getBookingWebServicePort().getBookingsByCustomerId(loginUserId);
                            
@@ -53,14 +46,14 @@
                 for (Booking booking : bookinglist) {
                 %>
                     <tr>
-                        <td><%=booking.getFare()%></td>
+                        <td><%=booking.getFare() == null? "" : booking.getFare()%></td>
                         <td><%=booking.getDistance()%></td>
-                        <td><%=booking.getStatus()%></td>
-                        <td><%=booking.getBooktime().toString()%></td>
+                        <td><%=booking.getStatus() == null? "" : booking.getStatus()%></td>
+                        <td><%=booking.getBooktime() == null? "" : booking.getBooktime()%></td>
                         <td><%=booking.getStarttime() == null? "" : booking.getStarttime()%></td>
                         <td><%=booking.getEndtime() == null? "" : booking.getEndtime()%></td>
-                        <td><%=booking.getCustomerFeedback()%></td>
-                        <td><%=booking.getDriverFeedback()%></td>
+                        <td><%=booking.getCustomerFeedback() == null? "" : booking.getCustomerFeedback()%></td>
+                        <td><%=booking.getDriverFeedback() == null? "" : booking.getDriverFeedback()%></td>
                         <td><%=booking.getStatus().equals(STATUS_COMPLETED) ? "<a href=\"booking.jsp?bookingid=" +booking.getId() + "\">Give feedback</a>" : ""%> </td>
                     </tr>
                <%}%>
@@ -89,7 +82,8 @@
                 <form action = "booking.jsp" method = "POST">
                     <input type = "hidden" name = "id" required="true" value="<%=editBooking.getId()%>"/>
                     <br />
-                    <label>Customer Feedback</label><input type = "textarea" name = "customerfeedback" required="true" value="<%=editBooking.getCustomerFeedback()%>"/>
+                    <label>Customer Feedback</label><textarea name = "customerfeedback" rows="4" cols="50" required="true"><%=editBooking.getCustomerFeedback()%></textarea>
+                    <br />
                     <br />
                     <input type = "submit" name ="editbooking" value = "Give Feedback" />
                 </form>
@@ -101,7 +95,6 @@
                 if(editbooking != null) {
                     String customerfeedback = request.getParameter("customerfeedback");
                     String id = request.getParameter("id");
-                    out.print(customerfeedback);
                     if(id == null){
                         %> <h3>Id can't be empty!</h3> <%
                         return;
@@ -112,21 +105,16 @@
 
                     try {
                         editBooking = bookingWebService_Service.getBookingWebServicePort().updateBooking(editBooking);
-                        %> <h4>Branch <%= editBooking.getCustomerFeedback()%> successfully updated!</h4> <%
+                        %> <h4>Booking <%= editBooking.getCustomerFeedback()%> successfully updated!</h4> <%
                     } catch (Exception e) {
                         if (e.getMessage().contains("Duplicate entry")) {
                             String error = e.getMessage().substring(0, e.getMessage().indexOf("for"));
                             %> <h3>Error: <%=error%>!</h3> <%
                          }
                     }
+                    response.sendRedirect("booking.jsp");
                 }
-
-
-
 %>
-           
-           
-  
         </div>
     </body>
 </html>
