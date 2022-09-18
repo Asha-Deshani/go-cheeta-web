@@ -10,9 +10,17 @@
 
 <xs:element name="deleteVehicleResponse" type="tns:deleteVehicleResponse"/>
 
+<xs:element name="getVehicle" type="tns:getVehicle"/>
+
 <xs:element name="getVehicleByBranchIdAndVehicleTypeId" type="tns:getVehicleByBranchIdAndVehicleTypeId"/>
 
 <xs:element name="getVehicleByBranchIdAndVehicleTypeIdResponse" type="tns:getVehicleByBranchIdAndVehicleTypeIdResponse"/>
+
+<xs:element name="getVehicleResponse" type="tns:getVehicleResponse"/>
+
+<xs:element name="getVehicles" type="tns:getVehicles"/>
+
+<xs:element name="getVehiclesResponse" type="tns:getVehiclesResponse"/>
 
 <xs:element name="updateVehicle" type="tns:updateVehicle"/>
 
@@ -69,6 +77,28 @@
 <xs:complexType name="updateVehicleResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:vehicle" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getVehicle">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getVehicleResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:vehicle" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getVehicles">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getVehiclesResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:vehicle" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

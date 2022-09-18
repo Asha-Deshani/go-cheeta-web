@@ -4,11 +4,11 @@
 <xsd:import namespace="http://controller.service.web.gocheeta.lk/" schemaLocation="http://localhost:8080/go-cheeta-web-service/VehicleWebService?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="getVehicleByBranchIdAndVehicleTypeId">
-<part name="parameters" element="tns:getVehicleByBranchIdAndVehicleTypeId"/>
+<message name="addVehicle">
+<part name="parameters" element="tns:addVehicle"/>
 </message>
-<message name="getVehicleByBranchIdAndVehicleTypeIdResponse">
-<part name="parameters" element="tns:getVehicleByBranchIdAndVehicleTypeIdResponse"/>
+<message name="addVehicleResponse">
+<part name="parameters" element="tns:addVehicleResponse"/>
 </message>
 <message name="ControlerException">
 <part name="fault" element="tns:ControlerException"/>
@@ -19,43 +19,65 @@
 <message name="updateVehicleResponse">
 <part name="parameters" element="tns:updateVehicleResponse"/>
 </message>
-<message name="addVehicle">
-<part name="parameters" element="tns:addVehicle"/>
-</message>
-<message name="addVehicleResponse">
-<part name="parameters" element="tns:addVehicleResponse"/>
-</message>
 <message name="deleteVehicle">
 <part name="parameters" element="tns:deleteVehicle"/>
 </message>
 <message name="deleteVehicleResponse">
 <part name="parameters" element="tns:deleteVehicleResponse"/>
 </message>
+<message name="getVehicleByBranchIdAndVehicleTypeId">
+<part name="parameters" element="tns:getVehicleByBranchIdAndVehicleTypeId"/>
+</message>
+<message name="getVehicleByBranchIdAndVehicleTypeIdResponse">
+<part name="parameters" element="tns:getVehicleByBranchIdAndVehicleTypeIdResponse"/>
+</message>
+<message name="getVehicles">
+<part name="parameters" element="tns:getVehicles"/>
+</message>
+<message name="getVehiclesResponse">
+<part name="parameters" element="tns:getVehiclesResponse"/>
+</message>
+<message name="getVehicle">
+<part name="parameters" element="tns:getVehicle"/>
+</message>
+<message name="getVehicleResponse">
+<part name="parameters" element="tns:getVehicleResponse"/>
+</message>
 <portType name="VehicleWebService">
-<operation name="getVehicleByBranchIdAndVehicleTypeId">
-<input wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicleByBranchIdAndVehicleTypeIdRequest" message="tns:getVehicleByBranchIdAndVehicleTypeId"/>
-<output wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicleByBranchIdAndVehicleTypeIdResponse" message="tns:getVehicleByBranchIdAndVehicleTypeIdResponse"/>
-<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicleByBranchIdAndVehicleTypeId/Fault/ControlerException"/>
+<operation name="addVehicle">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/addVehicleRequest" message="tns:addVehicle"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/addVehicleResponse" message="tns:addVehicleResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/addVehicle/Fault/ControlerException"/>
 </operation>
 <operation name="updateVehicle">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/updateVehicleRequest" message="tns:updateVehicle"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/updateVehicleResponse" message="tns:updateVehicleResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/updateVehicle/Fault/ControlerException"/>
 </operation>
-<operation name="addVehicle">
-<input wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/addVehicleRequest" message="tns:addVehicle"/>
-<output wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/addVehicleResponse" message="tns:addVehicleResponse"/>
-<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/addVehicle/Fault/ControlerException"/>
-</operation>
 <operation name="deleteVehicle">
 <input wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/deleteVehicleRequest" message="tns:deleteVehicle"/>
 <output wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/deleteVehicleResponse" message="tns:deleteVehicleResponse"/>
 <fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/deleteVehicle/Fault/ControlerException"/>
 </operation>
+<operation name="getVehicleByBranchIdAndVehicleTypeId">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicleByBranchIdAndVehicleTypeIdRequest" message="tns:getVehicleByBranchIdAndVehicleTypeId"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicleByBranchIdAndVehicleTypeIdResponse" message="tns:getVehicleByBranchIdAndVehicleTypeIdResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicleByBranchIdAndVehicleTypeId/Fault/ControlerException"/>
+</operation>
+<operation name="getVehicles">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehiclesRequest" message="tns:getVehicles"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehiclesResponse" message="tns:getVehiclesResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicles/Fault/ControlerException"/>
+</operation>
+<operation name="getVehicle">
+<input wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicleRequest" message="tns:getVehicle"/>
+<output wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicleResponse" message="tns:getVehicleResponse"/>
+<fault message="tns:ControlerException" name="ControlerException" wsam:Action="http://controller.service.web.gocheeta.lk/VehicleWebService/getVehicle/Fault/ControlerException"/>
+</operation>
 </portType>
 <binding name="VehicleWebServicePortBinding" type="tns:VehicleWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="getVehicleByBranchIdAndVehicleTypeId">
+<operation name="addVehicle">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -79,7 +101,7 @@
 <soap:fault name="ControlerException" use="literal"/>
 </fault>
 </operation>
-<operation name="addVehicle">
+<operation name="deleteVehicle">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -91,7 +113,31 @@
 <soap:fault name="ControlerException" use="literal"/>
 </fault>
 </operation>
-<operation name="deleteVehicle">
+<operation name="getVehicleByBranchIdAndVehicleTypeId">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="getVehicles">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="ControlerException">
+<soap:fault name="ControlerException" use="literal"/>
+</fault>
+</operation>
+<operation name="getVehicle">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

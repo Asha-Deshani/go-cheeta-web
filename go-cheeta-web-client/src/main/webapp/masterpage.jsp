@@ -61,6 +61,10 @@
                                      <a href="location.jsp">Manage Locations</a>
                                      <br/>
                                      <a href="driver.jsp">Manage Drivers</a>
+                                     <br/>
+                                     <a href="vehicletype.jsp">Manage Vehicle Types</a>
+                                     <br/>
+                                     <a href="vehicle.jsp">Manage Vehicles</a>
                                  <% 
                              } else if (loginRole.equals(ROLE_CUSTOMER)) {
                                 Customer customer = (Customer)sessionObject;
@@ -90,6 +94,8 @@
                     if (request.getServletPath().equals("/adminhome.jsp") ||
                             request.getServletPath().equals("/branch.jsp") ||
                             request.getServletPath().equals("/location.jsp") ||
+                            request.getServletPath().equals("/vehicletype.jsp") ||
+                            request.getServletPath().equals("/vehicle.jsp") ||
                             request.getServletPath().equals("/driver.jsp")) { 
                                 response.sendRedirect("index.jsp");
                     }

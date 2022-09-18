@@ -65,4 +65,13 @@ public class VehicleService {
             throw new ServiceException(ex.getMessage());
         }
     }
+    
+    public List<Vehicle> getVehicles() throws ServiceException {
+        try {
+            return vehicleRepository.getVehicles();
+        } catch (DatabaseException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ServiceException(ex.getMessage());
+        }
+    }
 }

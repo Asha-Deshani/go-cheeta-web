@@ -4,6 +4,8 @@
     Author     : asha
 --%>
 
+<%@page import="lk.gocheeta.web.service.controller.Login"%>
+<%@page import="lk.gocheeta.web.service.controller.LoginWebService_Service"%>
 <%@page import="lk.gocheeta.web.service.controller.DriverWebService_Service"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
@@ -49,11 +51,16 @@
                     <%}%>
                     </select>
                 <br />
+                <label>Username</label> <input type = "text" name = "username" required="true"/>
+                <br />
+                <label>Password</label> <input type = "password" name = "password" required="true"/>
+                <br />
                 <input type = "submit" name ="newdriver" value = "Create Driver" />
             </form>
           </div>
          <%
              DriverWebService_Service  driverService = new DriverWebService_Service();
+             LoginWebService_Service loginService = new LoginWebService_Service();
              
              String newdriver = request.getParameter("newdriver");
              if(newdriver != null) {
@@ -62,8 +69,12 @@
                 String email = request.getParameter("email");
                 String branchId = request.getParameter("branch");
                 
-                if(name == null || telephone == null || branchId == null){
-                  %> <h3>Name, Telephone and Branch can't be empty!</h3> <%
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+                
+                if(name == null || telephone == null || branchId == null ||
+                    username == null || password == null){
+                  %> <h3>Name, Telephone, Username, password and Branch can't be empty!</h3> <%
                   return;
                 }
 
@@ -75,6 +86,23 @@
 
                 try {
                     driver = driverService.getDriverWebServicePort().addDriver(driver);
+                
+                    Login newLogin = new Login();
+                    newLogin.setUsername(username);
+                    newLogin.setPassword(password);
+                    newLogin.setRole(ROLE_DRIVER);
+                    newLogin.setReferenceId(driver.getId());
+
+                    try {
+                      newLogin = loginService.getLoginWebServicePort().addLogin(newLogin);
+                    } catch (Exception e) {
+                      driverService.getDriverWebServicePort().deleteDriver(driver.getId());
+                        if (e.getMessage().contains("Duplicate entry")) {
+                            String error = e.getMessage().substring(0, e.getMessage().indexOf("for"));
+                            %> <h3>Error: <%=error%>!</h3> <%
+                             return;
+                         }
+                    }
                     %> <h4>Location <%= driver.getName()%> successfully created!</h4> <%
                 } catch (Exception e) {
                     if (e.getMessage().contains("Duplicate entry")) {

@@ -90,7 +90,7 @@
             <div class="left">
                 <h2>Give Feedback</h2>
                 <br />
-                <form action = "driverhome.jsp" method = "POST">
+                <form action = "" method = "POST">
                     <input type = "hidden" name = "id" required="true" value="<%=editBooking.getId()%>"/>
                     <br />
                     <label>Driver Feedback</label><textarea name = "driverfeedback" rows="4" cols="50" required="true"><%=editBooking.getDriverFeedback()%></textarea>

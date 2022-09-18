@@ -33,7 +33,7 @@ public class VehicleRepository {
     }
 
     public Vehicle addVehicle(Vehicle vehicle) throws DatabaseException {
-        String query = "INSERT INTO vehicle (make, model, year, driver_id, branch_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO vehicle (make, model, year, driver_id, branch_id, vehicle_type_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -47,6 +47,7 @@ public class VehicleRepository {
             statement.setString(3, vehicle.getYear());
             statement.setInt(4, vehicle.getDriverId());
             statement.setInt(5, vehicle.getBranchId());
+            statement.setInt(6, vehicle.getVehicleTypeId());
 
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
@@ -64,7 +65,7 @@ public class VehicleRepository {
     }
 
     public Vehicle updateVehicle(Vehicle vehicle) throws DatabaseException {
-        String query = "UPDATE vehicle SET make=?, model=?, year=?, driver_id=?, branch_id=? WHERE id =?";
+        String query = "UPDATE vehicle SET make=?, model=?, year=?, driver_id=?, branch_id=?, vehicle_type_id=? WHERE id =?";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -77,9 +78,11 @@ public class VehicleRepository {
             statement.setString(3, vehicle.getYear());
             statement.setInt(4, vehicle.getDriverId());
             statement.setInt(5, vehicle.getBranchId());
-            statement.setInt(6, vehicle.getId());
+            statement.setInt(6, vehicle.getVehicleTypeId());
+            statement.setInt(7, vehicle.getId());
 
             statement.executeUpdate();
+            System.out.print(vehicle.getMake());
             return vehicle;
         } catch (SQLException ex) {
             loger.log(Level.SEVERE, null, ex);
@@ -90,7 +93,7 @@ public class VehicleRepository {
     }
 
     public Vehicle getVehicle(int id) throws DatabaseException {
-        String query = "SELECT make, model, year, driver_id, branch_id FROM vehicle WHERE id =?";
+        String query = "SELECT make, model, year, driver_id, branch_id, vehicle_type_id FROM vehicle WHERE id =?";
         Vehicle vehicle = null;
 
         Connection connection = null;
@@ -112,6 +115,7 @@ public class VehicleRepository {
                 vehicle.setYear(rs.getString("year"));
                 vehicle.setDriverId(rs.getInt("driver_id"));
                 vehicle.setBranchId(rs.getInt("branch_id"));
+                vehicle.setVehicleTypeId(rs.getInt("vehicle_type_id"));
             }
             return vehicle;
         } catch (SQLException ex) {
@@ -143,7 +147,9 @@ public class VehicleRepository {
     }
     
     public List<Vehicle> getVehicleByBranchIdAndVehicleTypeId(int branchId, int vehicleTypeId) throws DatabaseException {
-        String query = "SELECT id, make, model, year, driver_id, branch_id, vehicle_type_id FROM vehicle WHERE branch_id =? AND vehicle_type_id =?";
+        String query = "SELECT v.id, v.make, v.model, v.year, v.driver_id, v.branch_id, v.vehicle_type_id " +
+                        "FROM vehicle v LEFT JOIN booking b ON b.vehicle_id = v.id " +
+                        "WHERE v.branch_id = ? AND v.vehicle_type_id = ? AND (b.status = 'COMPLETED' OR b.status is null);";
         List<Vehicle> vehicleList = new ArrayList();
 
         Connection connection = null;
@@ -155,6 +161,41 @@ public class VehicleRepository {
             statement = DatabaseManager.getPreparedStatement(connection, query);
             statement.setInt(1, branchId);
             statement.setInt(2, vehicleTypeId);
+
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Vehicle vehicle = new Vehicle();
+
+                vehicle.setId(rs.getInt("id"));
+                vehicle.setMake(rs.getString("make"));
+                vehicle.setModel(rs.getString("model"));
+                vehicle.setYear(rs.getString("year"));
+                vehicle.setDriverId(rs.getInt("driver_id"));
+                vehicle.setBranchId(rs.getInt("branch_id"));
+                vehicle.setVehicleTypeId(rs.getInt("vehicle_type_id"));
+                
+                vehicleList.add(vehicle);
+            }
+            return vehicleList;
+        } catch (SQLException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex.getMessage());
+        } finally {
+            DatabaseManager.closeResources(rs, statement, connection);
+        }
+    }
+    
+    public List<Vehicle> getVehicles() throws DatabaseException {
+        String query = "SELECT id, make, model, year, driver_id, branch_id, vehicle_type_id FROM vehicle";
+        List<Vehicle> vehicleList = new ArrayList();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            statement = DatabaseManager.getPreparedStatement(connection, query);
 
             rs = statement.executeQuery();
             while (rs.next()) {

@@ -29,7 +29,6 @@ public class VehicleWebService {
         vehicleService = new VehicleService();
     }
 
-
    @WebMethod(operationName = "updateVehicle")
     public Vehicle updateVehicle(@WebParam(name = "vehicle") Vehicle vehicle) throws ControlerException {
         try {
@@ -64,6 +63,26 @@ public class VehicleWebService {
     public List<Vehicle> getVehicleByBranchIdAndVehicleTypeId(@WebParam(name = "branchId") int branchId, @WebParam(name = "vehicleTypeId") int vehicleTypeId) throws ControlerException {
         try {
             return vehicleService.getVehicleByBranchIdAndVehicleTypeId(branchId, vehicleTypeId);
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getVehicles")
+    public List<Vehicle> getVehicles() throws ControlerException {
+        try {
+            return vehicleService.getVehicles();
+        } catch (ServiceException ex) {
+            loger.log(Level.SEVERE, null, ex);
+            throw new ControlerException(ex.getMessage());
+        }
+    }
+    
+    @WebMethod(operationName = "getVehicle")
+    public Vehicle getVehicle(@WebParam(name = "id") int id) throws ControlerException {
+        try {
+            return vehicleService.getVehicle(id);
         } catch (ServiceException ex) {
             loger.log(Level.SEVERE, null, ex);
             throw new ControlerException(ex.getMessage());
