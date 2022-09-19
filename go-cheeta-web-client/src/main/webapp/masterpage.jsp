@@ -18,9 +18,7 @@
     <body>
         <div class="master">
              <h1>GoCheeta Taxi!</h1>
-             <h5>Safest way to travel around</h5>
-           
-             <a href="logout.jsp">Logout</a>
+             <h5>Safest way to travel around</h5>  
           <%
             final String SESSESION_ID = "sessionId";     
             final String ROLE_CUSTOMER = "CUSTOMER";     
@@ -56,32 +54,36 @@
                                 isAthuenticated = true;
                                 loginUserId = admin.getId();
                                 %> <h2>Welcome Admin, <%=admin.getName()%>!</h3>
-                                     <a href="branch.jsp">Manage Branches</a>
-                                      <br/>
-                                     <a href="location.jsp">Manage Locations</a>
-                                      <br/>
-                                     <a href="driver.jsp">Manage Drivers</a>
-                                      <br/>
-                                     <a href="vehicletype.jsp">Manage Vehicle Types</a>
-                                     <br/>
-                                     <a href="vehicle.jsp">Manage Vehicles</a>
-                                     <br/>
-                                     <a href="bookingreport.jsp">Booking Report</a>
+                                 <div class="navbar">
+                                       <a href="branch.jsp">Manage Branches</a>
+                                      <a href="location.jsp">Manage Locations</a>
+                                      <a href="driver.jsp">Manage Drivers</a>
+                                   <a href="vehicletype.jsp">Manage Vehicle Types</a>
+                                      <a href="vehicle.jsp">Manage Vehicles</a>
+                                    <a href="bookingreport.jsp">Booking Report</a>
+                                    <a href="logout.jsp">Logout</a>
+                                </div>
                                  <% 
                              } else if (loginRole.equals(ROLE_CUSTOMER)) {
                                 Customer customer = (Customer)sessionObject;
                                 isAthuenticated = true;
                                 loginUserId = customer.getId();
                                 %> <h2>Welcome <%=customer.getName()%>, book your next taxi from here!</h3> <%
-                                   %> <a href="booking.jsp">Manage Bookings</a>
-                                   <br/>
-                                     <a href="home.jsp">Home</a>
+                                
+%>                             <div class="navbar">
+                                  <a href="home.jsp">Home</a>
+                                  <a href="booking.jsp">Manage Bookings</a>
+                                  <a href="logout.jsp">Logout</a>
+                                </div>
                                     <% 
                              } else if (loginRole.equals(ROLE_DRIVER)) {
                                 Driver driver = (Driver)sessionObject;
                                 isAthuenticated = true;
                                 loginUserId = driver.getId();
-                                %> <h2>Welcome <%=driver.getName()%>, Start and Finish your bookings from here!</h3> <%
+                                %> <h2>Welcome <%=driver.getName()%>, Start and Finish your bookings from here!</h3>
+                                    <div class="navbar">
+                                  <a href="logout.jsp">Logout</a>
+                                </div> <%
                              }
                           }
                         break;
