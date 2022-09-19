@@ -58,7 +58,7 @@ public class CustomerRepositoryTest {
     }
 
     @Test
-    public void addDuplicateBranchCityFail() {
+    public void addDuplicateCustomerFail() {
         Customer customer = new Customer();
         customer.setName("TEST_1 Peter");
         customer.setTelephone("TEST_1 07765231458");
@@ -87,7 +87,7 @@ public class CustomerRepositoryTest {
     }
 
     @Test
-    public void deleteNonExistsBranchFail() {
+    public void deleteNonExistsCustomerFail() {
         try {
             assertFalse(customerRepository.deleteCustomer(-999));
         } catch (DatabaseException ex) {

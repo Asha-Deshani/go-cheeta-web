@@ -82,7 +82,7 @@ public class LocationRepositoryTest {
     }
 
     @Test
-    public void addDuplicateBranchCityFail() {
+    public void addDuplicateLocationSameAddressFail() {
         Location location = new Location();
         location.setAddress("TEST_1 Address");
         location.setBranchId(branch.getId());
@@ -103,12 +103,11 @@ public class LocationRepositoryTest {
     }
 
     @Test
-    public void deleteNonExistsBranchFail() {
+    public void deleteNonExistsLocationFail() {
         try {
             assertFalse(locationRepository.deleteLocation(-999));
         } catch (DatabaseException ex) {
             loger.log(Level.SEVERE, null, ex);
         }
     }
-
 }
