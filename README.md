@@ -1,4 +1,4 @@
-# gocheeta Web Service and Client
+# Gocheeta Web Service and Client
 
 Even though Branch and Location can add from Web UI, the Distance matrix needs to add to the database manually. 
 
