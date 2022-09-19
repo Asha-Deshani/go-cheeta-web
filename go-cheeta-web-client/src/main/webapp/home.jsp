@@ -65,7 +65,7 @@
                     <%}%>
                     </select>
                 <br />
-                <input type = "submit" name ="branchselect" value = "Create Location" />
+                <input type = "submit" name ="branchselect" value = "Search Location" />
             </form>
           </div>
                <%
@@ -155,7 +155,7 @@
                 for (Vehicle vehicle : vehicleList) {
                 %>
                     <tr>
-                        <td><%=vehicle.getModel()%></td>
+                        <td><%=vehicle.getMake()%></td>
                         <td><%=vehicle.getModel()%></td>
                         <td><%=vehicle.getYear()%></td>
                         <td><a href="home.jsp?bookvehicleId=<%=vehicle.getId()%>&branchId=<%=branchId%>&vehicleRate=<%=vehicleRate%>&distance=<%=distance%>">Book Taxi</a></td>

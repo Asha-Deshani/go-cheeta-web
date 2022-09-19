@@ -4,6 +4,8 @@
     Author     : asha
 --%>
 
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="lk.gocheeta.web.service.controller.Driver"%>
 <%@page import="lk.gocheeta.web.service.controller.Admin"%>
 <%@page import="lk.gocheeta.web.service.controller.Customer"%>
@@ -30,6 +32,7 @@
             final String STATUS_ACCEPTED = "ACCEPTED";
             final String STATUS_STARTED = "STARTED";
             final String STATUS_COMPLETED = "COMPLETED";
+            final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
             
             int loginUserId = -1;
             String loginRole = null;

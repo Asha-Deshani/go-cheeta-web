@@ -57,9 +57,9 @@
                         <td><%=booking.getFare() == null? "" : booking.getFare()%></td>
                         <td><%=booking.getDistance()%></td>
                         <td><%=booking.getStatus() == null? "" : booking.getStatus()%></td>
-                        <td><%=booking.getBooktime() == null? "" : booking.getBooktime()%></td>
-                        <td><%=booking.getStarttime() == null? "" : booking.getStarttime()%></td>
-                        <td><%=booking.getEndtime() == null? "" : booking.getEndtime()%></td>
+                        <td><%=booking.getBooktime() == null? "" : formatter.format(booking.getBooktime().toGregorianCalendar().getTime())%></td>
+                        <td><%=booking.getStarttime() == null? "" : formatter.format(booking.getStarttime().toGregorianCalendar().getTime())%></td>
+                        <td><%=booking.getEndtime() == null? "" : formatter.format(booking.getEndtime().toGregorianCalendar().getTime())%></td>
                         <td><%=booking.getCustomerFeedback() == null? "" : booking.getCustomerFeedback()%></td>
                         <td><%=booking.getDriverFeedback() == null? "" : booking.getDriverFeedback()%></td>
                         <td><%=booking.getStatus().equals(STATUS_COMPLETED) ? "<a href=\"driverhome.jsp?bookingcompletedid=" +booking.getId() + "\">Give feedback</a>" : 

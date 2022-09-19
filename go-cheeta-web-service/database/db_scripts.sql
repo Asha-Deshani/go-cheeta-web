@@ -157,10 +157,22 @@ ADD COLUMN `booktime` DATETIME NOT NULL DEFAULT NOW() AFTER `branch_id`,
 ADD COLUMN `starttime` DATETIME NULL AFTER `booktime`,
 ADD COLUMN `endtime` DATETIME NULL AFTER `starttime`;
 
+INSERT INTO `gocheeta`.`admin` (`name`, `telephone`, `email`, `designation`) VALUES ('Peter', '072565487', 'peter@gocheeta.lk', 'manager');
+INSERT INTO `gocheeta`.`login` (`username`, `password`, `role`, `reference_id`) VALUES ('peter', 'peter', 'ADMIN', (select id from admin where name = 'Peter'));
 
---INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('1', '41', '11');
---INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('1', '44', '5');
---INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('1', '45', '20');
---INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('41', '44', '21');
---INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('41', '45', '8');
---INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ('44', '45', '12');
+INSERT INTO `gocheeta`.`branch`(`name`, `city`) VALUES ('Colombo City Center', 'Colombo');
+INSERT INTO `gocheeta`.`branch`(`name`, `city`) VALUES ('Kandy Central', 'Kandy');
+INSERT INTO `gocheeta`.`branch`(`name`, `city`) VALUES ('Malabe', 'Battaramulla');
+
+INSERT INTO `gocheeta`.`location`(`address`, `branch_id`) VALUES ('Borella Junction', (select id from `gocheeta`.`branch` where city = 'Colombo'));
+INSERT INTO `gocheeta`.`location`(`address`, `branch_id`) VALUES ('Colombo Fort', (select id from `gocheeta`.`branch` where city = 'Colombo'));
+INSERT INTO `gocheeta`.`location`(`address`, `branch_id`) VALUES ('Kirulapana Junction', (select id from `gocheeta`.`branch` where city = 'Colombo'));
+
+INSERT INTO `gocheeta`.`location`(`address`, `branch_id`) VALUES ('Malabe Junction', (select id from `gocheeta`.`branch` where city = 'Battaramulla'));
+INSERT INTO `gocheeta`.`location`(`address`, `branch_id`) VALUES ('Piliyandala Junction', (select id from `gocheeta`.`branch` where city = 'Battaramulla'));
+
+INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ((select id from `gocheeta`.`location` where address = 'Borella Junction'), (select id from `gocheeta`.`location` where address = 'Colombo Fort'), 12);
+INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ((select id from `gocheeta`.`location` where address = 'Borella Junction'), (select id from `gocheeta`.`location` where address = 'Kirulapana Junction'), 8);
+INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ((select id from `gocheeta`.`location` where address = 'Colombo Fort'), 	 (select id from `gocheeta`.`location` where address = 'Kirulapana Junction'), 15);
+
+INSERT INTO `gocheeta`.`distance_matrix` (`locId1`, `locId2`, `distance`) VALUES ((select id from `gocheeta`.`location` where address = 'Malabe Junction'), (select id from `gocheeta`.`location` where address = 'Piliyandala Junction'), 20);
