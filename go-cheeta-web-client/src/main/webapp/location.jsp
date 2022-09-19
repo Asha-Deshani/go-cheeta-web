@@ -36,9 +36,9 @@
                  }
             %>
             <form action = "" method = "POST">
-                <label>Address</label><input type = "text" name = "address" required="true"/>
+                <label for="address">Address</label><input type = "text" name = "address" required="true"/>
                 <br />
-                <label>Branch</label><select type = "text" name = "branch" required="true">
+                <label for="branch">Branch</label><select type = "text" name = "branch" required="true">
                     <% for (int i = 0; i < branchList.size(); i++) { %>
                             <option value="<%= branchList.get(i).getId()%>"><%=  branchList.get(i).getName()%></option>
                     <%}%>

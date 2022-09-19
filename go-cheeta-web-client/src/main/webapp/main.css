@@ -22,10 +22,14 @@ label {
   margin-right: 5px;
 }​
 
-input, select, button {
+select, input {
    padding: 8px;
    margin: 5px;
-   margin-bottom: 10px;
+}
+
+.class3, select {
+   padding: 8px;
+   margin: 5px;
 }
 
 .master {
@@ -37,58 +41,64 @@ input, select, button {
   text-align: center;
 }
 
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
 td {
-    padding: 10px;
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 th {
-    padding: 15px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: tomato;
+  color: white;
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 .left {
-    background-color: #6666ff;
     padding: 20px;
     margin: 20px;
-    border: solid;
     width: 45%;
 }
 
 .leftsmall {
-    background-color: #6666ff;
     padding: 20px;
     margin: 20px;
-    border: solid;
     width: 25%;
 }
 
 .leftfull {
-    background-color: #6666ff;
     padding: 20px;
     margin: 20px;
-    border: solid;
     width: 100%;
 }
 
 .right {
-    background-color: yellowgreen;
     padding: 20px;
     margin: 20px;
-    border: solid;
     width: 45%;
 }
 
 .rightbig {
-    background-color: yellowgreen;
     padding: 20px;
     margin: 20px;
-    border: solid;
     width: 65%;
 }
 
 .containerrow {
     display: flex;
     justify-content: space-between;
-    border: 1px black solid;
     width: 100%;
 }
 
@@ -98,9 +108,13 @@ th {
     border: 1px black solid;
 }
 
+.containercolumnreport {
+    display: flow;
+    justify-content: space-between;
+}
+
 .navbar {
   overflow: hidden;
- 
   text-align: center;
 }
 

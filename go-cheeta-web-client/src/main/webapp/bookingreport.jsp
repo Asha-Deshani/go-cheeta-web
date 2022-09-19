@@ -67,7 +67,7 @@
              if(branchselect != null) {
                        %>
                 <div class="containerrow">
-                    <div class="containercolumn">
+                    <div class="containercolumnreport">
                     <div class="leftfull">
                         <% 
                             String[] startTimeArray = startdate.split("-");
@@ -86,7 +86,7 @@
                          if(bookingDetailList != null) {
                            
                           %>
-                              <H5>Total booking count: <%=bookingDetailList.size()%></H5>
+                              <h2>Total booking count: <%=bookingDetailList.size()%></h2>
                           <br/>
                                              <table border="2">
                                <tr>

@@ -21,7 +21,7 @@
             <h2>Create a Branch</h2>
             <br />
             <form action = "branch.jsp" method = "POST">
-                <label>Name</label><input type = "text" name = "name" required="true"/>
+                <label for="name">Name</label><input type = "text" name = "name" required="true"/>
                 <br />
                 <label>City</label><input type = "text" name = "city" required="true"/>
                 <br />
